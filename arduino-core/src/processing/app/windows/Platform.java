@@ -59,7 +59,7 @@ public class Platform extends processing.app.Platform {
 
   private void recoverSettingsFolderPath() throws IOException {
     String path = Advapi32Util.registryGetStringValue(WinReg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Local AppData");
-    this.settingsFolder = new File(path, "Arduino15");
+    this.settingsFolder = new File(path, "Energia15");
   }
 
   private void recoverDefaultSketchbookFolder() throws IOException {
@@ -234,7 +234,7 @@ public class Platform extends processing.app.Platform {
   @Override
   public void fixSettingsLocation() throws IOException {
     String path = Advapi32Util.registryGetStringValue(WinReg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "AppData");
-    Path previousSettingsFolder = Paths.get(path, "Arduino15");
+    Path previousSettingsFolder = Paths.get(path, "Energia15");
     if (!Files.exists(previousSettingsFolder)) {
       return;
     }

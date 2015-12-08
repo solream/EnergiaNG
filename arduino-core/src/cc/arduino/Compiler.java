@@ -199,7 +199,7 @@ public class Compiler implements MessageConsumer {
         }
       });
 
-    Stream.of(BaseNoGui.getContentFile("tools-builder").getAbsolutePath(), Paths.get(BaseNoGui.getHardwarePath(), "tools", "avr").toAbsolutePath().toString(), new File(BaseNoGui.getSettingsFolder(), "packages").getAbsolutePath())
+    Stream.of(BaseNoGui.getContentFile("tools-builder").getAbsolutePath(), Paths.get(BaseNoGui.getHardwarePath(), "tools", "avr").toAbsolutePath().toString(), Paths.get(BaseNoGui.getHardwarePath(), "tools", "msp430").toAbsolutePath().toString(), new File(BaseNoGui.getSettingsFolder(), "packages").getAbsolutePath())
       .forEach(p -> {
         if (Files.exists(Paths.get(p))) {
           commandLine.addArgument("-tools", false);

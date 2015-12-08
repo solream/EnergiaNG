@@ -78,9 +78,9 @@ public class ContributionsIndexer {
 
   public void parseIndex() throws Exception {
     File defaultIndexFile = getIndexFile(Constants.DEFAULT_INDEX_FILE_NAME);
-    if (!signatureVerifier.isSigned(defaultIndexFile)) {
-      throw new SignatureVerificationFailedException(Constants.DEFAULT_INDEX_FILE_NAME);
-    }
+//    if (!signatureVerifier.isSigned(defaultIndexFile)) {
+//      throw new SignatureVerificationFailedException(Constants.DEFAULT_INDEX_FILE_NAME);
+//    }
     index = parseIndex(defaultIndexFile);
     index.setTrusted();
 

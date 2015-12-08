@@ -79,7 +79,7 @@ public class Platform extends processing.app.Platform {
 
 
   public File getSettingsFolder() throws Exception {
-    return new File(getLibraryFolder(), "Arduino15");
+    return new File(getLibraryFolder(), "Energia15");
   }
 
 
