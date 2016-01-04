@@ -1,6 +1,8 @@
 /*
  * This file is part of Arduino.
  *
+ * Copyright 2015 Arduino LLC (http://www.arduino.cc/)
+ *
  * Arduino is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,32 +25,39 @@
  * the GNU General Public License.  This exception does not however
  * invalidate any other reasons why the executable file might be covered by
  * the GNU General Public License.
- *
- * Copyright 2013 Arduino LLC (http://www.arduino.cc/)
  */
 
-package cc.arduino.packages;
+package cc.arduino.contributions.packages.ui;
 
-import cc.arduino.packages.uploaders.SSHUploader;
-import cc.arduino.packages.uploaders.SerialUploader;
-import cc.arduino.packages.uploaders.GenericNetworkUploader;
-import processing.app.debug.TargetBoard;
+import java.awt.Color;
+import java.awt.Component;
 
-public class UploaderFactory {
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 
-  public Uploader newUploader(TargetBoard board, BoardPort port, boolean noUploadPort) {
-    if (noUploadPort) {
-      return new SerialUploader(true);
+@SuppressWarnings("serial")
+public class ContributedPlatformTableCellRenderer implements TableCellRenderer {
+
+  public Component getTableCellRendererComponent(JTable table, Object value,
+                                                 boolean isSelected,
+                                                 boolean hasFocus, int row,
+                                                 int column) {
+    ContributedPlatformTableCellJPanel cell = new ContributedPlatformTableCellJPanel();
+    cell.setButtonsVisible(false);
+    cell.update(table, value, isSelected, false);
+
+    if (row % 2 == 0) {
+      cell.setBackground(new Color(236, 241, 241)); // #ecf1f1
+    } else {
+      cell.setBackground(new Color(255, 255, 255));
     }
 
-    if (port != null && "network".equals(port.getProtocol())) {
-      if(port.getPrefs().get("ssh_upload").contentEquals("no")){
-        return new GenericNetworkUploader(port);
-      }
-      return new SSHUploader(port);
+    int height = new Double(cell.getPreferredSize().getHeight()).intValue();
+    if (table.getRowHeight(row) < height) {
+      table.setRowHeight(row, height);
     }
 
-    return new SerialUploader();
+    return cell;
   }
 
 }
