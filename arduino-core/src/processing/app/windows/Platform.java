@@ -247,16 +247,9 @@ public class Platform extends processing.app.Platform {
   }
 
   @Override
-<<<<<<< HEAD
-  public void fixSettingsLocation() throws IOException {
-    String path = Advapi32Util.registryGetStringValue(WinReg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "AppData");
-    Path previousSettingsFolder = Paths.get(path, "Energia15");
-    if (!Files.exists(previousSettingsFolder)) {
-=======
   public void fixSettingsLocation() throws Exception {
     Path oldSettingsFolder = recoverOldSettingsFolderPath();
     if (!Files.exists(oldSettingsFolder)) {
->>>>>>> upstream/master
       return;
     }
 
