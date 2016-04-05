@@ -127,8 +127,6 @@ public class Base {
     System.setProperty("swing.aatext", "true");
     System.setProperty("java.net.useSystemProxies", "true");
 
-    splashScreenHelper.splashText(tr("Loading configuration..."));
-
     if (OSUtils.isMacOS()) {
       ThinkDifferent.init();
     }
@@ -157,6 +155,8 @@ public class Base {
     BaseNoGui.initPortableFolder();
 
     BaseNoGui.initParameters(args);
+
+    splashScreenHelper.splashText(tr("Loading configuration..."));
 
     BaseNoGui.initVersion();
 
@@ -222,15 +222,15 @@ public class Base {
     INSTANCE = new Base(args);
   }
 
-  
+
   static public void initLogger() {
     Handler consoleHandler = new ConsoleLogger();
     consoleHandler.setLevel(Level.ALL);
     consoleHandler.setFormatter(new LogFormatter("%1$tl:%1$tM:%1$tS [%4$7s] %2$s: %5$s%n"));
-    
+
     Logger globalLogger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     globalLogger.setLevel(consoleHandler.getLevel());
-    
+
     // Remove default
     Handler[] handlers = globalLogger.getHandlers();
     for(Handler handler : handlers) {
@@ -241,13 +241,13 @@ public class Base {
     for(Handler handler : handlers) {
       root.removeHandler(handler);
     }
-    
+
     globalLogger.addHandler(consoleHandler);
-    
+
     Logger.getLogger("cc.arduino.packages.autocomplete").setParent(globalLogger);
     Logger.getLogger("br.com.criativasoft.cpluslibparser").setParent(globalLogger);
     Logger.getLogger(Base.class.getPackage().getName()).setParent(globalLogger);
-    
+
   }
 
 
@@ -1135,7 +1135,7 @@ public class Base {
     importMenu.removeAll();
 
     JMenuItem menu = new JMenuItem(tr("Manage Libraries..."));
-    menu.addActionListener(e -> openLibraryManager(""));
+    menu.addActionListener(e -> openLibraryManager("", ""));
     importMenu.add(menu);
     importMenu.addSeparator();
 
@@ -1264,7 +1264,7 @@ public class Base {
     }
   }
 
-  public void openLibraryManager(String dropdownItem) {
+  public void openLibraryManager(final String filterText, String dropdownItem) {
     if (contributionsSelfCheck != null) {
       contributionsSelfCheck.cancel();
     }
@@ -1279,6 +1279,9 @@ public class Base {
         updateUI();
         if (StringUtils.isNotEmpty(dropdownItem)) {
           selectDropdownItemByClassName(dropdownItem);
+        }
+        if (StringUtils.isNotEmpty(filterText)) {
+          setFilterText(filterText);
         }
       }
     };
@@ -1751,7 +1754,7 @@ public class Base {
 
         Font f = new Font("SansSerif", Font.PLAIN, Theme.scale(11));
         g.setFont(f);
-        g.setColor(Color.white);
+        g.setColor(new Color(0,151,156));
         g.drawString(BaseNoGui.VERSION_NAME_LONG, Theme.scale(33), Theme.scale(20));
       }
     };
@@ -1949,7 +1952,7 @@ public class Base {
     File referenceFile = new File(referenceFolder, filename);
     if (!referenceFile.exists())
       referenceFile = new File(referenceFolder, filename + ".html");
-    
+
     if(referenceFile.exists()){
       openURL(referenceFile.getAbsolutePath());
     }else{

@@ -10,7 +10,10 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
+# Translators:
 # Francesc <kiski97@gmail.com>, 2015
+# Marc Giralt <marc.giralt.butjosa@gmail.com>, 2016
 # Moritz Werner Casero <moritzwernercasero@gmail.com>, 2015
 # Sergi  Pérez Labernia <rndrnd@gmail.com>, 2014
 # shacawine <shacawine@gmail.com>, 2012
@@ -20,8 +23,8 @@ msgstr ""
 "Project-Id-Version: Arduino IDE 1.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-29 10:24-0400\n"
-"PO-Revision-Date: 2015-11-18 16:15+0000\n"
-"Last-Translator: Federico Fissore <f.fissore@arduino.cc>\n"
+"PO-Revision-Date: 2016-03-07 18:40+0000\n"
+"Last-Translator: Cristian Maglie <c.maglie@arduino.cc>\n"
 "Language-Team: Catalan (http://www.transifex.com/mbanzi/arduino-ide-15/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,7 +61,7 @@ msgstr ""
 msgid ""
 "'arch' folder is no longer supported! See http://goo.gl/gfFJzU for more "
 "information"
-msgstr "La carpeta 'arch' ja no és suporta! Mira http://goo.gl/gfFJzU per saber més informació."
+msgstr "La carpeta 'arch' ja no es suporta! Per més informació, entra a http://goo.gl/gfFJzU."
 
 #: Preferences.java:478
 msgid "(edit only when Arduino is not running)"
@@ -81,22 +84,6 @@ msgstr "--verbós,  --verbós-pujar i -verbós-build només es poden emprar junt
 #: Sketch.java:746
 msgid ".pde -> .ino"
 msgstr ".pde -> .ino"
-
-#: ../../../../../app/src/cc/arduino/contributions/ContributionsSelfCheck.java:64
-#, java-format
-msgid "<br/>Update available for some of your {0}boards{1}"
-msgstr ""
-
-#: ../../../../../app/src/cc/arduino/contributions/ContributionsSelfCheck.java:66
-#, java-format
-msgid ""
-"<br/>Update available for some of your {0}boards{1} and {2}libraries{3}"
-msgstr ""
-
-#: ../../../../../app/src/cc/arduino/contributions/ContributionsSelfCheck.java:62
-#, java-format
-msgid "<br/>Update available for some of your {0}libraries{1}"
-msgstr ""
 
 #: Editor.java:2053
 msgid ""
@@ -316,6 +303,10 @@ msgstr "Format automàtic finalitzat."
 msgid "Auto-detect proxy settings"
 msgstr ""
 
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:264
+msgid "Automatic"
+msgstr ""
+
 #: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:474
 msgid "Automatic proxy configuration URL:"
 msgstr ""
@@ -345,6 +336,12 @@ msgstr "Bielorús"
 #: ../../../processing/app/Editor.java:707
 msgid "Board"
 msgstr "Tarja"
+
+#: ../../../../../app/src/processing/app/Editor.java:2545
+#: ../../../../../app/src/processing/app/Editor.java:2641
+#, java-format
+msgid "Board at {0} is not available"
+msgstr ""
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:62
 #, java-format
@@ -827,6 +824,11 @@ msgstr "Error"
 msgid "Error adding file"
 msgstr "Error al afegir un fitxer"
 
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:272
+#, java-format
+msgid "Error compiling for board {0}."
+msgstr ""
+
 #: debug/Compiler.java:369
 msgid "Error compiling."
 msgstr "Error compilant."
@@ -971,6 +973,11 @@ msgstr "No s´ha pogut obrir el sketch: \"{0}\""
 #: Editor.java:491
 msgid "File"
 msgstr "Fitxer"
+
+#: ../../../../../arduino-core/src/processing/app/SketchData.java:139
+#, java-format
+msgid "File name {0} is invalid: ignored"
+msgstr ""
 
 #: Preferences.java:94
 msgid "Filipino"
@@ -1188,6 +1195,10 @@ msgstr ""
 #: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:239
 #: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributionManagerUI.java:172
 msgid "Installing..."
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:256
+msgid "Interface scale:"
 msgstr ""
 
 #: ../../../processing/app/Base.java:1204
@@ -1508,6 +1519,10 @@ msgstr "Si us plau importa la llibreria Wire de Sketch > Menú Importació Llibr
 msgid "Please select a programmer from Tools->Programmer menu"
 msgstr "Per favor, seleccioneu un programador de Eines-> Menú de programadors"
 
+#: ../../../../../app/src/processing/app/Editor.java:2613
+msgid "Plotter not available while serial monitor is open"
+msgstr ""
+
 #: Preferences.java:110
 msgid "Polish"
 msgstr "Polonès"
@@ -1576,9 +1591,10 @@ msgstr "Problema adjustant la plataforma."
 msgid "Problem accessing board folder /www/sd"
 msgstr "Problema accedint a la carpeta de la tarja /www/sd"
 
-#: ../../../cc/arduino/packages/uploaders/SSHUploader.java:132
-msgid "Problem accessing files in folder "
-msgstr "Problema accedint als arxius de la carpeta"
+#: ../../../../../arduino-core/src/cc/arduino/packages/uploaders/SSHUploader.java:206
+#, java-format
+msgid "Problem accessing files in folder \"{0}\""
+msgstr ""
 
 #: Base.java:1673
 msgid "Problem getting data folder"
@@ -1665,6 +1681,10 @@ msgstr "Reemplaça la versió existent de {0}?"
 #: FindReplace.java:81
 msgid "Replace with:"
 msgstr "Substituir amb:"
+
+#: ../../../../../arduino-core/src/processing/app/I18n.java:28
+msgid "Retired"
+msgstr ""
 
 #: Preferences.java:113
 msgid "Romanian"
@@ -1771,6 +1791,10 @@ msgstr "Monitor sèrie"
 msgid "Serial Plotter"
 msgstr ""
 
+#: ../../../../../app/src/processing/app/Editor.java:2516
+msgid "Serial monitor not available while plotter is open"
+msgstr ""
+
 #: Serial.java:194
 #, java-format
 msgid ""
@@ -1805,10 +1829,6 @@ msgstr "Errors en les preferències"
 #: Editor.java:641
 msgid "Show Sketch Folder"
 msgstr "Mostra la carpeta del Sketch"
-
-#: ../../../processing/app/EditorStatus.java:468
-msgid "Show verbose output during compilation"
-msgstr "Mostra resultats detallats durant la compilació"
 
 #: Preferences.java:387
 msgid "Show verbose output during: "
@@ -1929,6 +1949,10 @@ msgstr "Tolanés"
 msgid "Tamil"
 msgstr "Tàmil"
 
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:100
+msgid "Thai"
+msgstr ""
+
 #: debug/Compiler.java:414
 msgid "The 'BYTE' keyword is no longer supported."
 msgstr "La descripció 'BYTE' ha deixat d'estar suportada."
@@ -2042,9 +2066,12 @@ msgid ""
 "Are you sure you want to delete it?"
 msgstr ""
 
-#: ../../../processing/app/EditorStatus.java:467
-msgid "This report would have more information with"
-msgstr "Aquest informe podria tenir més informació amb"
+#: ../../../../../app/src/processing/app/EditorStatus.java:349
+msgid ""
+"This report would have more information with\n"
+"\"Show verbose output during compilation\"\n"
+"option enabled in File -> Preferences.\n"
+msgstr ""
 
 #: Base.java:535
 msgid "Time for a Break"
@@ -2091,6 +2118,11 @@ msgstr "Introduïu la contrasenya de la tarja per pujar el nou sketch"
 #: ../../../processing/app/Preferences.java:118
 msgid "Ukrainian"
 msgstr "Ucraïnès"
+
+#: ../../../../../arduino-core/src/cc/arduino/packages/uploaders/SSHUploader.java:142
+#, java-format
+msgid "Unable to connect to {0}"
+msgstr ""
 
 #: ../../../processing/app/Editor.java:2524
 #: ../../../processing/app/NetworkMonitor.java:145
@@ -2160,6 +2192,21 @@ msgstr "Actualitza"
 #: Preferences.java:428
 msgid "Update sketch files to new extension on save (.pde -> .ino)"
 msgstr "Actualitza fitxer dels sketch a la nova extensió al desar (.pde -> .ino)"
+
+#: ../../../../../app/src/cc/arduino/contributions/ContributionsSelfCheck.java:88
+#, java-format
+msgid "Updates available for some of your {0}boards{1}"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/ContributionsSelfCheck.java:90
+#, java-format
+msgid "Updates available for some of your {0}boards{1} and {2}libraries{3}"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/ContributionsSelfCheck.java:86
+#, java-format
+msgid "Updates available for some of your {0}libraries{1}"
+msgstr ""
 
 #: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:167
 msgid "Updating list of installed libraries"
@@ -2418,14 +2465,14 @@ msgstr "ZIP no conté cap llibreria"
 msgid "\".{0}\" is not a valid extension."
 msgstr "\".{0}\" no és una extensió vàlida."
 
-#: SketchCode.java:258
+#: ../../../../../arduino-core/src/processing/app/SketchCode.java:201
 #, java-format
 msgid ""
-"\"{0}\" contains unrecognized characters.If this code was created with an "
-"older version of Arduino,you may need to use Tools -> Fix Encoding & Reload "
-"to updatethe sketch to use UTF-8 encoding. If not, you may need todelete the"
-" bad characters to get rid of this warning."
-msgstr "\"{0}\" conté caràcters desconeguts. Si aquest codi va ser creat amb una versió antiga de Processing, podria utilitzar el menú Eines > Arregla la codificació i recarrega per actualitzar el sketch per tal d’usar una codificació UTF-8. Si no, haurà de suprimir els caràcters incorrectes per desfer-se del avis."
+"\"{0}\" contains unrecognized characters. If this code was created with an "
+"older version of Arduino, you may need to use Tools -> Fix Encoding & Reload"
+" to update the sketch to use UTF-8 encoding. If not, you may need to delete "
+"the bad characters to get rid of this warning."
+msgstr ""
 
 #: debug/Compiler.java:409
 msgid ""
@@ -2493,10 +2540,6 @@ msgstr "Connectat!"
 #: Sketch.java:540
 msgid "createNewFile() returned false"
 msgstr "createNewFile() ha retornat false"
-
-#: ../../../processing/app/EditorStatus.java:469
-msgid "enabled in File > Preferences."
-msgstr "Activat en Fitxer>Preferències."
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
 msgid "http://www.arduino.cc/"
@@ -2572,6 +2615,11 @@ msgstr ""
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:76
 #, java-format
 msgid "{0} must be a folder"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/EditorLineStatus.java:109
+#, java-format
+msgid "{0} on {1}"
 msgstr ""
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:78
