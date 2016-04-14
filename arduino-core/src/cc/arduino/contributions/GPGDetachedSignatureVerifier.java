@@ -42,7 +42,7 @@ public class GPGDetachedSignatureVerifier extends SignatureVerifier {
   private String keyId;
 
   public GPGDetachedSignatureVerifier() {
-    this("7F294291");
+    this("E23EE22A");
   }
 
   public GPGDetachedSignatureVerifier(String keyId) {
