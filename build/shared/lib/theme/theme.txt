@@ -1,27 +1,28 @@
 #FUNCTIONS COLOR 			#D35400 - ORANGE			KEYWORD1
 #FUNCTIONS COLOR			#D35400 - ORANGE			KEYWORD2
-#STRUCTURE COLORS 			#728E00 - GREEN			KEYWORD3
-#CONSTANTS COLOR 				#00979C - BLUE				LITERAL1
-#VARIABLES COLOR 				#00979C - BLUE				LITERAL2
+#STRUCTURE COLORS 			#5E6D03 - GREEN			KEYWORD3
+#VARIABLES COLOR 				#00979C - BLUE				LITERAL1
 
 #ERROR COLOR					#A61717 - RED
 #COMMENTS // COLOR			#95A5A6 - LIGHT GREY
 #COMMENTS /**/ COLOR		#434F54	- DARK GREY
 
+
 # GUI - STATUS
-status.notice.fgcolor = #002325
-status.notice.bgcolor = #17A1A5
-status.error.fgcolor = #FFFFFF
+status.notice.fgcolor = #000000
+status.notice.bgcolor = #f12323
+status.error.fgcolor = #ffffff
 status.error.bgcolor = #E34C00
 status.edit.fgcolor = #000000
-status.edit.bgcolor = #F1B500
+status.edit.bgcolor = #f12323
 status.font = SansSerif,plain,12
 
 # GUI - TABS
+# settings for the tabs at the top
 # (tab images are stored in the lib/theme folder)
-header.bgcolor = #17A1A5
-header.text.selected.color = #005B5B
-header.text.unselected.color = #007e82
+header.bgcolor = #d40000
+header.text.selected.color = #000000
+header.text.unselected.color = #881f1f
 header.text.font = SansSerif,plain,12
 
 # GUI - CONSOLE
@@ -32,7 +33,7 @@ console.output.color = #eeeeee
 console.error.color = #E34C00
 
 # GUI - BUTTONS
-buttons.bgcolor = #006468
+buttons.bgcolor = #7e0000
 buttons.status.font = SansSerif,plain,12
 buttons.status.color = #ffffff
 
@@ -48,7 +49,7 @@ plotting.graphcolor.03 = #abd9e9
 
 # GUI - LINESTATUS   
 linestatus.color = #ffffff
-linestatus.bgcolor = #006468
+linestatus.bgcolor = #7e0000 
 
 # EDITOR - DETAILS
 
@@ -59,7 +60,7 @@ editor.bgcolor = #ffffff
 # highlight for the current line
 editor.linehighlight.color=#e2e2e2
 # highlight for the current line
-editor.linehighlight=false
+editor.linehighlight=true
 
 # caret blinking and caret color
 editor.caret.color = #333300
@@ -98,13 +99,17 @@ editor.reserved_word.style = #5E6D03,plain
 
 
 # TEXT - LITERALS
-editor.literal1.style = #00979C,plain
+
+# constants & datatypes
+editor.literal1.style = #006699,plain
+
+# p5 built in variables: e.g. mouseX, width, pixels
 editor.literal2.style = #00979C,plain
 editor.variable.style = #00979C,plain
 editor.reserved_word_2.style = #00979C,plain
 editor.literal_boolean.style = #00979C,plain
 editor.literal_char.style = #00979C,plain
-editor.literal_string_double_quote.style = #005C5F,plain
+editor.literal_string_double_quote.style = #00979C,plain
 editor.preprocessor.style = #5E6D03,plain
 
 # http://www.arduino.cc/
