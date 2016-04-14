@@ -119,7 +119,7 @@ editor.url.style = #0000ff,underlined
 editor.operator.style = #434f54,plain
 
 
-# ?? maybe this is for words followed by a colon
+# ?? maybe that is for words followed by a colon
 # like in case statements or goto
 editor.label.style = #7e7e7e,bold
 
