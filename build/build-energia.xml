@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Arduino" default="build">
+<project name="Energia" default="build">
   <!--echo message="os.name = ${os.name}" /-->
   <!--echo message="os.arch = ${os.arch}" /-->
   <!--echo message="os.version = ${os.version}" /-->
@@ -35,7 +35,7 @@
   <condition property="staging_folder" value="linux"><equals arg1="${platform}" arg2="linux32" /></condition>
   <condition property="staging_folder" value="linux"><equals arg1="${platform}" arg2="linux64" /></condition>
 
-  <condition property="staging_hardware_folder" value="Arduino.app/Contents/Java/hardware"><equals arg1="${platform}" arg2="macosx" /></condition>
+  <condition property="staging_hardware_folder" value="Energia.app/Contents/Java/hardware"><equals arg1="${platform}" arg2="macosx" /></condition>
   <condition property="staging_hardware_folder" value="hardware"><equals arg1="${platform}" arg2="windows" /></condition>
   <condition property="staging_hardware_folder" value="hardware"><equals arg1="${platform}" arg2="linux32" /></condition>
   <condition property="staging_hardware_folder" value="hardware"><equals arg1="${platform}" arg2="linux64" /></condition>
@@ -311,16 +311,16 @@
             jvmRequired="1.8"
             jrepreferred="true"
             outputdirectory="${staging_folder}/work"
-            name="Arduino"
-            displayname="Arduino"
-            executablename="Arduino"
-            identifier="cc.arduino.Arduino"
+            name="Energia"
+            displayname="Energia"
+            executablename="Energia"
+            identifier="nu.energia.Energia"
             shortversion="${version}"
             version="${revision}"
             signature="Pde1"
             icon="macosx/processing.icns"
             mainclassname="processing.app.Base"
-            copyright="Arduino LLC"
+            copyright="Energia"
             applicationCategory="public.app-category.education"
             minimumsystemversion="10.7"
             highresolutioncapable="true">
@@ -332,7 +332,7 @@
 
       <classpath refid="runtime.jars"/>
 
-      <option value="-Dapple.awt.application.name=Arduino"/>
+      <option value="-Dapple.awt.application.name=Energia"/>
       <option value="-Dapple.laf.useScreenMenuBar=true"/>
       <option value="-Dcom.apple.macos.use-file-dialog-packages=true"/>
       <option value="-Dcom.apple.smallTabs=true"/>
@@ -352,8 +352,8 @@
       <!--<option value="-Dcom.apple.macos.useScreenMenuBar=true"/>-->
 
       <!-- Workaround since the icon parameter for bundleapp doesn't work -->
-      <option value="-Xdock:name=Arduino"/>
-      <option value="-Dcom.apple.mrj.application.apple.menu.about.name=Arduino"/>
+      <option value="-Xdock:name=Energia"/>
+      <option value="-Dcom.apple.mrj.application.apple.menu.about.name=Energia"/>
       <option value="-Dfile.encoding=UTF-8"/>
 
       <option value="-Xms128M"/>
@@ -362,7 +362,7 @@
 
       <bundledocument extensions="ino,c,cpp,h"
                       icon="macosx/pde.icns"
-                      name="Arduino Source File"
+                      name="Energia Source File"
                       role="Editor" ispackage="false">
       </bundledocument>
 
@@ -451,7 +451,7 @@
   <target name="macosx-run" depends="build,start"/>
 
   <target name="macosx-start">
-    <exec executable="macosx/work/Arduino.app/Contents/MacOS/Arduino" spawn="false" failonerror="true"/>
+    <exec executable="macosx/work/Energia.app/Contents/MacOS/Energia" spawn="false" failonerror="true"/>
   </target>
 
   <!-- - - - - - - - - - - - - - - - -->
@@ -462,7 +462,7 @@
     <fail unless="version" message="Please set the property 'version' to correctly sign distribution file" />
 
     <!-- Remove everything from working folder -->
-    <delete dir="macosx/work/Arduino.app" />
+    <delete dir="macosx/work/Energia.app" />
 
     <!-- Unzip unsigned app into working dir -->
     <exec executable="unzip" dir="macosx/work" failonerror="true">
@@ -476,12 +476,12 @@
 
     <!-- Sign app -->
     <exec executable="codesign" dir="macosx/work" failonerror="true">
-      <arg line="--keychain &quot;${macosx-sign-keychain}&quot; --force -s &quot;${macosx-sign-id}&quot; --deep -v Arduino.app/" />
+      <arg line="--keychain &quot;${macosx-sign-keychain}&quot; --force -s &quot;${macosx-sign-id}&quot; --deep -v Energia.app/" />
     </exec>
 
     <!-- Check for successful signing -->
     <exec executable="codesign" dir="macosx/work" failonerror="true">
-      <arg line="-vvvv Arduino.app/" />
+      <arg line="-vvvv Energia.app/" />
     </exec>
 
     <delete file="macosx/arduino-${version}-${platform}.zip" />
