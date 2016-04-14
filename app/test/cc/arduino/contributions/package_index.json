@@ -1,7 +1,7 @@
 {
   "packages": [
     {
-      "name": "ti",
+      "name": "energia",
       "maintainer": "Energia",
       "websiteURL": "http://www.energia.nu/",
       "email": "make@energia.nu",
@@ -19,7 +19,11 @@
           "checksum": "SHA-256:2909a4c6dd6d7497e7e1b5fcaa2f66a100271417510f3a68593b65af8ff78c1c",
           "size": "4877442",
           "boards": [
-            {"name": "MSP-EXP430F5529LP"}
+            {"name": "MSP-EXP430F5529LP"},
+            {"name": "MSP-EXP430FR4133"},
+            {"name": "MSP-EXP430FR5969"},
+            {"name": "MSP-EXP430FR6989"},
+            {"name": "MSP-EXP430G2"}
           ],
           "toolsDependencies": [
             {
@@ -27,7 +31,71 @@
               "packager":"energia",
               "name":"msp430-gcc",
               "version":"4.6.3"
+            },
+            {
+
+              "packager":"energia",
+              "name":"dslite",
+              "version":"6.2.0.1455"
             }
+          ]
+        },
+        {
+          "name": "Energia MSP432 boards",
+          "architecture": "msp432",
+          "version": "1.0.0",
+          "category": "Energia",
+          "url": "http://energia.nu/cores/msp432-1.0.0.tar.bz2",
+          "archiveFileName": "msp432-1.0.0.tar.bz2",
+          "checksum": "SHA-256:e67d98ec82dbaec5a2639278fc8323a23e40cd6b2ea8cce7b3529169d751fb5c",
+          "size": "2208018",
+          "boards": [
+            {"name": "MSP_EXP432P401R"}
+          ],
+          "toolsDependencies": [
+            {
+
+              "packager":"energia",
+              "name":"arm-none-eabi-gcc",
+              "version":"4.8.4-20140725"
+            },
+            {
+
+              "packager":"energia",
+              "name":"dslite",
+              "version":"6.2.0.1455"
+            }
+
+          ]
+        },
+        {
+          "name": "Energia TivaC boards",
+          "architecture": "tivac",
+          "version": "1.0.0",
+          "category": "Energia",
+          "url": "http://energia.nu/cores/tivac-1.0.0.tar.bz2",
+          "archiveFileName": "tivac-1.0.0.tar.bz2",
+          "checksum": "SHA-256:e67d98ec82dbaec5a2639278fc8323a23e40cd6b2ea8cce7b3529169d751fb5c",
+          "size": "2208018",
+          "boards": [
+            {"name": "EK-TM4C123GXL"},
+            {"name": "EK-TM4C1294XL"},
+            {"name": "EK-LM4F120XL"}
+          ],
+          "toolsDependencies": [
+            {
+
+              "packager":"energia",
+              "name":"arm-none-eabi-gcc",
+              "version":"4.8.4-20140725"
+            },
+            {
+
+              "packager":"energia",
+              "name":"dslite",
+              "version":"6.2.0.1455"
+            }
+
           ]
         }
       ],
@@ -64,6 +132,54 @@
               "archiveFileName":"lin_msp430_tools.tar.bz2",
               "checksum":"SHA-256:5441db01ff0cfc9b869a3f8296642a8b2d89aa9d90eb47b01c53d8d9b00ab8f7",
               "size":"99056584" 
+            }
+          ]
+        },
+        {
+          "name": "arm-none-eabi-gcc",
+          "version": "4.8.4-20140725",
+          "systems": [
+            {
+              "host": "i686-mingw32",
+              "archiveFileName": "gcc-arm-none-eabi-4.8.3-2014q1-windows.tar.gz",
+              "url": "http://downloads.arduino.cc/gcc-arm-none-eabi-4.8.3-2014q1-windows.tar.gz",
+              "checksum": "SHA-256:fd8c111c861144f932728e00abd3f7d1107e186eb9cd6083a54c7236ea78b7c2",
+              "size": "84537449"
+            },
+            {
+              "host": "x86_64-apple-darwin",
+              "url": "http://energia.nu/tools/gcc-arm-none-eabi-4.8.4-20140725-mac.tar.bz2",
+              "archiveFileName": "gcc-arm-none-eabi-4.8.4-20140725-mac.tar.bz2",
+              "checksum": "SHA-256:66c9261fdd6d646931dfe940e8daf38d3b11cfba8a7e714c7a3811146b6dc9c7",
+              "size": "52518522"
+            },
+            {
+              "host": "x86_64-pc-linux-gnu",
+              "url": "http://downloads.arduino.cc/gcc-arm-none-eabi-4.8.3-2014q1-linux64.tar.gz",
+              "archiveFileName": "gcc-arm-none-eabi-4.8.3-2014q1-linux64.tar.gz",
+              "checksum": "SHA-256:d23f6626148396d6ec42a5b4d928955a703e0757829195fa71a939e5b86eecf6",
+              "size": "51395093"
+            },
+            {
+              "host": "i686-pc-linux-gnu",
+              "url": "http://downloads.arduino.cc/gcc-arm-none-eabi-4.8.3-2014q1-linux32.tar.gz",
+              "archiveFileName": "gcc-arm-none-eabi-4.8.3-2014q1-linux32.tar.gz",
+              "checksum": "SHA-256:ba1994235f69c526c564f65343f22ddbc9822b2ea8c5ee07dd79d89f6ace2498",
+              "size": "51029223"
+            }
+          ]
+        },
+        {
+          "name":"dslite",
+          "version":"6.2.0.1455",
+          "systems":
+          [
+           {
+              "host":"x86_64-apple-darwin",
+              "url":"http://www.energia.nu/tools/dslite-6.2.0.1455.tar.bz2",
+              "archiveFileName":"dslite-6.2.0.1455.tar.bz2",
+              "checksum":"SHA-256:541949d868fadb0bada44a1915f299a6b646de864589e8c3cf6cc8bac1af1384",
+              "size":"15026121"
             }
           ]
         },
