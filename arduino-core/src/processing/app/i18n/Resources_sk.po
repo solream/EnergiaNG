@@ -1018,8 +1018,8 @@ msgstr "Uprav kódovanie a znova nahraj"
 #: ../../../processing/app/BaseNoGui.java:318
 msgid ""
 "For information on installing libraries, see: "
-"http://www.arduino.cc/en/Guide/Libraries\n"
-msgstr "Informácie k inštalácii knižníc, pozri: http://www.arduino.cc/en/Guide/Libraries\n"
+"http://www.energia.nu/en/Guide/Libraries\n"
+msgstr "Informácie k inštalácii knižníc, pozri: http://www.energia.nu/en/Guide/Libraries\n"
 
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:118
 #, java-format
@@ -1423,9 +1423,9 @@ msgstr "Nórština Bokmål"
 
 #: ../../../processing/app/Sketch.java:1656
 msgid ""
-"Not enough memory; see http://www.arduino.cc/en/Guide/Troubleshooting#size "
+"Not enough memory; see http://www.energia.nu/en/Guide/Troubleshooting#size "
 "for tips on reducing your footprint."
-msgstr "Málo pämete; pozri http://www.arduino.cc/en/Guide/Troubleshooting#size pre tipy ako redukovať veľkosť kódu."
+msgstr "Málo pämete; pozri http://www.energia.nu/en/Guide/Troubleshooting#size pre tipy ako redukovať veľkosť kódu."
 
 #: Preferences.java:80 Sketch.java:585 Sketch.java:737 Sketch.java:1042
 #: Editor.java:2145 Editor.java:2465
@@ -1598,8 +1598,8 @@ msgstr "Problém s prístupom do dátového adresára"
 #: debug/Uploader.java:209
 msgid ""
 "Problem uploading to board.  See "
-"http://www.arduino.cc/en/Guide/Troubleshooting#upload for suggestions."
-msgstr "Problém s prenosom dat na vývojovú dosku (board). Na http://www.arduino.cc/en/Guide/Troubleshooting#upload nájdete návrhy na riešenie."
+"http://www.energia.nu/en/Guide/Troubleshooting#upload for suggestions."
+msgstr "Problém s prenosom dat na vývojovú dosku (board). Na http://www.energia.nu/en/Guide/Troubleshooting#upload nájdete návrhy na riešenie."
 
 #: Sketch.java:355 Sketch.java:362 Sketch.java:373
 msgid "Problem with rename"
@@ -1859,9 +1859,9 @@ msgstr "Projekt je len na čítanie"
 
 #: Sketch.java:1653
 msgid ""
-"Sketch too big; see http://www.arduino.cc/en/Guide/Troubleshooting#size for "
+"Sketch too big; see http://www.energia.nu/en/Guide/Troubleshooting#size for "
 "tips on reducing it."
-msgstr "Projekt je veľmi veľký; see http://www.arduino.cc/en/Guide/Troubleshooting#size pre tipy ako redukovať veľkosť kódu."
+msgstr "Projekt je veľmi veľký; see http://www.energia.nu/en/Guide/Troubleshooting#size pre tipy ako redukovať veľkosť kódu."
 
 #: ../../../processing/app/Sketch.java:1639
 #, java-format
@@ -2537,16 +2537,16 @@ msgid "createNewFile() returned false"
 msgstr "createNewFile() vrátil false"
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
-msgid "http://www.arduino.cc/"
-msgstr "http://www.arduino.cc/"
+msgid "http://www.energia.nu/"
+msgstr "http://www.energia.nu/"
 
 #: UpdateCheck.java:118
-msgid "http://www.arduino.cc/en/Main/Software"
-msgstr "http://www.arduino.cc/en/Main/Software"
+msgid "http://www.energia.nu/en/Main/Software"
+msgstr "http://www.energia.nu/en/Main/Software"
 
 #: UpdateCheck.java:53
-msgid "http://www.arduino.cc/latest.txt"
-msgstr "http://www.arduino.cc/latest.txt"
+msgid "http://www.energia.nu/latest.txt"
+msgstr "http://www.energia.nu/latest.txt"
 
 #: Preferences.java:625
 #, java-format

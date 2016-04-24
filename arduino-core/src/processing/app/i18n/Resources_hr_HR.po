@@ -1020,7 +1020,7 @@ msgstr "Popravi enkoding i Ponovno učitaj"
 #: ../../../processing/app/BaseNoGui.java:318
 msgid ""
 "For information on installing libraries, see: "
-"http://www.arduino.cc/en/Guide/Libraries\n"
+"http://www.energia.nu/en/Guide/Libraries\n"
 msgstr ""
 
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:118
@@ -1425,9 +1425,9 @@ msgstr "Norwegian Bokmål"
 
 #: ../../../processing/app/Sketch.java:1656
 msgid ""
-"Not enough memory; see http://www.arduino.cc/en/Guide/Troubleshooting#size "
+"Not enough memory; see http://www.energia.nu/en/Guide/Troubleshooting#size "
 "for tips on reducing your footprint."
-msgstr "Nema dovoljno memorije; vidi http://www.arduino.cc/en/Guide/Troubleshooting#size za savjete kako smanjiti program."
+msgstr "Nema dovoljno memorije; vidi http://www.energia.nu/en/Guide/Troubleshooting#size za savjete kako smanjiti program."
 
 #: Preferences.java:80 Sketch.java:585 Sketch.java:737 Sketch.java:1042
 #: Editor.java:2145 Editor.java:2465
@@ -1600,8 +1600,8 @@ msgstr "Problem pri dohvatu mape s podacima."
 #: debug/Uploader.java:209
 msgid ""
 "Problem uploading to board.  See "
-"http://www.arduino.cc/en/Guide/Troubleshooting#upload for suggestions."
-msgstr "Problem prijenosa na pločicu. vidi http://www.arduino.cc/en/Guide/Troubleshooting#upload za sugestije."
+"http://www.energia.nu/en/Guide/Troubleshooting#upload for suggestions."
+msgstr "Problem prijenosa na pločicu. vidi http://www.energia.nu/en/Guide/Troubleshooting#upload za sugestije."
 
 #: Sketch.java:355 Sketch.java:362 Sketch.java:373
 msgid "Problem with rename"
@@ -1861,9 +1861,9 @@ msgstr "Skicu je moguće samo čitati."
 
 #: Sketch.java:1653
 msgid ""
-"Sketch too big; see http://www.arduino.cc/en/Guide/Troubleshooting#size for "
+"Sketch too big; see http://www.energia.nu/en/Guide/Troubleshooting#size for "
 "tips on reducing it."
-msgstr "Skica je prevelika: vidi http://www.arduino.cc/en/Guide/Troubleshooting#size za ideje kako ju smanjiti."
+msgstr "Skica je prevelika: vidi http://www.energia.nu/en/Guide/Troubleshooting#size za ideje kako ju smanjiti."
 
 #: ../../../processing/app/Sketch.java:1639
 #, java-format
@@ -2539,16 +2539,16 @@ msgid "createNewFile() returned false"
 msgstr "createNewFile() vratio je false"
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
-msgid "http://www.arduino.cc/"
+msgid "http://www.energia.nu/"
 msgstr ""
 
 #: UpdateCheck.java:118
-msgid "http://www.arduino.cc/en/Main/Software"
-msgstr "http://www.arduino.cc/en/Main/Software"
+msgid "http://www.energia.nu/en/Main/Software"
+msgstr "http://www.energia.nu/en/Main/Software"
 
 #: UpdateCheck.java:53
-msgid "http://www.arduino.cc/latest.txt"
-msgstr "http://www.arduino.cc/latest.txt"
+msgid "http://www.energia.nu/latest.txt"
+msgstr "http://www.energia.nu/latest.txt"
 
 #: Preferences.java:625
 #, java-format

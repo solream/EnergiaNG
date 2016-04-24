@@ -71,7 +71,7 @@ public class Platform extends processing.app.Platform {
     FolderFinderInWindowsRegistry findInShellFolders = new FolderFinderInWindowsRegistry(findInUserShellFolders, "Documents", "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Personal");
 
     Path path = findInShellFolders.find();
-    this.defaultSketchbookFolder = path.resolve("Arduino").toFile();
+    this.defaultSketchbookFolder = path.resolve("Energia").toFile();
   }
 
   /**

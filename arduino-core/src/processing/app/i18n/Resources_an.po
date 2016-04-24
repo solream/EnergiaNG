@@ -1018,7 +1018,7 @@ msgstr "Reparar codificación y recargar"
 #: ../../../processing/app/BaseNoGui.java:318
 msgid ""
 "For information on installing libraries, see: "
-"http://www.arduino.cc/en/Guide/Libraries\n"
+"http://www.energia.nu/en/Guide/Libraries\n"
 msgstr ""
 
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:118
@@ -1423,9 +1423,9 @@ msgstr "Noruego"
 
 #: ../../../processing/app/Sketch.java:1656
 msgid ""
-"Not enough memory; see http://www.arduino.cc/en/Guide/Troubleshooting#size "
+"Not enough memory; see http://www.energia.nu/en/Guide/Troubleshooting#size "
 "for tips on reducing your footprint."
-msgstr "No i hai suficient memoria, veyer http://www.arduino.cc/en/guide/troubleshooting#size ta obtener consellos sobre cómo reducir o suyo sinyal."
+msgstr "No i hai suficient memoria, veyer http://www.energia.nu/en/guide/troubleshooting#size ta obtener consellos sobre cómo reducir o suyo sinyal."
 
 #: Preferences.java:80 Sketch.java:585 Sketch.java:737 Sketch.java:1042
 #: Editor.java:2145 Editor.java:2465
@@ -1598,8 +1598,8 @@ msgstr "Problema en adquirir carpeta de datos"
 #: debug/Uploader.java:209
 msgid ""
 "Problem uploading to board.  See "
-"http://www.arduino.cc/en/Guide/Troubleshooting#upload for suggestions."
-msgstr "Problema puyando a la placa. Visita http://www.arduino.cc/en/guide/troubleshooting#upload ta sucherencias."
+"http://www.energia.nu/en/Guide/Troubleshooting#upload for suggestions."
+msgstr "Problema puyando a la placa. Visita http://www.energia.nu/en/guide/troubleshooting#upload ta sucherencias."
 
 #: Sketch.java:355 Sketch.java:362 Sketch.java:373
 msgid "Problem with rename"
@@ -1859,9 +1859,9 @@ msgstr "O programa ye Solament Lectura"
 
 #: Sketch.java:1653
 msgid ""
-"Sketch too big; see http://www.arduino.cc/en/Guide/Troubleshooting#size for "
+"Sketch too big; see http://www.energia.nu/en/Guide/Troubleshooting#size for "
 "tips on reducing it."
-msgstr "Programa muit gran: visite http://www.arduino.cc/en/guide/troubleshooting#size ta veyer cómo reducir-lo."
+msgstr "Programa muit gran: visite http://www.energia.nu/en/guide/troubleshooting#size ta veyer cómo reducir-lo."
 
 #: ../../../processing/app/Sketch.java:1639
 #, java-format
@@ -2537,16 +2537,16 @@ msgid "createNewFile() returned false"
 msgstr "createNewFile() retornó FALSO."
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
-msgid "http://www.arduino.cc/"
+msgid "http://www.energia.nu/"
 msgstr ""
 
 #: UpdateCheck.java:118
-msgid "http://www.arduino.cc/en/Main/Software"
-msgstr "http://www.arduino.cc/en/main/software"
+msgid "http://www.energia.nu/en/Main/Software"
+msgstr "http://www.energia.nu/en/main/software"
 
 #: UpdateCheck.java:53
-msgid "http://www.arduino.cc/latest.txt"
-msgstr "http://www.arduino.cc/latest.txt"
+msgid "http://www.energia.nu/latest.txt"
+msgstr "http://www.energia.nu/latest.txt"
 
 #: Preferences.java:625
 #, java-format

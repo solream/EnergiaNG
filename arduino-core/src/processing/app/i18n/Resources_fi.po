@@ -1019,7 +1019,7 @@ msgstr "Korjaa koodaus ja avaa uudelleen"
 #: ../../../processing/app/BaseNoGui.java:318
 msgid ""
 "For information on installing libraries, see: "
-"http://www.arduino.cc/en/Guide/Libraries\n"
+"http://www.energia.nu/en/Guide/Libraries\n"
 msgstr ""
 
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:118
@@ -1424,9 +1424,9 @@ msgstr "Norjan bokmäl"
 
 #: ../../../processing/app/Sketch.java:1656
 msgid ""
-"Not enough memory; see http://www.arduino.cc/en/Guide/Troubleshooting#size "
+"Not enough memory; see http://www.energia.nu/en/Guide/Troubleshooting#size "
 "for tips on reducing your footprint."
-msgstr "Ei tarpeeksi muistia; katso http://www.arduino.cc/en/Guide/Troubleshooting#size vinkeiksi muistimäärän vapauttamiseksi."
+msgstr "Ei tarpeeksi muistia; katso http://www.energia.nu/en/Guide/Troubleshooting#size vinkeiksi muistimäärän vapauttamiseksi."
 
 #: Preferences.java:80 Sketch.java:585 Sketch.java:737 Sketch.java:1042
 #: Editor.java:2145 Editor.java:2465
@@ -1599,8 +1599,8 @@ msgstr "Datakansiota haettaessa tapahtui ongelma."
 #: debug/Uploader.java:209
 msgid ""
 "Problem uploading to board.  See "
-"http://www.arduino.cc/en/Guide/Troubleshooting#upload for suggestions."
-msgstr "Ongelma lähetettäessä levylle. Katsohttp://www.arduino.cc/en/Guide/Troubleshooting#upload ratkaisuiksi."
+"http://www.energia.nu/en/Guide/Troubleshooting#upload for suggestions."
+msgstr "Ongelma lähetettäessä levylle. Katsohttp://www.energia.nu/en/Guide/Troubleshooting#upload ratkaisuiksi."
 
 #: Sketch.java:355 Sketch.java:362 Sketch.java:373
 msgid "Problem with rename"
@@ -1860,9 +1860,9 @@ msgstr "Sketsi on vain luku"
 
 #: Sketch.java:1653
 msgid ""
-"Sketch too big; see http://www.arduino.cc/en/Guide/Troubleshooting#size for "
+"Sketch too big; see http://www.energia.nu/en/Guide/Troubleshooting#size for "
 "tips on reducing it."
-msgstr "Sketsi liian iso - katso pienennysohjeita http://www.arduino.cc/en/Guide/Troubleshooting#size"
+msgstr "Sketsi liian iso - katso pienennysohjeita http://www.energia.nu/en/Guide/Troubleshooting#size"
 
 #: ../../../processing/app/Sketch.java:1639
 #, java-format
@@ -2538,16 +2538,16 @@ msgid "createNewFile() returned false"
 msgstr "createNewFile() palautti epätoden"
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
-msgid "http://www.arduino.cc/"
+msgid "http://www.energia.nu/"
 msgstr ""
 
 #: UpdateCheck.java:118
-msgid "http://www.arduino.cc/en/Main/Software"
-msgstr "http://www.arduino.cc/en/Main/Software"
+msgid "http://www.energia.nu/en/Main/Software"
+msgstr "http://www.energia.nu/en/Main/Software"
 
 #: UpdateCheck.java:53
-msgid "http://www.arduino.cc/latest.txt"
-msgstr "http://www.arduino.cc/latest.txt"
+msgid "http://www.energia.nu/latest.txt"
+msgstr "http://www.energia.nu/latest.txt"
 
 #: Preferences.java:625
 #, java-format

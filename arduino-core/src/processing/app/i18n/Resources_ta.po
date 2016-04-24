@@ -1019,7 +1019,7 @@ msgstr "குறியீட்டை சரி செய்துவிட்�
 #: ../../../processing/app/BaseNoGui.java:318
 msgid ""
 "For information on installing libraries, see: "
-"http://www.arduino.cc/en/Guide/Libraries\n"
+"http://www.energia.nu/en/Guide/Libraries\n"
 msgstr ""
 
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:118
@@ -1424,7 +1424,7 @@ msgstr ""
 
 #: ../../../processing/app/Sketch.java:1656
 msgid ""
-"Not enough memory; see http://www.arduino.cc/en/Guide/Troubleshooting#size "
+"Not enough memory; see http://www.energia.nu/en/Guide/Troubleshooting#size "
 "for tips on reducing your footprint."
 msgstr ""
 
@@ -1599,8 +1599,8 @@ msgstr "தரவு கோப்புறையை பெறுவதில�
 #: debug/Uploader.java:209
 msgid ""
 "Problem uploading to board.  See "
-"http://www.arduino.cc/en/Guide/Troubleshooting#upload for suggestions."
-msgstr "பலகைக்கு பதிவேற்றம் செய்வதில் பிரச்சனை எழுந்துள்ளது. http://www.arduino.cc/en/Guide/Troubleshooting#upload ஐ பரிந்துரைகளுக்கு பார்க்கவும்."
+"http://www.energia.nu/en/Guide/Troubleshooting#upload for suggestions."
+msgstr "பலகைக்கு பதிவேற்றம் செய்வதில் பிரச்சனை எழுந்துள்ளது. http://www.energia.nu/en/Guide/Troubleshooting#upload ஐ பரிந்துரைகளுக்கு பார்க்கவும்."
 
 #: Sketch.java:355 Sketch.java:362 Sketch.java:373
 msgid "Problem with rename"
@@ -1860,9 +1860,9 @@ msgstr "வரைவை வாசிக்க மட்டுமே முடி
 
 #: Sketch.java:1653
 msgid ""
-"Sketch too big; see http://www.arduino.cc/en/Guide/Troubleshooting#size for "
+"Sketch too big; see http://www.energia.nu/en/Guide/Troubleshooting#size for "
 "tips on reducing it."
-msgstr "வரைவின் பெரியதாக உள்ளது; அதை குறைப்பது பற்றிய வழிமுறைகளுக்கு,\nhttp://www.arduino.cc/en/Guide/Troubleshooting#size ஐ பார்க்கவும்."
+msgstr "வரைவின் பெரியதாக உள்ளது; அதை குறைப்பது பற்றிய வழிமுறைகளுக்கு,\nhttp://www.energia.nu/en/Guide/Troubleshooting#size ஐ பார்க்கவும்."
 
 #: ../../../processing/app/Sketch.java:1639
 #, java-format
@@ -2538,16 +2538,16 @@ msgid "createNewFile() returned false"
 msgstr "createNewFile() தவறென கூறுகிறது"
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
-msgid "http://www.arduino.cc/"
+msgid "http://www.energia.nu/"
 msgstr ""
 
 #: UpdateCheck.java:118
-msgid "http://www.arduino.cc/en/Main/Software"
-msgstr "http://www.arduino.cc/en/Main/Software"
+msgid "http://www.energia.nu/en/Main/Software"
+msgstr "http://www.energia.nu/en/Main/Software"
 
 #: UpdateCheck.java:53
-msgid "http://www.arduino.cc/latest.txt"
-msgstr "http://www.arduino.cc/latest.txt"
+msgid "http://www.energia.nu/latest.txt"
+msgstr "http://www.energia.nu/latest.txt"
 
 #: Preferences.java:625
 #, java-format

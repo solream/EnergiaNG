@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class I18n {
 
   static {
-    tr("Arduino");
+    tr("Energia");
     tr("Partner");
     tr("Recommended");
     tr("Contributed");

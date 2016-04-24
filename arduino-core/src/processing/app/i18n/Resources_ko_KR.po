@@ -1022,8 +1022,8 @@ msgstr "인코딩 수정 & 새로 고침"
 #: ../../../processing/app/BaseNoGui.java:318
 msgid ""
 "For information on installing libraries, see: "
-"http://www.arduino.cc/en/Guide/Libraries\n"
-msgstr "라이브러리 설치에 대한 정보는 다음을 참고하세요: http://www.arduino.cc/en/Guide/Libraries\n"
+"http://www.energia.nu/en/Guide/Libraries\n"
+msgstr "라이브러리 설치에 대한 정보는 다음을 참고하세요: http://www.energia.nu/en/Guide/Libraries\n"
 
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:118
 #, java-format
@@ -1427,9 +1427,9 @@ msgstr "노르웨이 브크몰어"
 
 #: ../../../processing/app/Sketch.java:1656
 msgid ""
-"Not enough memory; see http://www.arduino.cc/en/Guide/Troubleshooting#size "
+"Not enough memory; see http://www.energia.nu/en/Guide/Troubleshooting#size "
 "for tips on reducing your footprint."
-msgstr "메모리가 충분하지 않음; 메모리를 줄이기 위한 팁을 위해 다음 링크를 참고하세요http://www.arduino.cc/en/Guide/Troubleshooting#size"
+msgstr "메모리가 충분하지 않음; 메모리를 줄이기 위한 팁을 위해 다음 링크를 참고하세요http://www.energia.nu/en/Guide/Troubleshooting#size"
 
 #: Preferences.java:80 Sketch.java:585 Sketch.java:737 Sketch.java:1042
 #: Editor.java:2145 Editor.java:2465
@@ -1602,8 +1602,8 @@ msgstr "데이터 폴더를 가져오는데 문제 발생"
 #: debug/Uploader.java:209
 msgid ""
 "Problem uploading to board.  See "
-"http://www.arduino.cc/en/Guide/Troubleshooting#upload for suggestions."
-msgstr "보드에 업로딩중에 문제 발생. 다음을  참고하세요. http://www.arduino.cc/en/Guide/Troubleshooting#upload"
+"http://www.energia.nu/en/Guide/Troubleshooting#upload for suggestions."
+msgstr "보드에 업로딩중에 문제 발생. 다음을  참고하세요. http://www.energia.nu/en/Guide/Troubleshooting#upload"
 
 #: Sketch.java:355 Sketch.java:362 Sketch.java:373
 msgid "Problem with rename"
@@ -1863,9 +1863,9 @@ msgstr "스케치는 읽기전용입니다"
 
 #: Sketch.java:1653
 msgid ""
-"Sketch too big; see http://www.arduino.cc/en/Guide/Troubleshooting#size for "
+"Sketch too big; see http://www.energia.nu/en/Guide/Troubleshooting#size for "
 "tips on reducing it."
-msgstr "스케치가 너무 큼; 이것을 줄이기 위해 다음을 참고하세요. http://www.arduino.cc/en/Guide/Troubleshooting#size"
+msgstr "스케치가 너무 큼; 이것을 줄이기 위해 다음을 참고하세요. http://www.energia.nu/en/Guide/Troubleshooting#size"
 
 #: ../../../processing/app/Sketch.java:1639
 #, java-format
@@ -2541,16 +2541,16 @@ msgid "createNewFile() returned false"
 msgstr "createNewFile()가 false를 반환했습니다"
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
-msgid "http://www.arduino.cc/"
-msgstr "http://www.arduino.cc/"
+msgid "http://www.energia.nu/"
+msgstr "http://www.energia.nu/"
 
 #: UpdateCheck.java:118
-msgid "http://www.arduino.cc/en/Main/Software"
-msgstr "http://www.arduino.cc/en/Main/Software"
+msgid "http://www.energia.nu/en/Main/Software"
+msgstr "http://www.energia.nu/en/Main/Software"
 
 #: UpdateCheck.java:53
-msgid "http://www.arduino.cc/latest.txt"
-msgstr "http://www.arduino.cc/latest.txt"
+msgid "http://www.energia.nu/latest.txt"
+msgstr "http://www.energia.nu/latest.txt"
 
 #: Preferences.java:625
 #, java-format

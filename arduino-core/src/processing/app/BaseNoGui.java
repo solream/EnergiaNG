@@ -251,7 +251,7 @@ public class BaseNoGui {
         settingsFolder = getPlatform().getSettingsFolder();
       } catch (Exception e) {
         showError(tr("Problem getting data folder"),
-                  tr("Error getting the Arduino data folder."), e);
+                  tr("Error getting the Energa data folder."), e);
       }
     }
 
@@ -259,7 +259,7 @@ public class BaseNoGui {
     if (!settingsFolder.exists()) {
       if (!settingsFolder.mkdirs()) {
         showError(tr("Settings issues"),
-                tr("Arduino cannot run because it could not\n" +
+                tr("Energia cannot run because it could not\n" +
                         "create a folder to store your settings."), null);
       }
     }
@@ -311,9 +311,9 @@ public class BaseNoGui {
       if (!sketchbookFolder.exists()) {
         showWarning(tr("Sketchbook folder disappeared"),
                     tr("The sketchbook folder no longer exists.\n" +
-                      "Arduino will switch to the default sketchbook\n" +
+                      "Energia will switch to the default sketchbook\n" +
                       "location, and create a new sketchbook folder if\n" +
-                      "necessary. Arduino will then stop talking about\n" +
+                      "necessary. Energia will then stop talking about\n" +
                       "himself in the third person."), null);
         sketchbookPath = null;
       }

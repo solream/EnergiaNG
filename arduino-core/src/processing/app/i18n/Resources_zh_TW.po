@@ -1025,8 +1025,8 @@ msgstr "修正編碼並重新載入"
 #: ../../../processing/app/BaseNoGui.java:318
 msgid ""
 "For information on installing libraries, see: "
-"http://www.arduino.cc/en/Guide/Libraries\n"
-msgstr "關於如何安裝程式庫，詳情請見http://www.arduino.cc/en/Guide/Libraries\n"
+"http://www.energia.nu/en/Guide/Libraries\n"
+msgstr "關於如何安裝程式庫，詳情請見http://www.energia.nu/en/Guide/Libraries\n"
 
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:118
 #, java-format
@@ -1430,9 +1430,9 @@ msgstr "巴克摩挪威語"
 
 #: ../../../processing/app/Sketch.java:1656
 msgid ""
-"Not enough memory; see http://www.arduino.cc/en/Guide/Troubleshooting#size "
+"Not enough memory; see http://www.energia.nu/en/Guide/Troubleshooting#size "
 "for tips on reducing your footprint."
-msgstr "記憶體不足；請見http://www.arduino.cc/en/Guide/Troubleshooting#size得知如何降低用量的技巧？"
+msgstr "記憶體不足；請見http://www.energia.nu/en/Guide/Troubleshooting#size得知如何降低用量的技巧？"
 
 #: Preferences.java:80 Sketch.java:585 Sketch.java:737 Sketch.java:1042
 #: Editor.java:2145 Editor.java:2465
@@ -1605,8 +1605,8 @@ msgstr "取得資料目錄時發生問題"
 #: debug/Uploader.java:209
 msgid ""
 "Problem uploading to board.  See "
-"http://www.arduino.cc/en/Guide/Troubleshooting#upload for suggestions."
-msgstr "上傳到板子時發生問題。可行建議請見http://www.arduino.cc/en/Guide/Troubleshooting#upload。"
+"http://www.energia.nu/en/Guide/Troubleshooting#upload for suggestions."
+msgstr "上傳到板子時發生問題。可行建議請見http://www.energia.nu/en/Guide/Troubleshooting#upload。"
 
 #: Sketch.java:355 Sketch.java:362 Sketch.java:373
 msgid "Problem with rename"
@@ -1866,9 +1866,9 @@ msgstr "草稿碼是唯讀狀態"
 
 #: Sketch.java:1653
 msgid ""
-"Sketch too big; see http://www.arduino.cc/en/Guide/Troubleshooting#size for "
+"Sketch too big; see http://www.energia.nu/en/Guide/Troubleshooting#size for "
 "tips on reducing it."
-msgstr "草稿碼太大；請見http://www.arduino.cc/en/Guide/Troubleshooting#size得知縮減大小的技巧"
+msgstr "草稿碼太大；請見http://www.energia.nu/en/Guide/Troubleshooting#size得知縮減大小的技巧"
 
 #: ../../../processing/app/Sketch.java:1639
 #, java-format
@@ -2544,16 +2544,16 @@ msgid "createNewFile() returned false"
 msgstr "createNewFile()回傳false"
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
-msgid "http://www.arduino.cc/"
-msgstr "http://www.arduino.cc/"
+msgid "http://www.energia.nu/"
+msgstr "http://www.energia.nu/"
 
 #: UpdateCheck.java:118
-msgid "http://www.arduino.cc/en/Main/Software"
-msgstr "http://www.arduino.cc/en/Main/Software"
+msgid "http://www.energia.nu/en/Main/Software"
+msgstr "http://www.energia.nu/en/Main/Software"
 
 #: UpdateCheck.java:53
-msgid "http://www.arduino.cc/latest.txt"
-msgstr "http://www.arduino.cc/latest.txt"
+msgid "http://www.energia.nu/latest.txt"
+msgstr "http://www.energia.nu/latest.txt"
 
 #: Preferences.java:625
 #, java-format
