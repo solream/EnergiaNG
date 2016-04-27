@@ -1944,7 +1944,7 @@ public class Base {
 
 
   static public void showReference(String filename) {
-    showReference("reference/www.arduino.cc/en", filename);
+    showReference("reference/www.energia.nu/en", filename);
   }
 
   static public void showReference(String prefix, String filename) {
