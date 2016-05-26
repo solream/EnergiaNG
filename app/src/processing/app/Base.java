@@ -1755,7 +1755,7 @@ public class Base {
         Font f = new Font("SansSerif", Font.PLAIN, Theme.scale(11));
         g.setFont(f);
         g.setColor(new Color(0,151,156));
-        g.drawString(BaseNoGui.VERSION_NAME_LONG, Theme.scale(33), Theme.scale(20));
+        g.drawString(BaseNoGui.VERSION_NAME_LONG + "E" + BaseNoGui.EVERSION_NAME_LONG, Theme.scale(33), Theme.scale(20));
       }
     };
     window.addMouseListener(new MouseAdapter() {

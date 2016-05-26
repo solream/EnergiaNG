@@ -80,9 +80,9 @@ public class Constants {
     if (externalLibraryIndexUrl != null && !"".equals(externalLibraryIndexUrl)) {
       LIBRARY_INDEX_URL = externalLibraryIndexUrl;
     } else {
-      LIBRARY_INDEX_URL = "http://downloads.arduino.cc/libraries/library_index.json";
+      LIBRARY_INDEX_URL = "http://www.energia.nu/libraries/library_index.json";
     }
-    LIBRARY_INDEX_URL_GZ = "http://downloads.arduino.cc/libraries/library_index.json.gz";
+    LIBRARY_INDEX_URL_GZ = "http://www.energia.nu/libraries/library_index.json.gz";
   }
 
 }

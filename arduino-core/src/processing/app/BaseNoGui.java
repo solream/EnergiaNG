@@ -44,7 +44,9 @@ public class BaseNoGui {
   public static final int REVISION = 10610;
   /** Extended version string displayed on GUI */
   public static final String VERSION_NAME = "1.6.10";
+  public static final String EVERSION_NAME = "18";
   public static final String VERSION_NAME_LONG;
+  public static final String EVERSION_NAME_LONG;
 
   // Current directory to use for relative paths specified on the
   // commandline
@@ -52,6 +54,7 @@ public class BaseNoGui {
 
   static {
     String versionNameLong = VERSION_NAME;
+    String eversionNameLong = EVERSION_NAME;
     File hourlyBuildTxt = new File(getContentFile("lib"), "hourlyBuild.txt");
     if (hourlyBuildTxt.exists() && hourlyBuildTxt.canRead()) {
       versionNameLong += " Hourly Build";
@@ -62,6 +65,7 @@ public class BaseNoGui {
       }
     }
     VERSION_NAME_LONG = versionNameLong;
+    EVERSION_NAME_LONG = eversionNameLong;
   }
 
   private static DiscoveryManager discoveryManager = new DiscoveryManager();

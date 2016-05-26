@@ -2223,9 +2223,9 @@ public class Editor extends JFrame implements RunnerListener {
       return;
     }
     if (sketch.getName().equals(sketch.getCurrentCode().getPrettyName())) {
-      setTitle(I18n.format(tr("{0} | Energia {1}"), sketch.getName(), BaseNoGui.VERSION_NAME_LONG));
+      setTitle(I18n.format(tr("{0} | Energia {1}"), sketch.getName(), BaseNoGui.VERSION_NAME_LONG + "E" + BaseNoGui.EVERSION_NAME_LONG));
     } else {
-      setTitle(I18n.format(tr("{0} - {1} | Energia {2}"), sketch.getName(), sketch.getCurrentCode().getFileName(), BaseNoGui.VERSION_NAME_LONG));
+      setTitle(I18n.format(tr("{0} - {1} | Energia {2}"), sketch.getName(), sketch.getCurrentCode().getFileName(), BaseNoGui.VERSION_NAME_LONG + "E" + BaseNoGui.EVERSION_NAME_LONG));
     }
   }
 
