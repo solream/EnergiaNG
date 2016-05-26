@@ -1915,7 +1915,7 @@ public class Base {
 
     List<Image> icons = Stream
       .of("16", "24", "32", "48", "64", "72", "96", "128", "256")
-      .map(res -> "/lib/icons/" + res + "x" + res + "/apps/arduino.png")
+      .map(res -> "/lib/icons/" + res + "x" + res + "/apps/energia.png")
       .map(path -> BaseNoGui.getContentFile(path).getAbsolutePath())
       .map(absPath -> Toolkit.getDefaultToolkit().createImage(absPath))
       .collect(Collectors.toList());
