@@ -654,8 +654,8 @@
     <delete dir="${staging_folder}/arduino-builder-linux64" includeemptydirs="true"/>
     <mkdir dir="${staging_folder}/arduino-builder-linux64"/>
     <antcall target="untar">
-      <param name="archive_file" value="./arduino-builder-linux64-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
-      <param name="archive_url" value="http://downloads.arduino.cc/tools/arduino-builder-linux64-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
+      <param name="archive_file" value="./energia-builder-linux64-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
+      <param name="archive_url" value="http://energia.nu/tools/energia-builder-linux64-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
       <param name="final_folder" value="${staging_folder}/arduino-builder-linux64/arduino-builder" />
       <param name="dest_folder" value="${staging_folder}/arduino-builder-linux64" />
     </antcall>
