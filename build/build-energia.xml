@@ -587,10 +587,12 @@
         <fileset dir="linux/work" includes="energia" />
         <fileset dir="linux/work" includes="**/*.sh" />
     </chmod>
+  </target>
 
+  <target name="linux-libastyle-x86" depends="linux-build" description="Download libastyle.so for x86/x64 arch">
     <antcall target="unzip">
-      <param name="archive_file" value="./libastylej-2.05.1.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/libastylej-2.05.1.zip" />
+      <param name="archive_file" value="./libastylej-2.05.1-3.zip" />
+      <param name="archive_url" value="http://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
       <param name="final_folder" value="${staging_folder}/libastylej-2.05.1" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
@@ -612,7 +614,7 @@
 
   </target>
 
-  <target name="linux32-build" depends="linux-build" description="Build linux (32-bit) version">
+  <target name="linux32-build" depends="linux-libastyle-x86" description="Build linux (32-bit) version">
     <antcall target="linux-jvm-${linux-bundle-jvm-task}">
       <param name="JVM" value="${LINUX32_BUNDLED_JVM}"/>
     </antcall>
@@ -644,7 +646,7 @@
     <antcall target="package-library-index-json-bundle"/>
   </target>
 
-  <target name="linux64-build" depends="linux-build" description="Build linux (64-bit) version">
+  <target name="linux64-build" depends="linux-libastyle-x86" description="Build linux (64-bit) version">
     <antcall target="linux-jvm-${linux-bundle-jvm-task}">
       <param name="JVM" value="${LINUX64_BUNDLED_JVM}"/>
     </antcall>
@@ -861,8 +863,8 @@
     <antcall target="windows-build-avr-toolchain" />
 
     <antcall target="unzip">
-      <param name="archive_file" value="./libastylej-2.05.1.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/libastylej-2.05.1.zip" />
+      <param name="archive_file" value="./libastylej-2.05.1-3.zip" />
+      <param name="archive_url" value="http://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
       <param name="final_folder" value="${staging_folder}/libastylej-2.05.1" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
