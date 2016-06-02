@@ -1029,13 +1029,8 @@ msgstr "Corrigir Codificação & Recarregar"
 #: ../../../processing/app/BaseNoGui.java:318
 msgid ""
 "For information on installing libraries, see: "
-<<<<<<< HEAD
 "http://www.energia.nu/en/Guide/Libraries\n"
 msgstr ""
-=======
-"http://www.arduino.cc/en/Guide/Libraries\n"
-msgstr "Para informação sobre a instalação de bibliotecas, veja: http://www.arduino.cc/en/Guide/Libraries\n"
->>>>>>> upstream/master
 
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:118
 #, java-format
@@ -2318,7 +2313,7 @@ msgid "Vietnamese"
 msgstr "Vietnamita"
 
 #: Editor.java:1105
-msgid "Visit Arduino.cc"
+msgid "Visit Energia.nu"
 msgstr "Visitar Arduino.cc"
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:90
@@ -2553,13 +2548,8 @@ msgid "createNewFile() returned false"
 msgstr "createNewFile() devolveu falso"
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
-<<<<<<< HEAD
 msgid "http://www.energia.nu/"
-msgstr ""
-=======
-msgid "http://www.arduino.cc/"
-msgstr "http://www.arduino.cc/"
->>>>>>> upstream/master
+msgstr "http://www.energia.nu/"
 
 #: UpdateCheck.java:118
 msgid "http://www.energia.nu/en/Main/Software"

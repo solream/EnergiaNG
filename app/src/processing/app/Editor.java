@@ -814,9 +814,9 @@ public class Editor extends JFrame implements RunnerListener {
       portMenu = new JMenu(tr("Port"));
     populatePortMenu();
     toolsMenu.add(portMenu);
-    item = new JMenuItem(tr("Get Board Info"));
-    item.addActionListener(e -> handleBoardInfo());
-    toolsMenu.add(item);
+//    item = new JMenuItem(tr("Get Board Info"));
+//    item.addActionListener(e -> handleBoardInfo());
+//    toolsMenu.add(item);
     toolsMenu.addSeparator();
 
     base.rebuildProgrammerMenu();
@@ -824,9 +824,9 @@ public class Editor extends JFrame implements RunnerListener {
     base.getProgrammerMenus().stream().forEach(programmersMenu::add);
     toolsMenu.add(programmersMenu);
 
-    item = new JMenuItem(tr("Burn Bootloader"));
-    item.addActionListener(e -> handleBurnBootloader());
-    toolsMenu.add(item);
+//    item = new JMenuItem(tr("Burn Bootloader"));
+//    item.addActionListener(e -> handleBurnBootloader());
+//    toolsMenu.add(item);
 
     toolsMenu.addMenuListener(new StubMenuListener() {
       public void menuSelected(MenuEvent e) {
@@ -1340,7 +1340,7 @@ public class Editor extends JFrame implements RunnerListener {
     item = new JMenuItem(tr("Visit Energia.nu"));
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          Base.openURL(tr("http://www.energia.nu/"));
+          Base.openURL("http://www.energia.nu/");
         }
       });
     menu.add(item);
@@ -1923,7 +1923,7 @@ public class Editor extends JFrame implements RunnerListener {
       if (referenceFile.startsWith("Serial_")) {
         Base.showReference("Serial/" + referenceFile.substring("Serial_".length()));
       } else {
-        Base.showReference("Reference/" + referenceFile);
+        Base.showReference(referenceFile);
       }
     }
   }

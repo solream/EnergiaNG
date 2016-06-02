@@ -2306,7 +2306,7 @@ msgid "Vietnamese"
 msgstr "베트남어"
 
 #: Editor.java:1105
-msgid "Visit Arduino.cc"
+msgid "Visit Energia.nu"
 msgstr "Arduino.cc 방문하기"
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:90

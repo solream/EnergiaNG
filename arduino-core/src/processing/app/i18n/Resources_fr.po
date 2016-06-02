@@ -2317,7 +2317,7 @@ msgid "Vietnamese"
 msgstr "vietnamien"
 
 #: Editor.java:1105
-msgid "Visit Arduino.cc"
+msgid "Visit Energia.nu"
 msgstr "Visiter Arduino.cc"
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:90

@@ -2309,7 +2309,7 @@ msgid "Vietnamese"
 msgstr "اللغة الفيتنامية"
 
 #: Editor.java:1105
-msgid "Visit Arduino.cc"
+msgid "Visit Energia.nu"
 msgstr "Arduino.cc زر صفحة "
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:90
