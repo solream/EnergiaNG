@@ -953,9 +953,9 @@
     <antcall target="msp430-toolchain-bundle">
       <param name="unpack_target" value="unzip"/>
       <param name="gcc_archive_file" value="msp430-gcc-4.6.3-i686-mingw32.zip"/>
-      <param name="gcc_version" value="4.8.1-arduino5"/>
-      <param name="dslite_archive_file" value="dslite-6.2.0.1624-i686-mingw32.zip"/>
-      <param name="dslite_version" value="6.2.0.1624"/>
+      <param name="gcc_version" value="4.6.3"/>
+      <param name="dslite_archive_file" value="dslite-6.2.1.1594-i686-mingw32.zip"/>
+      <param name="dslite_version" value="6.2.1.1549"/>
     </antcall>
 
     <antcall target="package-library-index-json-bundle"/>
