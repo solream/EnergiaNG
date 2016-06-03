@@ -1755,7 +1755,7 @@ public class Base {
         Font f = new Font("SansSerif", Font.PLAIN, Theme.scale(11));
         g.setFont(f);
         g.setColor(new Color(0,151,156));
-        g.drawString(BaseNoGui.VERSION_NAME_LONG, Theme.scale(33), Theme.scale(20));
+        g.drawString(BaseNoGui.VERSION_NAME_LONG + "E" + BaseNoGui.EVERSION_NAME_LONG, Theme.scale(33), Theme.scale(20));
       }
     };
     window.addMouseListener(new MouseAdapter() {
@@ -1915,7 +1915,7 @@ public class Base {
 
     List<Image> icons = Stream
       .of("16", "24", "32", "48", "64", "72", "96", "128", "256")
-      .map(res -> "/lib/icons/" + res + "x" + res + "/apps/arduino.png")
+      .map(res -> "/lib/icons/" + res + "x" + res + "/apps/energia.png")
       .map(path -> BaseNoGui.getContentFile(path).getAbsolutePath())
       .map(absPath -> Toolkit.getDefaultToolkit().createImage(absPath))
       .collect(Collectors.toList());
@@ -1944,7 +1944,7 @@ public class Base {
 
 
   static public void showReference(String filename) {
-    showReference("reference/www.energia.nu/en", filename);
+    showReference("reference/www.energia.nu", filename);
   }
 
   static public void showReference(String prefix, String filename) {
@@ -1966,31 +1966,31 @@ public class Base {
 
   static public void showArduinoGettingStarted() {
     if (OSUtils.isMacOS()) {
-      showReference("Guide/MacOSX");
+      showReference("Guide_MacOSX");
     } else if (OSUtils.isWindows()) {
-      showReference("Guide/Windows");
+      showReference("Guide_Windows");
     } else {
-      openURL("http://www.arduino.cc/playground/Learning/Linux");
+      showReference("Guide_Linux");
     }
   }
 
   static public void showReference() {
-    showReference("Reference/HomePage");
+    showReference("index.html");
   }
 
 
   static public void showEnvironment() {
-    showReference("Guide/Environment");
+    showReference("Guide_Environment");
   }
 
 
   static public void showTroubleshooting() {
-    showReference("Guide/Troubleshooting");
+    showReference("Guide_Troubleshooting");
   }
 
 
   static public void showFAQ() {
-    showReference("Main/FAQ");
+    showReference("FAQ");
   }
 
 

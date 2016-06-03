@@ -1885,11 +1885,6 @@ msgstr "Sketchbook location:"
 msgid "Sketchbook path not defined"
 msgstr "Sketchbook path not defined"
 
-#: ../../../../../arduino-core/src/cc/arduino/contributions/packages/ContributionsIndexer.java:96
-#, java-format
-msgid "Skipping contributed index file {0}, parsing error occured:"
-msgstr ""
-
 #: ../../../../../app/src/processing/app/Preferences.java:185
 msgid "Slovak"
 msgstr "Slovak"
@@ -2306,8 +2301,8 @@ msgid "Vietnamese"
 msgstr "Vietnamese"
 
 #: Editor.java:1105
-msgid "Visit Arduino.cc"
-msgstr "Visit Arduino.cc"
+msgid "Visit Energia.nu"
+msgstr "Visit Energia.nu"
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:90
 #, java-format

@@ -1,4 +1,10 @@
-ARDUINO 1.6.9
+ARDUINO 1.6.10
+
+[ide]
+[core]
+[libraries]
+
+ARDUINO 1.6.9 - 2016.05.10
 
 [ide]
 * Catch and report errors during parsing contributed index files
@@ -15,6 +21,7 @@ ARDUINO 1.6.9
 * Cut/Copy actions are disable when there is no text selected. Thanks @avargas-nearsoft
 * Added more OSX native (emacs-like) keybindings. Thanks @nopdotcom
 * Fixed Ctrl+Del: now deletes the word behind the cursor instead of the entire line. Thanks @avargas-nearsoft
+* Fixed "Verify code after upload" option in preferences. Thanks @gh-megabit
 
 [core]
 * String class now supports iterators. Thanks @Chris--A
@@ -26,6 +33,8 @@ ARDUINO 1.6.9
   with older version of Arduino IDE. Thanks @per1234
 
 [libraries]
+* Bridge / bridge.py: added support for SSL sockets (Yun firmware >=1.6.2 is
+  needed).
 
 ARDUINO 1.6.8 - 2016.03.09
 
