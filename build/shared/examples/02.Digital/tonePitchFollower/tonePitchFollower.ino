@@ -1,21 +1,21 @@
 /*
   Pitch follower
-
+ 
  Plays a pitch that changes based on a changing analog input
-
+ 
  circuit:
- * 8-ohm speaker on digital pin 9
+ * 8-ohm speaker on digital pin 8
  * photoresistor on analog 0 to 5V
  * 4.7K resistor on analog 0 to ground
-
+ 
  created 21 Jan 2010
- modified 31 May 2012
- by Tom Igoe, with suggestion from Michael Flynn
+ modified 30 Aug 2011
+ by Tom Igoe 
 
 This example code is in the public domain.
-
- http://www.arduino.cc/en/Tutorial/Tone2
-
+ 
+ http://arduino.cc/en/Tutorial/Tone2
+ 
  */
 
 
@@ -29,15 +29,14 @@ void loop() {
   int sensorReading = analogRead(A0);
   // print the sensor reading so you know its range
   Serial.println(sensorReading);
-  // map the analog input range (in this case, 400 - 1000 from the photoresistor)
-  // to the output pitch range (120 - 1500Hz)
+  // map the pitch to the range of the analog input.
   // change the minimum and maximum input numbers below
   // depending on the range your sensor's giving:
-  int thisPitch = map(sensorReading, 400, 1000, 120, 1500);
+  int thisPitch = map(sensorReading, 400, 1000, 100, 1000);
 
   // play the pitch:
   tone(9, thisPitch, 10);
-  delay(1);        // delay in between reads for stability
+
 }
 
 
