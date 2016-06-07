@@ -1,8 +1,8 @@
 <launch4jConfig>
   <dontWrapJar>true</dontWrapJar>
   <headerType>gui</headerType>
-  <outfile>arduino.exe</outfile>
-  <errTitle>Arduino</errTitle>
+  <outfile>energia.exe</outfile>
+  <errTitle>Energia</errTitle>
   <downloadUrl>http://www.oracle.com/technetwork/java/javase/downloads/index.html</downloadUrl>
   <icon>application.ico</icon>
   <classPath>
@@ -65,7 +65,7 @@
     <productName>Arduino</productName>
     <companyName>Arduino LLC</companyName>
     <internalName>arduino</internalName>
-    <originalFilename>arduino.exe</originalFilename>
+    <originalFilename>energia.exe</originalFilename>
   </versionInfo>
   <messages>
     <startupErr>An error occurred while starting the application.</startupErr>
