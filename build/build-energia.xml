@@ -887,8 +887,8 @@
     <delete dir="${staging_folder}/arduino-builder-windows" includeemptydirs="true"/>
     <mkdir dir="${staging_folder}/arduino-builder-windows"/>
     <antcall target="unzip-with-ant-task">
-      <param name="archive_file" value="./arduino-builder-windows-${ARDUINO-BUILDER-VERSION}.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/tools/arduino-builder-windows-${ARDUINO-BUILDER-VERSION}.zip" />
+      <param name="archive_file" value="./energia-builder-windows-${ARDUINO-BUILDER-VERSION}.zip" />
+      <param name="archive_url" value="http://energia.nu/tools/energia-builder-windows-${ARDUINO-BUILDER-VERSION}.zip" />
       <param name="final_folder" value="${staging_folder}/arduino-builder-windows/arduino-builder.exe" />
       <param name="dest_folder" value="${staging_folder}/arduino-builder-windows" />
     </antcall>
@@ -915,12 +915,12 @@
 
     <copy todir="windows/work">
       <fileset dir="windows/launcher"
-	       includes="application.ico, config.xml, config_debug.xml, arduino.l4j.ini"/>
+	       includes="application.ico, config.xml, config_debug.xml, energia.l4j.ini"/>
     </copy>
     <launch4j configFile="windows/work/config.xml" fileVersion="${revision}.0" txtFileVersion="${revision}" productVersion="${revision}.0" txtProductVersion="${revision}"/>
     <launch4j configFile="windows/work/config_debug.xml" fileVersion="${revision}.0" txtFileVersion="${revision}" productVersion="${revision}.0" txtProductVersion="${revision}"/>
     <delete dir="windows/work" includes="application.ico, config.xml, config_debug.xml" />
-    <copy file="windows/work/arduino.l4j.ini" tofile="windows/work/arduino_debug.l4j.ini" />
+    <copy file="windows/work/energia.l4j.ini" tofile="windows/work/energia_debug.l4j.ini" />
 
     <!-- cygwin requires html, dll, and exe to have the +x flag -->
     <chmod perm="755">
@@ -964,11 +964,11 @@
   <target name="windows-run" depends="build,start"/>
 
   <target name="windows-start">
-    <exec executable="windows/work/arduino.exe" dir="windows/work" spawn="false" failonerror="true"/>
+    <exec executable="windows/work/energia.exe" dir="windows/work" spawn="false" failonerror="true"/>
   </target>
 
   <target name="windows-dist" depends="build" description="Create .zip files of windows version">
-    <zip destfile="windows/arduino-${full-version}.zip" level="9">
+    <zip destfile="windows/energia-${full-version}.zip" level="9">
       <zipfileset dir="windows/work" prefix="arduino-${version}"/>
     </zip>
 
