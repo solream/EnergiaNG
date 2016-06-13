@@ -1046,7 +1046,7 @@
     <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/gcc/msp430" tofile="${staging_folder}/work/${staging_hardware_folder}/tools/msp430"/>
     <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/dslite/" tofile="${staging_folder}/work/${staging_hardware_folder}/tools/"/>
 <!--    <antcall target="macosx-fix-bundled-toolchain-missing-symlinks"/> -->
-    <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/msp430/builtin_tools_versions.txt" message="energia.dslite=${dslite_version}${line.separator}"/>
+    <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/DSLite/builtin_tools_versions.txt" message="energia.dslite=${dslite_version}${line.separator}"/>
     <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/msp430/builtin_tools_versions.txt" message="energia.msp430-gcc=${gcc_version}${line.separator}"/>
   </target>
 
