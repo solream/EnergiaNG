@@ -1,5 +1,5 @@
 
-# Arduino AVR Core and platform.
+# Energia MSP430 Core and platform.
 # ------------------------------
 #
 # For more info:
