@@ -1048,6 +1048,7 @@
 <!--    <antcall target="macosx-fix-bundled-toolchain-missing-symlinks"/> -->
     <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/DSLite/builtin_tools_versions.txt" message="energia.dslite=${dslite_version}${line.separator}"/>
     <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/msp430/builtin_tools_versions.txt" message="energia.msp430-gcc=${gcc_version}${line.separator}"/>
+    <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/msp430/builtin_tools_versions.txt" message="energia.mspdebug=0.22${line.separator}"/>
   </target>
 
   <target name="package-library-index-json-bundle">
