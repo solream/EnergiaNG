@@ -75,7 +75,7 @@ public class FileDownloader extends Observable {
     outputFile = file;
     downloaded = 0;
     initialSize = 0;
-    userAgent = "ArduinoIDE/" + BaseNoGui.VERSION_NAME + " Java/"
+    userAgent = "EnergiaIDE/" + BaseNoGui.VERSION_NAME + " Java/"
                 + System.getProperty("java.version");
   }
 
