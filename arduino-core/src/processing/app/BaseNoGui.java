@@ -44,7 +44,7 @@ public class BaseNoGui {
   public static final int REVISION = 10610;
   /** Extended version string displayed on GUI */
   public static final String VERSION_NAME = "1.6.10";
-  public static final String EVERSION_NAME = "18B2";
+  public static final String EVERSION_NAME = "18B6";
   public static final String VERSION_NAME_LONG;
   public static final String EVERSION_NAME_LONG;
 
