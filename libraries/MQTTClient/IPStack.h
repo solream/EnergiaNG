@@ -12,70 +12,68 @@
  *
  * Contributors:
  *    Ian Craggs - initial API and implementation and/or initial documentation
+ *    Benjamin Cabe - generic IPStack
  *******************************************************************************/
 
-#ifndef ARDUINOWIFIIPSTACK_H
-#define ARDUINOWIFIIPSTACK_H
+#if !defined(IPSTACK_H)
+#define IPSTACK_H
 
-#include <WiFi.h>
+#include <SPI.h>
 
-class WifiIPStack 
+#include <Client.h>
+
+class IPStack 
 {
 public:    
-    WifiIPStack()
+    IPStack(Client& client) : client(&client)
     {
-        //WiFi.begin();              // Use DHCP
-        iface.setTimeout(1000);    // 1 second Timeout 
+
     }
     
     int connect(char* hostname, int port)
     {
-        return iface.connect(hostname, port);
+        return client->connect(hostname, port);
     }
 
     int connect(uint32_t hostname, int port)
     {
-        return iface.connect(hostname, port);
+        return client->connect(hostname, port);
     }
 
     int read(unsigned char* buffer, int len, int timeout)
     {
         int interval = 10;  // all times are in milliseconds
-        int total = 0, rc = -1;
+		int total = 0, rc = -1;
 
-        if (timeout < 30)
-            interval = 2;
-            while (iface.available() < len && total < timeout) {
-                delay(interval);
-                total += interval;
-            }
-
-        if (iface.available() >= len) {
-            rc = iface.readBytes((char*)buffer, len);
-        }
-
-        return rc;
+		if (timeout < 30)
+			interval = 2;
+		while (client->available() < len && total < timeout)
+		{
+			delay(interval);
+			total += interval;
+		}
+		if (client->available() >= len)
+			rc = client->readBytes((char*)buffer, len);
+		return rc;
     }
     
     int write(unsigned char* buffer, int len, int timeout)
     {
-        iface.setTimeout(timeout);  
-        return iface.write((uint8_t*)buffer, len);
+        client->setTimeout(timeout);  
+		return client->write((uint8_t*)buffer, len);
     }
     
     int disconnect()
     {
-        iface.stop();
+        client->stop();
         return 0;
     }
-    
+
 private:
 
-    WiFiClient iface;
-    
+    Client* client;
 };
 
 #endif
-
 
 
