@@ -471,7 +471,7 @@
 
     <!-- Unzip unsigned app into working dir -->
     <exec executable="unzip" dir="macosx/work" failonerror="true">
-      <arg line="../arduino-${version}-${platform}.zip" />
+      <arg line="../energia-${version}-${platform}.zip" />
     </exec>
 
     <!-- Unlock keychain file -->
@@ -489,18 +489,18 @@
       <arg line="-vvvv Energia.app/" />
     </exec>
 
-    <delete file="macosx/arduino-${version}-${platform}.zip" />
+    <delete file="macosx/energia-${version}-${platform}.zip" />
 
     <!-- Create signed zip file -->
     <exec executable="zip" dir="macosx/work" failonerror="true">
-      <arg line="-q -r ../arduino-${full-version}-signed.zip ." />
+      <arg line="-q -r ../energia-${full-version}-signed.zip ." />
     </exec>
 
     <echo>
       =======================================================
-      Arduino for Mac OS X built and signed.
+      Energia for Mac OS X built and signed.
 
-      macosx/arduino-${full-version}-signed.zip
+      macosx/energia-${full-version}-signed.zip
       =======================================================
     </echo>
   </target>
@@ -516,14 +516,14 @@
   <!-- - - - - - - - - - - - - - - - - - - -->
   <target name="macosx-dist" if="macosx" depends="build" description="Create a downloadable .zip for the Mac OS X version">
     <exec executable="zip" dir="macosx/work" failonerror="true">
-      <arg line="-q -r ../arduino-${full-version}.zip ." />
+      <arg line="-q -r ../energia-${full-version}.zip ." />
     </exec>
 
     <echo>
       =======================================================
-      Arduino for Mac OS X was built. Grab the image from
+      Energia for Mac OS X was built. Grab the image from
 
-      macosx/arduino-${full-version}.zip
+      macosx/energia-${full-version}.zip
       =======================================================
     </echo>
   </target>
@@ -776,7 +776,7 @@
 
     <echo>
       =======================================================
-      Arduino for Linux was built. Grab the archive from
+      Energia for Linux was built. Grab the archive from
 
       linux/energia-${full-version}.tar.xz
       =======================================================
@@ -969,14 +969,14 @@
 
   <target name="windows-dist" depends="build" description="Create .zip files of windows version">
     <zip destfile="windows/energia-${full-version}.zip" level="9">
-      <zipfileset dir="windows/work" prefix="arduino-${version}"/>
+      <zipfileset dir="windows/work" prefix="energia-${version}"/>
     </zip>
 
     <echo>
       =======================================================
-      Arduino for Windows was built. Grab the archive from
+      Energia for Windows was built. Grab the archive from
 
-      windows/arduino-${full-version}.zip
+      windows/energia-${full-version}.zip
       =======================================================
     </echo>
   </target>
@@ -992,9 +992,9 @@
 	   addproperty="version"
 	   defaultvalue="${revision}" />
 
-    <tar compression="gzip" destfile="arduino-${version}-src.tar.gz">
+    <tar compression="gzip" destfile="energia-${version}-src.tar.gz">
       <tarfileset dir="../"
-		  prefix="arduino-${version}"
+		  prefix="energia-${version}"
 		  excludes="**/*.tgz,
 			     **/*.bz2,
 			     **/build/macosx/,
@@ -1007,9 +1007,9 @@
 
     <echo>
       =======================================================
-      Arduino source distribution was built. Grab the archive from
+      energia source distribution was built. Grab the archive from
 
-      arduino-${version}-src.tar.gz
+      energia-${version}-src.tar.gz
       =======================================================
     </echo>
   </target>
@@ -1029,7 +1029,7 @@
 
     <antcall target="${unpack_target}">
       <param name="archive_file" value="${staging_folder}/${gcc_archive_file}"/>
-      <param name="archive_url" value="http://energia.nu/files/${gcc_archive_file}"/>
+      <param name="archive_url" value="http://energia.nu/tools/${gcc_archive_file}"/>
       <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/gcc/${gcc_version}/"/>
       <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/gcc/"/>
     </antcall>
