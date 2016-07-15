@@ -51,7 +51,7 @@ import static processing.app.I18n.tr;
  */
 public class UpdateCheck implements Runnable {
   Base base;
-  String downloadURL = tr("http://www.energia.nu/latest.txt");
+  String downloadURL = "http://www.energia.nu/latestng.txt";
 
   static final long ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -87,9 +87,15 @@ public class UpdateCheck implements Runnable {
                         System.getProperty("os.version") + "\t" +
                         System.getProperty("os.arch"), "UTF-8");
       
-      int latest = readInt(downloadURL + "?" + info);
+      //int latest = readInt(downloadURL + "?" + info);
 
+      String latestString = readString(downloadURL + "?" + info);
       String lastString = PreferencesData.get("update.last");
+
+      String[] parts = latestString.split("E");
+      int latest = Integer.parseInt(parts[0]);
+      int lateste = Integer.parseInt(parts[1]);
+
       long now = System.currentTimeMillis();
       if (lastString != null) {
         long when = Long.parseLong(lastString);
@@ -105,7 +111,7 @@ public class UpdateCheck implements Runnable {
           "would you like to visit the Energia download page?");
         
       if (base.activeEditor != null) {
-        if (latest > BaseNoGui.REVISION) {
+        if (latest > BaseNoGui.REVISION || lateste > BaseNoGui.EREVISION) {
           Object[] options = { tr("Yes"), tr("No") };
           int result = JOptionPane.showOptionDialog(base.activeEditor,
                                                     prompt,
@@ -126,6 +132,17 @@ public class UpdateCheck implements Runnable {
     }
   }
 
+
+  protected String readString(String filename) throws IOException {
+    URL url = new URL(filename);
+    BufferedReader reader = null;
+    try {
+      reader = new BufferedReader(new InputStreamReader(url.openStream()));
+      return reader.readLine();
+    } finally {
+      IOUtils.closeQuietly(reader);
+    }
+  }
 
   protected int readInt(String filename) throws IOException {
     URL url = new URL(filename);

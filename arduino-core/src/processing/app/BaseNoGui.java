@@ -42,6 +42,7 @@ public class BaseNoGui {
 
   /** Version string to be used for build */
   public static final int REVISION = 10610;
+  public static final int EREVISION = 18;
   /** Extended version string displayed on GUI */
   public static final String VERSION_NAME = "1.6.10";
   public static final String EVERSION_NAME = "18B6";
