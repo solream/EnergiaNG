@@ -2577,13 +2577,8 @@ msgid "createNewFile() returned false"
 msgstr "createNewFile() ha retornat false"
 
 #: ../../../../../app/src/processing/app/Editor.java:1352
-<<<<<<< HEAD
 msgid "http://www.energia.nu/"
-msgstr ""
-=======
-msgid "http://www.arduino.cc/"
-msgstr "http://www.arduino.cc/"
->>>>>>> 1.6.10
+msgstr "http://www.energia.nu/"
 
 #: UpdateCheck.java:118
 msgid "http://www.energia.nu/en/Main/Software"
