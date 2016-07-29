@@ -28,8 +28,8 @@ msgstr ""
 "Project-Id-Version: Arduino IDE 1.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-29 10:24-0400\n"
-"PO-Revision-Date: 2016-04-11 10:38+0000\n"
-"Last-Translator: Tomasz Pudło <wptom@wp.pl>\n"
+"PO-Revision-Date: 2016-07-19 08:35+0000\n"
+"Last-Translator: Grzegorz Wielgoszewski <translations@wielgoszewski.pl>\n"
 "Language-Team: Polish (http://www.transifex.com/mbanzi/arduino-ide-15/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -341,6 +341,10 @@ msgstr "białoruski"
 #: ../../../processing/app/Editor.java:707
 msgid "Board"
 msgstr "Płytka"
+
+#: ../../../../../app//src/processing/app/Editor.java:2824
+msgid "Board Info"
+msgstr ""
 
 #: ../../../../../app/src/processing/app/Editor.java:2545
 #: ../../../../../app/src/processing/app/Editor.java:2641
@@ -689,7 +693,7 @@ msgstr "Kontrolowanie urządzeń"
 msgid ""
 "Device is not responding, check the right serial port is selected or RESET "
 "the board right before exporting"
-msgstr "Urządzenie nie odpowiada, sprawdź czy prawy szeregowy port jest wybrany lub zresetuj płytkę tuż przed exportem"
+msgstr "Urządzenie nie odpowiada, sprawdź czy został wybrany właściwy port szeregowy lub zresetuj płytkę tuż przed eksportem"
 
 #: tools/FixEncoding.java:57
 msgid "Discard all changes and reload sketch?"
@@ -746,7 +750,7 @@ msgstr "Ładowanie zakończone."
 #: ../../../cc/arduino/contributions/DownloadableContributionsDownloader.java:105
 #, java-format
 msgid "Downloaded {0}kb of {1}kb."
-msgstr "Pobrano [0}kb z {1}kb."
+msgstr "Pobrano {0} kB z {1} kB."
 
 #: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:107
 msgid "Downloading boards definitions."
@@ -754,7 +758,7 @@ msgstr "Ładowanie definicji płytek."
 
 #: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:86
 msgid "Downloading libraries index..."
-msgstr "Pobieranie indeksów bibliotek"
+msgstr "Pobieranie indeksu bibliotek..."
 
 #: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:115
 #, java-format
@@ -850,7 +854,7 @@ msgstr "Błąd w dostępie do folderu danych Arduino."
 #: Serial.java:593
 #, java-format
 msgid "Error inside Serial.{0}()"
-msgstr "Błąd wewnątrz szeregu.{0}()"
+msgstr "Błąd w funkcji Serial.{0}()"
 
 #: ../../../processing/app/debug/TargetPlatform.java:95
 #: ../../../processing/app/debug/TargetPlatform.java:106
@@ -895,7 +899,7 @@ msgstr "Błąd przy włączaniu metody wykrywania wyjścia:"
 #: Serial.java:125
 #, java-format
 msgid "Error touching serial port ''{0}''."
-msgstr "Błąd dotknięcie portu szeregowego''{0}''."
+msgstr "Błąd dotknięcia portu szeregowego ''{0}''."
 
 #: Editor.java:2512 Editor.java:2516 Editor.java:2520
 msgid "Error while burning bootloader."
@@ -1063,6 +1067,10 @@ msgstr "gruziński"
 #: Preferences.java:97
 msgid "German"
 msgstr "niemiecki"
+
+#: ../../../../../app//src/processing/app/Editor.java:817
+msgid "Get Board Info"
+msgstr ""
 
 #: Editor.java:1054
 msgid "Getting Started"
@@ -1324,6 +1332,10 @@ msgstr "Musisz wskazać dokładnie jeden plik szkicu"
 msgid "Name for new file:"
 msgstr "Nazwa dla nowego pliku:"
 
+#: ../../../../../app//src/processing/app/Editor.java:2809
+msgid "Native serial port, can't obtain info"
+msgstr ""
+
 #: ../../../processing/app/Preferences.java:149
 msgid "Nepali"
 msgstr "nepalski"
@@ -1331,6 +1343,10 @@ msgstr "nepalski"
 #: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:601
 msgid "Network"
 msgstr "Sieć"
+
+#: ../../../../../app//src/processing/app/Editor.java:2804
+msgid "Network port, can't obtain info"
+msgstr ""
 
 #: ../../../../../app/src/processing/app/Editor.java:65
 msgid "Network ports"
@@ -1519,6 +1535,10 @@ msgstr "Proszę zaimportować bilbiotekę SPI z Szkic > Importuj bibliotekę"
 msgid "Please import the Wire library from the Sketch > Import Library menu."
 msgstr "Proszę zaimportować Bibliotekę Przewodów z Szkic > Zaimportu bibliotekę menu."
 
+#: ../../../../../app//src/processing/app/Editor.java:2799
+msgid "Please select a port to obtain board info"
+msgstr ""
+
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:217
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:262
 msgid "Please select a programmer from Tools->Programmer menu"
@@ -1526,7 +1546,7 @@ msgstr "Wybierz programator z Narzędzia -> Menu programatora"
 
 #: ../../../../../app/src/processing/app/Editor.java:2613
 msgid "Plotter not available while serial monitor is open"
-msgstr "Kreślarka jest niedostępna, gdy monitor szeregowy jest już otwarty"
+msgstr "Kreślarka jest niedostępna, gdy monitor portu szeregowego jest już otwarty"
 
 #: Preferences.java:110
 msgid "Polish"
@@ -1790,29 +1810,29 @@ msgstr "Sensory"
 
 #: EditorToolbar.java:41 EditorToolbar.java:46 Editor.java:669
 msgid "Serial Monitor"
-msgstr "Monitor szeregowy"
+msgstr "Monitor portu szeregowego"
 
 #: ../../../../../app/src/processing/app/Editor.java:804
 msgid "Serial Plotter"
-msgstr "Monitor portu szeregowego"
+msgstr "Kreślarka"
 
 #: ../../../../../app/src/processing/app/Editor.java:2516
 msgid "Serial monitor not available while plotter is open"
-msgstr "Monitor szeregowy jest niedostępny, gdy kreślarka pracuje"
+msgstr "Monitor portu szeregowego jest niedostępny, gdy kreślarka pracuje"
 
 #: Serial.java:194
 #, java-format
 msgid ""
 "Serial port ''{0}'' not found. Did you select the right one from the Tools >"
 " Serial Port menu?"
-msgstr "Port szeregowy ''{0}'' nie znaleziony . Czy wybrałeś poprawny z Narzędzia > Port Szeregowy?"
+msgstr "Nie znaleziono portu szeregowego ''{0}''. Czy wybrałeś właściwy z menu Narzędzia > Port?"
 
 #: Editor.java:2343
 #, java-format
 msgid ""
 "Serial port {0} not found.\n"
 "Retry the upload with another serial port?"
-msgstr "Port szeregowy {0} nie znaleziony.\nPonowić wgrywanie z innym portem ?"
+msgstr "Nie znaleziono portu szeregowego {0}.\nPonowić próbę wgrywania przez inny port?"
 
 #: ../../../../../app/src/processing/app/Editor.java:65
 msgid "Serial ports"
@@ -1895,6 +1915,11 @@ msgstr "Lokalizacja szkicownika:"
 #: ../../../processing/app/BaseNoGui.java:428
 msgid "Sketchbook path not defined"
 msgstr "Ścieżka szkicownika nie znaleziona"
+
+#: ../../../../../arduino-core//src/cc/arduino/contributions/packages/ContributionsIndexer.java:96
+#, java-format
+msgid "Skipping contributed index file {0}, parsing error occured:"
+msgstr ""
 
 #: ../../../../../app/src/processing/app/Preferences.java:185
 msgid "Slovak"
@@ -2149,11 +2174,11 @@ msgstr "Nie można znaleźć {0} w {1}"
 
 #: ../../../processing/app/Editor.java:2512
 msgid "Unable to open serial monitor"
-msgstr "Nie można otworzyć monitora szeregowego"
+msgstr "Nie można otworzyć monitora portu szeregowego"
 
 #: ../../../../../app/src/processing/app/Editor.java:2709
 msgid "Unable to open serial plotter"
-msgstr "Nie można otworzyć szeregowego monitora"
+msgstr "Nie można uruchomić kreślarki"
 
 #: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:94
 #: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributionManagerUI.java:89
@@ -2172,6 +2197,10 @@ msgstr "Cofnij"
 #, java-format
 msgid "Unhandled type {0} in context key {1}"
 msgstr "Nieobsługiwany typ {0} w kontekście klucza {1}"
+
+#: ../../../../../app//src/processing/app/Editor.java:2818
+msgid "Unknown board"
+msgstr ""
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:86
 #, java-format
@@ -2224,6 +2253,10 @@ msgstr "Wgraj"
 #: EditorToolbar.java:46 Editor.java:553
 msgid "Upload Using Programmer"
 msgstr "Wgraj używając programatora"
+
+#: ../../../../../app//src/processing/app/Editor.java:2814
+msgid "Upload any sketch to obtain it"
+msgstr ""
 
 #: Editor.java:2403 Editor.java:2439
 msgid "Upload canceled."
@@ -2493,7 +2526,7 @@ msgid ""
 "As of Arduino 1.0, the 'BYTE' keyword is no longer supported.\n"
 "Please use Serial.write() instead.\n"
 "\n"
-msgstr "\nOd Arduino 1.0,  'BYTE' jest niewspierany.\nProszę użyć Serial.write() zamiast tego.\n\n"
+msgstr "\nOd Arduino 1.0, 'BYTE' nie jest wspierane.\nZamiast tego proszę użyć funkcji Serial.write().\n\n"
 
 #: debug/Compiler.java:427
 msgid ""
@@ -2569,13 +2602,13 @@ msgstr "name jest puste"
 
 #: Editor.java:932
 msgid "serialMenu is null"
-msgstr "szeregoweMenu jest puste"
+msgstr "serialMenu jest puste"
 
 #: debug/Uploader.java:195
 #, java-format
 msgid ""
 "the selected serial port {0} does not exist or your board is not connected"
-msgstr "wybrany port szeregowy {0} nie istnieje na twojej płycie lub jest niepodłączony"
+msgstr "wybrany port szeregowy {0} nie istnieje albo Twoja płytka nie jest podłączona"
 
 #: ../../../processing/app/Base.java:389
 #, java-format

@@ -122,7 +122,7 @@ public class UpdateCheck implements Runnable {
                                                     options,
                                                     options[0]);
           if (result == JOptionPane.YES_OPTION) {
-            Base.openURL(tr("http://www.energia.nu/download/"));
+            Base.openURL(tr("http://www.energia.nu/download"));
           }
         }
       }

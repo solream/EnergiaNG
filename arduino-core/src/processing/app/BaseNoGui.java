@@ -293,7 +293,7 @@ public class BaseNoGui {
         libdir.mkdirs();
         freadme = new FileWriter(new File(libdir, "readme.txt"));
         freadme.write(tr("For information on installing libraries, see: " +
-                        "http://www.arduino.cc/en/Guide/Libraries\n"));
+                        "http://www.energia.nu/reference/libraries\n"));
       } catch (Exception e) {
       } finally {
         IOUtils.closeQuietly(freadme);
@@ -414,7 +414,10 @@ public class BaseNoGui {
     }
 
     BaseNoGui.initPackages();
-    
+
+    // refresh the serial port names after loading all packages
+    BaseNoGui.getDiscoveryManager().getSerialDiscoverer().forceRefresh();
+
     // Setup board-dependent variables.
     onBoardOrPortChange();
 
