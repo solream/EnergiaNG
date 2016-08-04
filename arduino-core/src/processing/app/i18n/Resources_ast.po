@@ -2578,7 +2578,7 @@ msgid "http://www.energia.nu/en/Main/Software"
 msgstr ""
 
 #: UpdateCheck.java:53
-msgid "http://www.energia.nu/latest.txt"
+msgid "http://www.energia.nu/latestng.txt"
 msgstr ""
 
 #: Preferences.java:625

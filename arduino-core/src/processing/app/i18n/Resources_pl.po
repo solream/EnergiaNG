@@ -2588,8 +2588,8 @@ msgid "http://www.energia.nu/en/Main/Software"
 msgstr "http://www.energia.nu/en/Main/Software"
 
 #: UpdateCheck.java:53
-msgid "http://www.energia.nu/latest.txt"
-msgstr "http://www.energia.nu/latest.txt"
+msgid "http://www.energia.nu/latestng.txt"
+msgstr "http://www.energia.nu/latestng.txt"
 
 #: Preferences.java:625
 #, java-format
