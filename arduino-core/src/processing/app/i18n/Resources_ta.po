@@ -12,6 +12,8 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
+# Alagappan Karthikeyan <me@karthik.sg>, 2016
 # Shankar C <c.shankar7@hotmail.com>, 2015
 # Nadar Solomon Sunder <solomonsunder@gmail.com>, 2014
 msgid ""
@@ -19,7 +21,7 @@ msgstr ""
 "Project-Id-Version: Arduino IDE 1.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-29 10:24-0400\n"
-"PO-Revision-Date: 2016-03-07 18:40+0000\n"
+"PO-Revision-Date: 2016-08-16 11:24+0000\n"
 "Last-Translator: Cristian Maglie <c.maglie@arduino.cc>\n"
 "Language-Team: Tamil (http://www.transifex.com/mbanzi/arduino-ide-15/language/ta/)\n"
 "MIME-Version: 1.0\n"
@@ -35,23 +37,23 @@ msgstr "  (Arduino மறுதுவக்கம் தேவைப்படு
 #: ../../../processing/app/debug/Compiler.java:529
 #, java-format
 msgid " Not used: {0}"
-msgstr ""
+msgstr "பயன்பாட்டில் இல்லை : {0}"
 
 #: ../../../processing/app/debug/Compiler.java:525
 #, java-format
 msgid " Used: {0}"
-msgstr ""
+msgstr ": {0} பயன்படுத்தப்பட்டது "
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:558
 msgid ""
 "'Keyboard' not found. Does your sketch include the line '#include "
 "<Keyboard.h>'?"
-msgstr ""
+msgstr "விசைப்பலகை தொகுப்பில் இல்லை என தெரிகிறது.  '#include <Keyboard.h>'  என்கிற வரி சேர்க்கப்பட்டுள்ளதா என சரிபார்க்கவும் "
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:553
 msgid ""
 "'Mouse' not found. Does your sketch include the line '#include <Mouse.h>'?"
-msgstr ""
+msgstr "சுட்டி தொகுப்பில் இல்லை என தெரிகிறது.   '#include <Mouse.h>' என்கிற வரி சேர்க்கப்பட்டுள்ளதா என சரிபார்க்கவும் "
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:61
 msgid ""
@@ -122,6 +124,10 @@ msgstr ""
 #: Editor.java:1116
 msgid "About Arduino"
 msgstr "Arduino பற்றி"
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:41
+msgid "Acoli"
+msgstr ""
 
 #: ../../../../../app/src/processing/app/Base.java:1177
 msgid "Add .ZIP Library..."
@@ -949,12 +955,22 @@ msgstr ""
 msgid "Examples"
 msgstr "எடுத்துக்காட்டுகள்"
 
+#: ../../../../../app/src/processing/app/Base.java:1267
+msgid "Examples from Built-in Libraries"
+msgstr ""
+
 #: ../../../../../app/src/processing/app/Base.java:1244
 msgid "Examples from Custom Libraries"
 msgstr ""
 
-#: ../../../../../app/src/processing/app/Base.java:1222
-msgid "Examples from Libraries"
+#: ../../../../../app/src/processing/app/Base.java:1329
+msgid "Examples from Other Libraries"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:1287
+#: ../../../../../app/src/processing/app/Base.java:1298
+#, java-format
+msgid "Examples from {0} Libraries"
 msgstr ""
 
 #: ../../../../../app/src/processing/app/Editor.java:753
@@ -1121,6 +1137,10 @@ msgstr "நீங்கள் மிகவும் திறமைசாலி"
 msgid "Hungarian"
 msgstr "ஹங்கேரியன்"
 
+#: ../../../../../app/src/processing/app/Base.java:1319
+msgid "INCOMPATIBLE"
+msgstr ""
+
 #: FindReplace.java:96
 msgid "Ignore Case"
 msgstr "வேற்றுமையை அலட்சியப்படுத்து"
@@ -1222,6 +1242,10 @@ msgstr "இத்தாலியன்"
 #: Preferences.java:103
 msgid "Japanese"
 msgstr "ஜப்பனீஸ்"
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:81
+msgid "Kazakh"
+msgstr ""
 
 #: Preferences.java:104
 msgid "Korean"
@@ -1968,6 +1992,10 @@ msgstr ""
 
 #: Preferences.java:116
 msgid "Tamil"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:102
+msgid "Telugu"
 msgstr ""
 
 #: ../../../../../app/src/cc/arduino/i18n/Languages.java:100

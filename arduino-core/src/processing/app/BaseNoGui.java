@@ -5,7 +5,9 @@ import cc.arduino.Constants;
 import cc.arduino.UploaderUtils;
 import cc.arduino.contributions.GPGDetachedSignatureVerifier;
 import cc.arduino.contributions.SignatureVerificationFailedException;
+import cc.arduino.contributions.VersionComparator;
 import cc.arduino.contributions.libraries.LibrariesIndexer;
+import cc.arduino.contributions.packages.ContributedPlatform;
 import cc.arduino.contributions.packages.ContributedTool;
 import cc.arduino.contributions.packages.ContributionsIndexer;
 import cc.arduino.files.DeleteFilesOnShutdown;
@@ -25,7 +27,6 @@ import processing.app.packages.LibraryList;
 import processing.app.packages.UserLibrary;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,10 +42,10 @@ import static processing.app.helpers.filefilters.OnlyDirs.ONLY_DIRS;
 public class BaseNoGui {
 
   /** Version string to be used for build */
-  public static final int REVISION = 10610;
+  public static final int REVISION = 10611;
   public static final int EREVISION = 18;
   /** Extended version string displayed on GUI */
-  public static final String VERSION_NAME = "1.6.10";
+  public static final String VERSION_NAME = "1.6.11";
   public static final String EVERSION_NAME = "18";
   public static final String VERSION_NAME_LONG;
   public static final String EVERSION_NAME_LONG;
@@ -165,6 +166,36 @@ public class BaseNoGui {
       }
     }
     prefs.put("name", extendedName);
+
+    // Resolve tools needed for this board
+    List<ContributedTool> requiredTools = new ArrayList<>();
+
+    // Add all tools dependencies specified in package index
+    ContributedPlatform platform = indexer.getContributedPlaform(getTargetPlatform());
+    if (platform != null)
+      requiredTools.addAll(platform.getResolvedTools());
+
+    // Add all tools dependencies from the (possibily) referenced core
+    String core = prefs.get("build.core");
+    if (core.contains(":")) {
+      String split[] = core.split(":");
+      TargetPlatform referenced = BaseNoGui.getCurrentTargetPlatformFromPackage(split[0]);
+      ContributedPlatform referencedPlatform = indexer.getContributedPlaform(referenced);
+      if (referencedPlatform != null)
+        requiredTools.addAll(referencedPlatform.getResolvedTools());
+    }
+
+    String prefix = "runtime.tools.";
+    for (ContributedTool tool : requiredTools) {
+      File folder = tool.getDownloadableContribution(getPlatform()).getInstalledFolder();
+      if (folder == null) {
+        continue;
+      }
+      String toolPath = folder.getAbsolutePath();
+      prefs.put(prefix + tool.getName() + ".path", toolPath);
+      PreferencesData.set(prefix + tool.getName() + ".path", toolPath);
+      PreferencesData.set(prefix + tool.getName() + "-" + tool.getVersion() + ".path", toolPath);
+    }
     return prefs;
   }
 
@@ -581,36 +612,19 @@ public class BaseNoGui {
   }
 
   static public void initPackages() throws Exception {
-    indexer = new ContributionsIndexer(BaseNoGui.getSettingsFolder(), BaseNoGui.getPlatform(), new GPGDetachedSignatureVerifier());
-    File indexFile = indexer.getIndexFile("package_index.json");
-    File defaultPackageJsonFile = new File(getContentFile("dist"), "package_index.json");
-    if (!indexFile.isFile() || (defaultPackageJsonFile.isFile() && defaultPackageJsonFile.lastModified() > indexFile.lastModified())) {
-      FileUtils.copyFile(defaultPackageJsonFile, indexFile);
-    } else if (!indexFile.isFile()) {
-      // Otherwise create an empty packages index
-      FileOutputStream out = null;
-      try {
-        out = new FileOutputStream(indexFile);
-        out.write("{ \"packages\" : [ ] }".getBytes());
-      } finally {
-        IOUtils.closeQuietly(out);
-      }
-    }
-
-    File indexSignatureFile = indexer.getIndexFile("package_index.json.sig");
-    File defaultPackageJsonSignatureFile = new File(getContentFile("dist"), "package_index.json.sig");
-    if (!indexSignatureFile.isFile() || (defaultPackageJsonSignatureFile.isFile() && defaultPackageJsonSignatureFile.lastModified() > indexSignatureFile.lastModified())) {
-      FileUtils.copyFile(defaultPackageJsonSignatureFile, indexSignatureFile);
-    }
+    indexer = new ContributionsIndexer(getSettingsFolder(), getHardwareFolder(), getPlatform(),
+        new GPGDetachedSignatureVerifier());
 
     try {
       indexer.parseIndex();
     } catch (JsonProcessingException | SignatureVerificationFailedException e) {
+      File indexFile = indexer.getIndexFile(Constants.DEFAULT_INDEX_FILE_NAME);
+      File indexSignatureFile = indexer.getIndexFile(Constants.DEFAULT_INDEX_FILE_NAME + ".sig");
       FileUtils.deleteIfExists(indexFile);
       FileUtils.deleteIfExists(indexSignatureFile);
       throw e;
     }
-    indexer.syncWithFilesystem(getHardwareFolder());
+    indexer.syncWithFilesystem();
 
     packages = new LinkedHashMap<String, TargetPackage>();
     loadHardware(getHardwareFolder());
@@ -618,35 +632,12 @@ public class BaseNoGui {
     loadHardware(getSketchbookHardwareFolder());
     createToolPreferences(indexer.getInstalledTools(), true);
 
-    librariesIndexer = new LibrariesIndexer(BaseNoGui.getSettingsFolder());
-    File librariesIndexFile = librariesIndexer.getIndexFile();
-    copyStockLibraryIndexIfUpstreamIsMissing(librariesIndexFile);
+    librariesIndexer = new LibrariesIndexer(getSettingsFolder());
     try {
       librariesIndexer.parseIndex();
     } catch (JsonProcessingException e) {
+      File librariesIndexFile = librariesIndexer.getIndexFile();
       FileUtils.deleteIfExists(librariesIndexFile);
-      copyStockLibraryIndexIfUpstreamIsMissing(librariesIndexFile);
-      librariesIndexer.parseIndex();
-    }
-  }
-
-  private static void copyStockLibraryIndexIfUpstreamIsMissing(File librariesIndexFile) throws IOException {
-    File defaultLibraryJsonFile = new File(getContentFile("dist"), "library_index.json");
-    if (!librariesIndexFile.isFile() || (defaultLibraryJsonFile.isFile() && defaultLibraryJsonFile.lastModified() > librariesIndexFile.lastModified())) {
-      if (defaultLibraryJsonFile.isFile()) {
-        FileUtils.copyFile(defaultLibraryJsonFile, librariesIndexFile);
-      } else {
-        FileOutputStream out = null;
-        try {
-          // Otherwise create an empty packages index
-          out = new FileOutputStream(librariesIndexFile);
-          out.write("{ \"libraries\" : [ ] }".getBytes());
-        } catch (IOException e) {
-          e.printStackTrace();
-        } finally {
-          IOUtils.closeQuietly(out);
-        }
-      }
     }
   }
 
@@ -857,16 +848,29 @@ public class BaseNoGui {
       PreferencesData.removeAllKeysWithPrefix(prefix);
     }
 
+    Map<String, String> latestVersions = new HashMap<>();
+    VersionComparator comparator = new VersionComparator();
     for (ContributedTool tool : installedTools) {
       File installedFolder = tool.getDownloadableContribution(getPlatform()).getInstalledFolder();
-      String absolutePath;
+      String toolPath;
       if (installedFolder != null) {
-        absolutePath = installedFolder.getAbsolutePath();
+        toolPath = installedFolder.getAbsolutePath();
       } else {
-        absolutePath = Constants.PREF_REMOVE_PLACEHOLDER;
+        toolPath = Constants.PREF_REMOVE_PLACEHOLDER;
       }
-      PreferencesData.set(prefix + tool.getName() + ".path", absolutePath);
-      PreferencesData.set(prefix + tool.getName() + "-" + tool.getVersion() + ".path", absolutePath);
+      String toolName = tool.getName();
+      String toolVersion = tool.getVersion();
+      PreferencesData.set(prefix + toolName + "-" + toolVersion + ".path", toolPath);
+      PreferencesData.set(prefix + tool.getPackager() + "-" + toolName + "-" + toolVersion + ".path", toolPath);
+      // In the generic tool property put the path of the latest version if more are available
+      try {
+        if (!latestVersions.containsKey(toolName) || comparator.greaterThan(toolVersion, latestVersions.get(toolName))) {
+          latestVersions.put(toolName, toolVersion);
+          PreferencesData.set(prefix + toolName + ".path", toolPath);
+        }
+      } catch (Exception e) {
+        // Ignore invalid versions
+      }
     }
   }
 
