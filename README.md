@@ -1,8 +1,7 @@
 ![IMG](http://energia.nu/img/Energia.png)
 
-[![Stories in In Progress](https://badge.waffle.io/energia/energia.png?label=In%20Progress&title=In%20Progress)](https://waffle.io/energia/energia)<br>
-[![Stories in Ready to Commit](https://badge.waffle.io/energia/energia.png?label=Ready%20to%20Commit&title=Ready%20to%20Commit)](https://waffle.io/energia/energia)
-
+[![Stories in In Progress](https://badge.waffle.io/robertinant/energiang.png?label=In%20Progress&title=In%20Progress)](https://waffle.io/robertinant/energiang)<br>
+[![Stories in Ready to Commit](https://badge.waffle.io/robertinant/energiang.png?label=Ready%20to%20Commit&title=Ready%20to%20Commit)](https://waffle.io/robertinant/energiang)
 
 ## What Is Energia?
 
