@@ -12,17 +12,19 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
 # Cougar <cougar@random.ee>, 2012
 # Cristian Maglie <c.maglie@arduino.cc>, 2016
 # Georg, 2014
 # Georg, 2014
 # Lauri Võsandi <lauri.vosandi@gmail.com>, 2015
+# Triin Taveter <taveter@ut.ee>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Arduino IDE 1.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-29 10:24-0400\n"
-"PO-Revision-Date: 2016-03-08 17:47+0000\n"
+"PO-Revision-Date: 2016-08-16 11:24+0000\n"
 "Last-Translator: Cristian Maglie <c.maglie@arduino.cc>\n"
 "Language-Team: Estonian (Estonia) (http://www.transifex.com/mbanzi/arduino-ide-15/language/et_EE/)\n"
 "MIME-Version: 1.0\n"
@@ -125,6 +127,10 @@ msgstr "Su visandite kausta alamkaust pole korrektne teek."
 #: Editor.java:1116
 msgid "About Arduino"
 msgstr "Arduino info"
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:41
+msgid "Acoli"
+msgstr ""
 
 #: ../../../../../app/src/processing/app/Base.java:1177
 msgid "Add .ZIP Library..."
@@ -304,7 +310,7 @@ msgstr "Proxy seadete automaatne tuvastus"
 
 #: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:264
 msgid "Automatic"
-msgstr ""
+msgstr "Automaatne"
 
 #: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:474
 msgid "Automatic proxy configuration URL:"
@@ -344,7 +350,7 @@ msgstr ""
 #: ../../../../../app/src/processing/app/Editor.java:2641
 #, java-format
 msgid "Board at {0} is not available"
-msgstr ""
+msgstr "Plaat kohas {0} ei ole saadaval"
 
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:62
 #, java-format
@@ -830,7 +836,7 @@ msgstr "Viga faili lisamisel"
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:272
 #, java-format
 msgid "Error compiling for board {0}."
-msgstr ""
+msgstr "Viga plaadi {0} jaoks kompilleerimisel."
 
 #: debug/Compiler.java:369
 msgid "Error compiling."
@@ -952,13 +958,23 @@ msgstr "Eesti (Eesti)"
 msgid "Examples"
 msgstr "Näited"
 
+#: ../../../../../app/src/processing/app/Base.java:1267
+msgid "Examples from Built-in Libraries"
+msgstr ""
+
 #: ../../../../../app/src/processing/app/Base.java:1244
 msgid "Examples from Custom Libraries"
 msgstr "Ise paigaldatud teekide näited"
 
-#: ../../../../../app/src/processing/app/Base.java:1222
-msgid "Examples from Libraries"
-msgstr "Teekide näited"
+#: ../../../../../app/src/processing/app/Base.java:1329
+msgid "Examples from Other Libraries"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:1287
+#: ../../../../../app/src/processing/app/Base.java:1298
+#, java-format
+msgid "Examples from {0} Libraries"
+msgstr ""
 
 #: ../../../../../app/src/processing/app/Editor.java:753
 msgid "Export canceled, changes must first be saved."
@@ -980,7 +996,7 @@ msgstr "Fail"
 #: ../../../../../arduino-core/src/processing/app/SketchData.java:139
 #, java-format
 msgid "File name {0} is invalid: ignored"
-msgstr ""
+msgstr "Faili nimi {0} on kehtetu: ignoreeritakse"
 
 #: Preferences.java:94
 msgid "Filipino"
@@ -1124,6 +1140,10 @@ msgstr "Maakera sees on maakera"
 msgid "Hungarian"
 msgstr "Ungari"
 
+#: ../../../../../app/src/processing/app/Base.java:1319
+msgid "INCOMPATIBLE"
+msgstr ""
+
 #: FindReplace.java:96
 msgid "Ignore Case"
 msgstr "Tähesuuruse ignoreerimine"
@@ -1206,7 +1226,7 @@ msgstr "Paigaldamine ..."
 
 #: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:256
 msgid "Interface scale:"
-msgstr ""
+msgstr "Liidese skaala:"
 
 #: ../../../processing/app/Base.java:1204
 #, java-format
@@ -1225,6 +1245,10 @@ msgstr "Itaalia"
 #: Preferences.java:103
 msgid "Japanese"
 msgstr "Jaapani"
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:81
+msgid "Kazakh"
+msgstr ""
 
 #: Preferences.java:104
 msgid "Korean"
@@ -1540,7 +1564,7 @@ msgstr "Vali programmaator menüüst Tööriistad -> Programmaator."
 
 #: ../../../../../app/src/processing/app/Editor.java:2613
 msgid "Plotter not available while serial monitor is open"
-msgstr ""
+msgstr "Plotterit ei saa kasutada, kui jadapordi monitor on avatud"
 
 #: Preferences.java:110
 msgid "Polish"
@@ -1812,7 +1836,7 @@ msgstr "Jadapordi plotter"
 
 #: ../../../../../app/src/processing/app/Editor.java:2516
 msgid "Serial monitor not available while plotter is open"
-msgstr ""
+msgstr "Jadapordi monitori ei saa kasutada, kui plotter on avatud"
 
 #: Serial.java:194
 #, java-format
@@ -1972,6 +1996,10 @@ msgstr "Talossan"
 #: Preferences.java:116
 msgid "Tamil"
 msgstr "Tamili"
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:102
+msgid "Telugu"
+msgstr ""
 
 #: ../../../../../app/src/cc/arduino/i18n/Languages.java:100
 msgid "Thai"
@@ -2146,7 +2174,7 @@ msgstr "Ukraina"
 #: ../../../../../arduino-core/src/cc/arduino/packages/uploaders/SSHUploader.java:142
 #, java-format
 msgid "Unable to connect to {0}"
-msgstr ""
+msgstr "Ei saa ühendust seadme/võrguga {0}"
 
 #: ../../../processing/app/Editor.java:2524
 #: ../../../processing/app/NetworkMonitor.java:145
@@ -2164,7 +2192,7 @@ msgstr "Ühendust ei õnnestu luua, vale parool?"
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:65
 #, java-format
 msgid "Unable to find {0} in {1}"
-msgstr ""
+msgstr "Ei õnnestu leida {0} kohast {1}"
 
 #: ../../../processing/app/Editor.java:2512
 msgid "Unable to open serial monitor"
@@ -2190,7 +2218,7 @@ msgstr "Võta tagasi"
 #: ../../../../../arduino-core/src/cc/arduino/Compiler.java:85
 #, java-format
 msgid "Unhandled type {0} in context key {1}"
-msgstr ""
+msgstr "Käsitlemata tüüp {0} konteksi võtmes {1}"
 
 #: ../../../../../app//src/processing/app/Editor.java:2818
 msgid "Unknown board"

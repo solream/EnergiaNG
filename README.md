@@ -1,53 +1,82 @@
-Arduino
-========
+![IMG](http://energia.nu/img/Energia.png)
 
-* Arduino is an open-source physical computing platform based on a simple I/O
-board and a development environment that implements the Processing/Wiring
-language. Arduino can be used to develop stand-alone interactive objects or
-can be connected to software on your computer (e.g. Flash, Processing and MaxMSP).
-The boards can be assembled by hand or purchased preassembled; the open-source
-IDE can be downloaded for free at http://www.arduino.cc/en/Main/Software
+[![Stories in In Progress](https://badge.waffle.io/robertinant/energiang.png?label=In%20Progress&title=In%20Progress)](https://waffle.io/robertinant/energiang)<br>
+[![Stories in Ready to Commit](https://badge.waffle.io/robertinant/energiang.png?label=Ready%20to%20Commit&title=Ready%20to%20Commit)](https://waffle.io/robertinant/energiang)
 
-* For more information, see the website at: http://www.arduino.cc/
-or the forums at: http://www.arduino.cc/forum/  
-You can also follow Arduino on Twitter at: https://twitter.com/arduino or
-like Arduino on Facebook at: https://www.facebook.com/official.arduino
+## What Is Energia?
 
-* To report a *bug* in the software or to request *a simple enhancement* go to:
-http://github.com/arduino/Arduino/issues
+Energia is a fork/port of Arduino for the Launchpads, or boards with MCUs from Texas Instruments.
 
-* More complex requests and technical discussion should go on the Arduino Developers
-mailing list:
-https://groups.google.com/a/arduino.cc/forum/#!forum/developers
+## What Are the LaunchPads Supported?
 
-* If you're interested in modifying or extending the Arduino software, we strongly 
-suggest discussing your ideas on the Developers mailing list *before* starting
-to work on them. That way you can coordinate with the Arduino Team and others,
-giving your work a higher chance of being integrated into the official release
-https://groups.google.com/a/arduino.cc/forum/#!forum/developers
+Energia provides native support for the following LaunchPads:
 
-Installation
-------------
-Detailed instructions are in reference/Guide_Windows.html and
-reference/Guide_MacOSX.html.  For Linux, see the Arduino playground:
-http://www.arduino.cc/playground/Learning/Linux
+MSP430 LaunchPads:
 
+* MSP-EXP430F5529LP
+* MSP-EXP430FR4133
+* MSP-EXP430FR5969LP
+* MSP-EXP430FR6989
+* MSP-EXP430G2553LP
+* MSP-EXP430FR5739LP
+
+TivaC LaunchPads:
+
+* EK-TM4C123GXL
+* EK-TM4C1294XL
+* EK-LM4F120XL
+
+MSP432 LaunchPads:
+
+* MSP-EXP432P401R
+
+CC3200 LaunchPads:
+
+* CC3200-LAUNCHXL
+* RedBearLab CC3200
+* RedBearLab WiFi Mini
+* RedBearLab WiFi Micro
+
+## Looking for Help?
+
+No problem! There are a variety of resources available to get you up and running, and sprinting once you're up and running.
+
+* [GitHub repository](https://github.com/robertinant/EnergiaNG/issues) - This very page!
+* [Download](http://energia.nu/download/) - Download a compiled application for Linux, Mac OS X, or Windows.
+* [Website](http://energia.nu) - Full documentation including tutorials, reference, pins maps, FAQ and much more!
+* [Forum at 43oh](http://forum.43oh.com/forum/28-energia/) - A community around the original LaunchPad  but also the newer ones.
+* [Bug report](https://github.com/robertinant/EnergiaNG/issues) - Is something not working as it ought to? Or better yet, is there something we could make better?
+
+## Clone instructions:
+
+To clone Energia:
+```
+git clone https://github.com/robertinant/EnergiaNG.git
+```
+## Building Energia
+To build Energia you will need a copy of Apache ant and a recent JDK (1.8).
+```
+cd build
+ant -buildfile build-energia.xml
+```
+### Other build instructions are:
+```
+ant -buildfile build-energia.xml clean // clean the build
+ant -buildfile build-energia.xml build // build
+ant -buildfile build-energia.xml dist // build the distribution
+```
+For other more advanced build options see:
+```
+build/build-energia.xml
+build/build_all_dist.bash
+build/build_pull_request.bash
+```
 Credits
 --------
-Arduino is an open source project, supported by many.
+Energia is an open source project, supported by many.
 
-The Arduino team is composed of Massimo Banzi, David Cuartielles, Tom Igoe
-and David A. Mellis.
+Energia uses
 
-Arduino uses
-[GNU avr-gcc toolchain](http://gcc.gnu.org/wiki/avr-gcc),
 [GCC ARM Embedded toolchain](https://launchpad.net/gcc-arm-embedded),
-[avr-libc](http://www.nongnu.org/avr-libc/),
-[avrdude](http://www.nongnu.org/avrdude/),
-[bossac](http://www.shumatech.com/web/products/bossa),
-[openOCD](http://openocd.org/)
 and code from [Processing](http://www.processing.org)
-and [Wiring](http://wiring.org.co).
-
-Icon and about image designed by [ToDo](http://www.todo.to.it/)
-
+and [Wiring](http://wiring.org.co), [MSP430 gcc](https://sourceforge.net/projects/mspgcc/) and [mspdebug](http://dlbeer.co.nz/mspdebug/).

@@ -12,14 +12,15 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
 # Paras Nath Chaudhary <opnchaudhary@gmail.com>, 2013,2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Arduino IDE 1.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-29 10:24-0400\n"
-"PO-Revision-Date: 2016-06-19 18:58+0000\n"
-"Last-Translator: Paras Nath Chaudhary <opnchaudhary@gmail.com>\n"
+"PO-Revision-Date: 2016-08-16 11:24+0000\n"
+"Last-Translator: Cristian Maglie <c.maglie@arduino.cc>\n"
 "Language-Team: Nepali (http://www.transifex.com/mbanzi/arduino-ide-15/language/ne/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -121,6 +122,10 @@ msgstr ""
 #: Editor.java:1116
 msgid "About Arduino"
 msgstr "Arduinoको बारेमा"
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:41
+msgid "Acoli"
+msgstr ""
 
 #: ../../../../../app/src/processing/app/Base.java:1177
 msgid "Add .ZIP Library..."
@@ -948,12 +953,22 @@ msgstr ""
 msgid "Examples"
 msgstr "उदाहरणहरु"
 
+#: ../../../../../app/src/processing/app/Base.java:1267
+msgid "Examples from Built-in Libraries"
+msgstr ""
+
 #: ../../../../../app/src/processing/app/Base.java:1244
 msgid "Examples from Custom Libraries"
 msgstr ""
 
-#: ../../../../../app/src/processing/app/Base.java:1222
-msgid "Examples from Libraries"
+#: ../../../../../app/src/processing/app/Base.java:1329
+msgid "Examples from Other Libraries"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:1287
+#: ../../../../../app/src/processing/app/Base.java:1298
+#, java-format
+msgid "Examples from {0} Libraries"
 msgstr ""
 
 #: ../../../../../app/src/processing/app/Editor.java:753
@@ -1120,6 +1135,10 @@ msgstr ""
 msgid "Hungarian"
 msgstr "हंगेरी"
 
+#: ../../../../../app/src/processing/app/Base.java:1319
+msgid "INCOMPATIBLE"
+msgstr ""
+
 #: FindReplace.java:96
 msgid "Ignore Case"
 msgstr ""
@@ -1221,6 +1240,10 @@ msgstr "इटालियन "
 #: Preferences.java:103
 msgid "Japanese"
 msgstr "जापनिज"
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:81
+msgid "Kazakh"
+msgstr ""
 
 #: Preferences.java:104
 msgid "Korean"
@@ -1968,6 +1991,10 @@ msgstr ""
 #: Preferences.java:116
 msgid "Tamil"
 msgstr "तामिल"
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:102
+msgid "Telugu"
+msgstr ""
 
 #: ../../../../../app/src/cc/arduino/i18n/Languages.java:100
 msgid "Thai"
