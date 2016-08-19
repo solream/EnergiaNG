@@ -57,7 +57,20 @@ git clone https://github.com/robertinant/EnergiaNG.git
 ## Building Energia
 To build Energia you will need a copy of Apache ant and a recent JDK (1.8).
 ```
+cd build
 ant -buildfile build-energia.xml
+```
+### Other build instructions are:
+```
+ant -buildfile build-energia.xml clean // clean the build
+ant -buildfile build-energia.xml build // build
+ant -buildfile build-energia.xml dist // build the distribution
+```
+For other more advanced build options see:
+```
+build/build-energia.xml
+build/build_all_dist.bash
+build/build_pull_request.bash
 ```
 Credits
 --------
