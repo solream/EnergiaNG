@@ -48,10 +48,16 @@ OneMsTaskTimer_t * p_initial_OneMsTaskTimer = 0;
 
 #if defined(__MSP430__)
 
+
+#if defined(__MSP430_HAS_T0A2__) || defined(__MSP430_HAS_T0A3__) || defined(__MSP430_HAS_T0A5__) || defined(__MSP430_HAS_T0A7__)
 #define DEFAULT_TIMER 1
+#else
+//#error Board not supported
+#define DEFAULT_TIMER 10
+#endif
+
 uint32_t timer_index_ = DEFAULT_TIMER;
 
-//#if defined(__MSP430_HAS_T1A2__) || defined(__MSP430_HAS_T1A3__) || defined(__MSP430_HAS_T1A5__) || defined(__MSP430_HAS_T1A7__)
 	#if DEFAULT_TIMER == 0
 	#define TAxCCTL0 TA0CCTL0
 	#define TAxCCR0 TA0CCR0
@@ -87,10 +93,11 @@ uint32_t timer_index_ = DEFAULT_TIMER;
 	#define TAxCCR0 TB0CCR0
 	#define TAxCTL TB0CTL
 	#define TIMERx_A0_VECTOR TIMER0_B0_VECTOR
+	#if !defined(TACLR)  
+	#define TACLR TBCLR
+	#define TASSEL_2 TBSSEL_2
 	#endif
-//#else
-//#error Board not supported
-//#endif
+	#endif
 
 
 // lifted from wiring_analog.c so that the do not step on each other

@@ -118,8 +118,8 @@ public:
 
     void setLineSpacing(uint8_t pixel);
     void setXY(uint8_t x, uint8_t y, uint8_t ulValue);
-    void text(uint8_t x, uint8_t y, String s);
-    void text(uint8_t x, uint8_t y, String s, tLCDWrapType wrap);
+    //void text(uint8_t x, uint8_t y, String s);
+    void text(uint8_t x, uint8_t y, String s, tLCDWrapType wrap=LCDWrapNextLine);
     void text(uint8_t x, uint8_t y, uint8_t c) ;
     void flush();
     void setCharXY(uint8_t x, uint8_t y);

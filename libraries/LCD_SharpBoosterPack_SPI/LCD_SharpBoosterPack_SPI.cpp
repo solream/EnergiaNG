@@ -121,18 +121,18 @@ void LCD_SharpBoosterPack_SPI::setXY(uint8_t x, uint8_t y, uint8_t  ulValue)
     switch (_orientation)
     {
         case 1:
-            x0 = LCD_HORIZONTAL_MAX - y;
+            x0 = LCD_HORIZONTAL_MAX - 1 - y;
             y0 = x;
             break;
 
         case 2:
-            x0 = LCD_HORIZONTAL_MAX - x;
-            y0 = LCD_VERTICAL_MAX   - y;
+            x0 = LCD_HORIZONTAL_MAX - 1 - x;
+            y0 = LCD_VERTICAL_MAX - 1   - y;
             break;
             
         case 3:
             x0 = y;
-            y0 = LCD_VERTICAL_MAX   - x;
+            y0 = LCD_VERTICAL_MAX - 1   - x;
             break;
             
         default:
@@ -142,6 +142,8 @@ void LCD_SharpBoosterPack_SPI::setXY(uint8_t x, uint8_t y, uint8_t  ulValue)
     }
 
     if (_reverse) ulValue = (ulValue == 0);
+    if (x0 > LCD_HORIZONTAL_MAX - 1) x0 = LCD_HORIZONTAL_MAX - 1;
+    if (y0 > LCD_VERTICAL_MAX - 1)   y0 = LCD_VERTICAL_MAX - 1;
     
     if (ulValue != 0)   DisplayBuffer[y0][x0>>3] &= ~(0x80 >> (x0 & 0x7));
     else                DisplayBuffer[y0][x0>>3] |=  (0x80 >> (x0 & 0x7));
@@ -218,9 +220,9 @@ void LCD_SharpBoosterPack_SPI::setLineSpacing(uint8_t pixel) {
     lineSpacing[_font] = pixel;
 }
 
-void LCD_SharpBoosterPack_SPI::text(uint8_t x, uint8_t y, String s) {
-	text(x, y, s, LCDWrapNextLine);
-}
+//void LCD_SharpBoosterPack_SPI::text(uint8_t x, uint8_t y, String s) {
+//	text(x, y, s, LCDWrapNextLine);
+//}
 
 void LCD_SharpBoosterPack_SPI::text(uint8_t x, uint8_t y, String s, tLCDWrapType wrap) {
     uint8_t i;
