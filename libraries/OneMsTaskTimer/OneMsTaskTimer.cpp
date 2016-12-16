@@ -49,7 +49,7 @@ OneMsTaskTimer_t * p_initial_OneMsTaskTimer = 0;
 #if defined(__MSP430__)
 
 
-#if defined(__MSP430_HAS_T0A2__) || defined(__MSP430_HAS_T0A3__) || defined(__MSP430_HAS_T0A5__) || defined(__MSP430_HAS_T0A7__)
+#if defined(__MSP430_HAS_T1A2__) || defined(__MSP430_HAS_T1A3__) || defined(__MSP430_HAS_T1A5__) || defined(__MSP430_HAS_T1A7__)
 #define DEFAULT_TIMER 1
 #else
 //#error Board not supported
