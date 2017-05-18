@@ -201,7 +201,7 @@ void OneMsTaskTimer_int(void)
 #endif //if defined(__CC3200R1M1RGC__)
 
 
-#if defined(__TM4C123GH6PM__)
+#if defined(ENERGIA_ARCH_TIVAC)
 
 #include "wiring_private.h"
 #include "inc/hw_ints.h"
@@ -266,7 +266,7 @@ void OneMsTaskTimer_int(void)
   ROM_TimerIntClear(g_ulBase, TIMER_A);
   OneMsTaskTimer::_ticHandler();
 }
-#endif //#if defined(__TM4C123GH6PM__)
+#endif //#if defined(ENERGIA_ARCH_TIVAC)
 
 #if defined(ti_sysbios_BIOS___VERS)
 #include <xdc/runtime/Error.h>
