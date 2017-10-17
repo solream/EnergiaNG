@@ -26,6 +26,9 @@
   <condition property="platform" value="windows"><os family="windows" /></condition>
   <condition property="platform" value="linux32"><os family="unix" arch="i386" /></condition>
   <condition property="platform" value="linux64"><os family="unix" arch="amd64" /></condition>
+  <condition property="platform" value="linuxarm"><os family="unix" arch="arm" /></condition>
+
+  <condition property="windows_host" value="true"><os family="windows" /></condition>
 
   <condition property="macosx"><equals arg1="${platform}" arg2="macosx" /></condition>
   <condition property="windows"><equals arg1="${platform}" arg2="windows" /></condition>
@@ -54,6 +57,7 @@
   <condition property="launch4j-download-unpack-target-name" value="launch4j-windows"><os family="windows" /></condition>
   <property name="launch4j-download-unpack-target-name" value="launch4j-linux"/>
 
+  <echo message="Java Home is: ${java.home}" />
   <property name="MACOSX_BUNDLED_JVM" value="${java.home}/../"/>
   <property name="WINDOWS_BUNDLED_JVM" value="${java.home}"/>
   <property name="LINUX32_BUNDLED_JVM" value="none"/>
@@ -77,8 +81,15 @@
 
   <property name="portable" value="false" />
 
-  <property name="ARDUINO-BUILDER-VERSION" value="1.3.18" />
-  <property name="LIBLISTSERIAL-VERSION" value="1.1.4" />
+  <property name="ARDUINO-BUILDER-VERSION" value="1.3.25" />
+  <property name="LIBLISTSERIAL-VERSION" value="1.4.0" />
+  <property name="AVRGCC-VERSION" value="4.9.2-atmel3.5.4-arduino2" />
+  <property name="AVRDUDE-VERSION" value="6.3.0-arduino9" />
+  <property name="arduinoOTA-VERSION" value="1.1.1" />
+  <property name="MSPGCC-VERSION" value="4.6.4" />
+  <property name="MSPDEBUG-VERSION" value="0.24" />
+  <property name="DSLITE-VERSION" value="7.2.0.2096" />
+  <property name="MSP430-CORE-VERSION" value="1.0.2" />
 
   <!-- Libraries required for running arduino -->
   <fileset dir=".." id="runtime.jars">
@@ -167,32 +178,42 @@
 
     <mkdir dir="${target.path}/reference"/>
 
-    <!-- Unzip documentation -->
-    <antcall target="unzip">
-      <param name="archive_file" value="shared/reference.zip" />
-      <param name="archive_url" value="http://energia.nu/files/reference.zip" />
-      <param name="final_folder" value="${target.path}/reference/www.energia.nu" />
-      <param name="dest_folder" value="${target.path}/reference" />
-    </antcall>
-<!--
-    <antcall target="unzip">
-      <param name="archive_file" value="shared/Galileo_help_files-1.6.2.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/Galileo_help_files-1.6.2.zip" />
-      <param name="final_folder" value="${target.path}/reference/Galileo_help_files" />
-      <param name="dest_folder" value="${target.path}/reference/" />
-    </antcall>
-    <antcall target="unzip">
-      <param name="archive_file" value="shared/Edison_help_files-1.6.2.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/Edison_help_files-1.6.2.zip" />
-      <param name="final_folder" value="${target.path}/reference/Edison_help_files" />
-      <param name="dest_folder" value="${target.path}/reference/" />
-    </antcall>
--->
+    <antcall target="assemble-docs" />
     <!-- Write the revision file! -->
     <echo file="${target.path}/lib/version.txt" message="${version}" />
 
     <antcall target="assemble-libraries" />
   </target>
+
+  <target name="assemble-docs" unless="no_docs">
+      <!-- Unzip documentation -->
+      <antcall target="unzip">
+        <param name="archive_file" value="shared/reference.zip" />
+        <param name="archive_url" value="https://downloads.arduino.cc/reference.zip" />
+        <param name="final_folder" value="${target.path}/reference/www.energia.nu" />
+        <param name="dest_folder" value="${target.path}/reference/" />
+      </antcall>
+<!--
+      <antcall target="unzip">
+        <param name="archive_file" value="shared/Galileo_help_files-1.6.2.zip" />
+        <param name="archive_url" value="https://downloads.arduino.cc/Galileo_help_files-1.6.2.zip" />
+        <param name="final_folder" value="${target.path}/reference/Galileo_help_files" />
+        <param name="dest_folder" value="${target.path}/reference/" />
+      </antcall>
+      <antcall target="unzip">
+        <param name="archive_file" value="shared/Edison_help_files-1.6.2.zip" />
+        <param name="archive_url" value="https://downloads.arduino.cc/Edison_help_files-1.6.2.zip" />
+        <param name="final_folder" value="${target.path}/reference/Edison_help_files" />
+        <param name="dest_folder" value="${target.path}/reference/" />
+      </antcall>
+-->
+      <!-- Fix wrong permissions from zip file root folder -->
+<!--
+      <chmod perm="755" dir="${target.path}/reference/Galileo_help_files" />
+      <chmod perm="755" dir="${target.path}/reference/Edison_help_files" />
+-->
+  </target>
+
 
   <!-- copy library folder -->
   <target name="assemble-libraries" unless="light_bundle">
@@ -216,6 +237,7 @@
 
   <macrodef name="download-library">
     <attribute name="name"/>
+    <attribute name="foldername" default="@{name}"/>
     <attribute name="version"/>
     <attribute name="tag" default="@{version}"/>
     <attribute name="githubuser" default="arduino-libraries"/>
@@ -226,19 +248,32 @@
         <param name="final_folder" value="${target.path}/libraries/@{name}-@{version}"/>
         <param name="dest_folder" value="${target.path}/libraries"/>
       </antcall>
-      <move file="${target.path}/libraries/@{name}-@{version}" tofile="${target.path}/libraries/@{name}"/>
+      <move file="${target.path}/libraries/@{name}-@{version}" tofile="${target.path}/libraries/@{foldername}"/>
     </sequential>
   </macrodef>
 
   <!-- copy hardware folder -->
   <target name="assemble-hardware" unless="light_bundle">
+    <mkdir dir="${staging_folder}/work/${staging_hardware_folder}/tmp/msp430-core"/>
+
+    <antcall target="untar">
+      <param name="archive_file" value="./msp430-${MSP430-CORE-VERSION}.tar.bz2"/>
+      <param name="archive_url" value="https://s3.amazonaws.com/energiaUS/cores/msp430-${MSP430-CORE-VERSION}.tar.bz2"/>
+      <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/msp430-core/${MSP430-CORE-VERSION}"/>
+      <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/msp430-core/"/>
+    </antcall>
+    <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/msp430-core/msp430-core-${MSP430-CORE-VERSION}" tofile="${staging_folder}/work/${staging_hardware_folder}/energia/msp430/"/>
+    <delete dir="${staging_folder}/work/${staging_hardware_folder}/tmp"/>
+  </target>
+<!--
     <copy todir="${target.path}/hardware">
       <fileset dir="../hardware">
         <exclude name="arduino/**"/>
-        <exclude name="arduino/**"/>
+        <exclude name="energia/**"/>
       </fileset>
     </copy>
   </target>
+-->
 
   <!-- - - - - - - - - -->
   <!-- Revision check  -->
@@ -307,7 +342,7 @@
 
     <antcall target="unzip">
       <param name="archive_file" value="${staging_folder}/appbundler-1.0ea-arduino4.jar.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/appbundler-1.0ea-arduino4.jar.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/appbundler-1.0ea-arduino4.jar.zip" />
       <param name="final_folder" value="${staging_folder}/appbundler-1.0ea-arduino4" />
       <param name="dest_folder" value="${staging_folder}/appbundler-1.0ea-arduino4" />
     </antcall>
@@ -395,7 +430,7 @@
 
     <antcall target="unzip">
       <param name="archive_file" value="./libastylej-2.05.1-3.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
       <param name="final_folder" value="${staging_folder}/libastylej-2.05.1" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
@@ -406,28 +441,14 @@
 
     <antcall target="unzip">
       <param name="archive_file" value="./liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/liblistSerials/liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/liblistSerials/liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
       <param name="final_folder" value="${staging_folder}/liblistSerials-${LIBLISTSERIAL-VERSION}" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
     <copy file="macosx/liblistSerials-${LIBLISTSERIAL-VERSION}/osx/liblistSerialsj.dylib" todir="macosx/work/${staging_hardware_folder}/../lib/" />
     <chmod perm="755" file="macosx/work/${staging_hardware_folder}/../lib/liblistSerialsj.dylib" />
 
-    <delete dir="${staging_folder}/arduino-builder-macosx" includeemptydirs="true"/>
-    <mkdir dir="${staging_folder}/arduino-builder-macosx"/>
-    <antcall target="untar">
-      <param name="archive_file" value="./energia-builder-macosx-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
-      <param name="archive_url" value="http://energia.nu/tools/energia-builder-macosx-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
-      <param name="final_folder" value="${staging_folder}/arduino-builder-macosx/arduino-builder" />
-      <param name="dest_folder" value="${staging_folder}/arduino-builder-macosx" />
-    </antcall>
-    <copy file="${staging_folder}/arduino-builder-macosx/arduino-builder" tofile="macosx/work/${staging_hardware_folder}/../arduino-builder" />
-    <chmod perm="755" file="macosx/work/${staging_hardware_folder}/../arduino-builder" />
-    <move file="${staging_folder}/arduino-builder-macosx/tools" tofile="macosx/work/${staging_hardware_folder}/../tools-builder"/>
-    <copy todir="macosx/work/${staging_hardware_folder}" overwrite="true">
-      <fileset dir="${staging_folder}/arduino-builder-macosx/hardware" includes="*.txt"/>
-    </copy>
-    <delete dir="${staging_folder}/arduino-builder-macosx" includeemptydirs="true"/>
+    <antcall target="build-arduino-builder" />
 
     <antcall target="portable-${portable}">
       <param name="parentdir" value="macosx/work/${staging_hardware_folder}/.." />
@@ -438,10 +459,12 @@
   <target name="macosx-build-msp430-toolchain" unless="light_bundle">
     <antcall target="msp430-toolchain-bundle">
       <param name="unpack_target" value="untar"/>
-      <param name="gcc_archive_file" value="msp430-gcc-4.6.3-i386-apple-darwin11.tar.bz2"/>
-      <param name="gcc_version" value="4.6.3"/>
-      <param name="dslite_archive_file" value="dslite-6.2.1.1594-x86_64-apple-darwin.tar.bz2"/>
-      <param name="dslite_version" value="6.2.1.1594"/>
+      <param name="gcc_archive_file" value="msp430-gcc-${MSPGCC-VERSION}-i386-apple-darwin11.tar.bz2"/>
+      <param name="gcc_version" value="${MSPGCC-VERSION}"/>
+      <param name="dslite_archive_file" value="dslite-${DSLITE-VERSION}-x86_64-apple-darwin.tar.bz2"/>
+      <param name="dslite_version" value="${DSLITE-VERSION}"/>
+      <param name="mspdebug_archive_file" value="mspdebug-${MSPDEBUG-VERSION}-x86_64-apple-darwin.tar.bz2"/>
+      <param name="mspdebug_version" value="${MSPDEBUG-VERSION}"/>
     </antcall>
 
     <chmod perm="+x">
@@ -585,6 +608,7 @@
 
     <copy tofile="linux/work/lib/arduino-arduinoide.xml" file="linux/dist/mime.xml" />
     <copy todir="linux/work/lib" file="linux/dist/desktop.template" />
+    <copy todir="linux/work/lib" file="linux/dist/appdata.xml" />
 
     <copy todir="linux/work" file="linux/dist/energia" />
     <copy todir="linux/work" file="linux/dist/install.sh" />
@@ -593,13 +617,14 @@
     <chmod perm="ugo+x">
         <fileset dir="linux/work" includes="energia" />
         <fileset dir="linux/work" includes="**/*.sh" />
+        <fileset dir="linux/work/lib" includes="**/*desktop*" />
     </chmod>
   </target>
 
   <target name="linux-libastyle-x86" depends="linux-build" description="Download libastyle.so for x86/x64 arch">
     <antcall target="unzip">
       <param name="archive_file" value="./libastylej-2.05.1-3.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
       <param name="final_folder" value="${staging_folder}/libastylej-2.05.1" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
@@ -612,7 +637,7 @@
 
     <antcall target="unzip">
       <param name="archive_file" value="./liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/liblistSerials/liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/liblistSerials/liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
       <param name="final_folder" value="${staging_folder}/liblistSerials-${LIBLISTSERIAL-VERSION}" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
@@ -626,28 +651,16 @@
       <param name="JVM" value="${LINUX32_BUNDLED_JVM}"/>
     </antcall>
 
-    <delete dir="${staging_folder}/arduino-builder-linux32" includeemptydirs="true"/>
-    <mkdir dir="${staging_folder}/arduino-builder-linux32"/>
-    <antcall target="untar">
-      <param name="archive_file" value="./arduino-builder-linux32-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
-      <param name="archive_url" value="http://downloads.arduino.cc/tools/arduino-builder-linux32-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
-      <param name="final_folder" value="${staging_folder}/arduino-builder-linux32/arduino-builder" />
-      <param name="dest_folder" value="${staging_folder}/arduino-builder-linux32" />
-    </antcall>
-    <copy file="${staging_folder}/arduino-builder-linux32/arduino-builder" tofile="linux/work/arduino-builder" />
-    <chmod perm="755" file="linux/work/arduino-builder" />
-    <move file="${staging_folder}/arduino-builder-linux32/tools" tofile="linux/work/tools-builder"/>
-    <copy todir="linux/work/hardware" overwrite="true">
-      <fileset dir="${staging_folder}/arduino-builder-linux32/hardware" includes="*.txt"/>
-    </copy>
-    <delete dir="${staging_folder}/arduino-builder-linux32" includeemptydirs="true"/>
+    <antcall target="build-arduino-builder" />
 
     <antcall target="msp430-toolchain-bundle">
       <param name="unpack_target" value="untar"/>
       <param name="gcc_archive_file" value="avr-gcc-4.8.1-arduino5-i686-pc-linux-gnu.tar.bz2"/>
       <param name="gcc_version" value="4.8.1-arduino5"/>
-      <param name="avrdude_archive_file" value="avrdude-6.0.1-arduino5-i686-pc-linux-gnu.tar.bz2"/>
-      <param name="avrdude_version" value="6.0.1-arduino5"/>
+      <param name="avrdude_archive_file" value="avrdude-${AVRDUDE-VERSION}-i686-w64-mingw32.zip"/>
+      <param name="avrdude_version" value="${AVRDUDE-VERSION}"/>
+      <param name="arduinoOTA_archive_file" value="arduinoOTA-${arduinoOTA-VERSION}-windows_386.zip"/>
+      <param name="arduinoOTA_version" value="${arduinoOTA-VERSION}"/>
     </antcall>
 
     <antcall target="package-library-index-json-bundle"/>
@@ -659,27 +672,15 @@
     </antcall>
 
     <delete dir="${staging_folder}/arduino-builder-linux64" includeemptydirs="true"/>
-    <mkdir dir="${staging_folder}/arduino-builder-linux64"/>
-    <antcall target="untar">
-      <param name="archive_file" value="./energia-builder-linux64-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
-      <param name="archive_url" value="http://energia.nu/tools/energia-builder-linux64-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
-      <param name="final_folder" value="${staging_folder}/arduino-builder-linux64/arduino-builder" />
-      <param name="dest_folder" value="${staging_folder}/arduino-builder-linux64" />
-    </antcall>
-    <copy file="${staging_folder}/arduino-builder-linux64/arduino-builder" tofile="linux/work/arduino-builder" />
-    <chmod perm="755" file="linux/work/arduino-builder" />
-    <move file="${staging_folder}/arduino-builder-linux64/tools" tofile="linux/work/tools-builder"/>
-    <copy todir="linux/work/hardware" overwrite="true">
-      <fileset dir="${staging_folder}/arduino-builder-linux64/hardware" includes="*.txt"/>
-    </copy>
-    <delete dir="${staging_folder}/arduino-builder-linux64" includeemptydirs="true"/>
+
+    <antcall target="build-arduino-builder" />
 
     <antcall target="msp430-toolchain-bundle">
       <param name="unpack_target" value="untar"/>
-      <param name="gcc_archive_file" value="msp430-gcc-4.6.3-i386-x86_64-pc-linux-gnu.tar.bz2"/>
-      <param name="gcc_version" value="4.6.3"/>
-      <param name="dslite_archive_file" value="dslite-6.2.1.1594-i386-x86_64-pc-linux-gnu.tar.bz2"/>
-      <param name="dslite_version" value="6.2.1.1594"/>
+      <param name="gcc_archive_file" value="msp430-gcc-${MSPGCC-VERSION}-i386-x86_64-pc-linux-gnu.tar.bz2"/>
+      <param name="gcc_version" value="${MSPGCC-VERSION}"/>
+      <param name="dslite_archive_file" value="dslite-${DSLITE-VERSION}-i386-x86_64-pc-linux-gnu.tar.bz2"/>
+      <param name="dslite_version" value="${DSLITE-VERSION}"/>
     </antcall>
 
     <antcall target="package-library-index-json-bundle"/>
@@ -707,6 +708,24 @@
 
   <target name="linux64-start">
     <exec executable="./linux/work/energia" spawn="false" failonerror="true"/>
+  </target>
+
+  <target name="build-arduino-builder" unless="no_arduino_builder">
+    <delete dir="${staging_folder}/arduino-builder-${platform}" includeemptydirs="true"/>
+    <mkdir dir="${staging_folder}/arduino-builder-${platform}"/>
+    <antcall target="untar">
+      <param name="archive_file" value="./energia-builder-${platform}-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
+      <param name="archive_url" value="http://www.energia.nu/tools/energia-builder-${platform}-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
+      <param name="final_folder" value="${staging_folder}/arduino-builder-${platform}/arduino-builder" />
+      <param name="dest_folder" value="${staging_folder}/arduino-builder-${platform}" />
+    </antcall>
+    <copy file="${staging_folder}/arduino-builder-${platform}/arduino-builder" tofile="${staging_folder}/work/${staging_hardware_folder}/../arduino-builder" />
+    <chmod perm="755" file="${staging_folder}/work/${staging_hardware_folder}/../arduino-builder" />
+    <move file="${staging_folder}/arduino-builder-${platform}/tools" tofile="${staging_folder}/work/${staging_hardware_folder}/../tools-builder"/>
+    <copy todir="${staging_folder}/work/${staging_hardware_folder}" overwrite="true">
+      <fileset dir="${staging_folder}/arduino-builder-${platform}/hardware" includes="*.txt"/>
+    </copy>
+    <delete dir="${staging_folder}/arduino-builder-${platform}" includeemptydirs="true"/>
   </target>
 
   <!-- Set '${dist_file}_available' property if toolchain dist_file is downloaded              -->
@@ -761,6 +780,19 @@
     <echo>Unzipping ${archive_file} into folder ${dest_folder}</echo>
     <mkdir dir="${dest_folder}" />
     <unzip src="${archive_file}" dest="${dest_folder}"/>
+  </target>
+
+  <!-- Ensure that the executable flag is set in all enviroments/OS -->
+  <target name="make-file-executable" depends="make-file-executable-windows">
+    <chmod perm="755" file="${file}" />
+  </target>
+
+  <target name="make-file-executable-windows" if="windows_host">
+    <exec executable="icacls" failonerror="false">
+      <arg value="${file}"/>
+      <arg value="/grant"/>
+      <arg value="Everyone:(RX)"/>
+    </exec>
   </target>
 
   <target name="linux-dist" depends="build"
@@ -819,8 +851,8 @@
 
   <target name="download-launch4j-windows">
     <antcall target="unzip-with-ant-task">
-      <param name="archive_file" value="windows/launch4j-3.8-win32.zip"/>
-      <param name="archive_url" value="http://downloads.sourceforge.net/project/launch4j/launch4j-3/3.8/launch4j-3.8-win32.zip"/>
+      <param name="archive_file" value="windows/launch4j-3.9-win32.zip"/>
+      <param name="archive_url" value="https://downloads.arduino.cc/tools/launch4j-3.9-win32.zip"/>
       <param name="final_folder" value="windows/launcher/launch4j"/>
       <param name="dest_folder" value="windows/launcher/"/>
     </antcall>
@@ -828,8 +860,8 @@
 
   <target name="download-launch4j-linux">
     <antcall target="untar">
-      <param name="archive_file" value="windows/launch4j-3.8-linux.tgz"/>
-      <param name="archive_url" value="http://downloads.sourceforge.net/project/launch4j/launch4j-3/3.8/launch4j-3.8-linux.tgz"/>
+      <param name="archive_file" value="windows/launch4j-3.9-linux.tgz"/>
+      <param name="archive_url" value="https://downloads.arduino.cc/tools/launch4j-3.9-linux.tgz"/>
       <param name="final_folder" value="windows/launcher/launch4j"/>
       <param name="dest_folder" value="windows/launcher/"/>
     </antcall>
@@ -871,7 +903,7 @@
 
     <antcall target="unzip">
       <param name="archive_file" value="./libastylej-2.05.1-3.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
       <param name="final_folder" value="${staging_folder}/libastylej-2.05.1" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
@@ -881,12 +913,14 @@
 
     <antcall target="unzip">
       <param name="archive_file" value="./liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
-      <param name="archive_url" value="http://downloads.arduino.cc/liblistSerials/liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/liblistSerials/liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
       <param name="final_folder" value="${staging_folder}/liblistSerials-${LIBLISTSERIAL-VERSION}" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
     <copy file="windows/liblistSerials-${LIBLISTSERIAL-VERSION}/windows/listSerialsj.dll" todir="windows/work/lib/" />
-    <chmod perm="755" file="windows/work/lib/listSerialsj.dll" />
+    <antcall target="make-file-executable">
+      <param name="file" value="windows/work/lib/listSerialsj.dll" />
+    </antcall>
 
     <delete dir="${staging_folder}/arduino-builder-windows" includeemptydirs="true"/>
     <mkdir dir="${staging_folder}/arduino-builder-windows"/>
@@ -897,13 +931,58 @@
       <param name="dest_folder" value="${staging_folder}/arduino-builder-windows" />
     </antcall>
     <copy file="${staging_folder}/arduino-builder-windows/arduino-builder.exe" tofile="windows/work/arduino-builder.exe" />
-    <chmod perm="755" file="windows/work/arduino-builder.exe" />
+    <antcall target="make-file-executable">
+      <param name="file" value="windows/work/arduino-builder.exe" />
+    </antcall>
     <move file="${staging_folder}/arduino-builder-windows/tools" tofile="windows/work/tools-builder"/>
-    <chmod perm="755" file="windows/work/tools-builder/ctags/5.8-arduino6/ctags.exe" />
+    <antcall target="make-file-executable">
+      <param name="file" value="windows/work/tools-builder/ctags/5.8-arduino11/ctags.exe" />
+    </antcall>
     <copy todir="windows/work/hardware" overwrite="true">
       <fileset dir="${staging_folder}/arduino-builder-windows/hardware" includes="*.txt"/>
     </copy>
     <delete dir="${staging_folder}/arduino-builder-windows" includeemptydirs="true"/>
+
+    <exec executable="unzip" failonerror="true">
+      <arg value="-q" />
+      <arg value="-n" />
+      <arg value="-j" />
+      <arg value="-d" />
+      <arg value="windows/work/lib" />
+      <arg value="../arduino-core/lib/jna-4.2.2.jar" />
+      <arg value="com/sun/jna/win32-x86/jnidispatch.dll" />
+    </exec>
+    <move file="windows/work/lib/jnidispatch.dll" tofile="windows/work/lib/jnidispatch-4.2.2-win32-x86.dll" />
+    <antcall target="make-file-executable">
+      <param name="file" value="windows/work/lib/jnidispatch-4.2.2-win32-x86.dll" />
+    </antcall>
+
+    <exec executable="unzip" failonerror="true">
+      <arg value="-q" />
+      <arg value="-n" />
+      <arg value="-j" />
+      <arg value="-d" />
+      <arg value="windows/work/lib" />
+      <arg value="../arduino-core/lib/jssc-2.8.0-arduino1.jar" />
+      <arg value="libs/windows/jSSC-2.8_x86.dll" />
+    </exec>
+    <move file="windows/work/lib/jSSC-2.8_x86.dll" tofile="windows/work/lib/jSSC-2.8_x86.dll" />
+    <antcall target="make-file-executable">
+      <param name="file" value="windows/work/lib/jSSC-2.8_x86.dll" />
+    </antcall>
+    <exec executable="unzip" failonerror="true">
+      <arg value="-q" />
+      <arg value="-n" />
+      <arg value="-j" />
+      <arg value="-d" />
+      <arg value="windows/work/lib" />
+      <arg value="../arduino-core/lib/jssc-2.8.0-arduino1.jar" />
+      <arg value="libs/windows/jSSC-2.8_x86_64.dll" />
+    </exec>
+    <move file="windows/work/lib/jSSC-2.8_x86_64.dll" tofile="windows/work/lib/jSSC-2.8_x86_64.dll" />
+    <antcall target="make-file-executable">
+      <param name="file" value="windows/work/lib/jSSC-2.8_x86_64.dll" />
+    </antcall>
 
     <antcall target="assemble">
       <param name="target.path" value="windows/work" />
@@ -919,7 +998,7 @@
 
     <copy todir="windows/work">
       <fileset dir="windows/launcher"
-	       includes="application.ico, config.xml, config_debug.xml, energia.l4j.ini"/>
+	       includes="application.ico, config.xml, config_debug.xml, energia.l4j.ini, wrapper-manifest.xml"/>
     </copy>
     <launch4j configFile="windows/work/config.xml" fileVersion="${revision}.0" txtFileVersion="${revision}" productVersion="${revision}.0" txtProductVersion="${revision}"/>
     <launch4j configFile="windows/work/config_debug.xml" fileVersion="${revision}.0" txtFileVersion="${revision}" productVersion="${revision}.0" txtProductVersion="${revision}"/>
@@ -956,10 +1035,10 @@
   <target name="windows-build-msp430-toolchain">
     <antcall target="msp430-toolchain-bundle">
       <param name="unpack_target" value="unzip"/>
-      <param name="gcc_archive_file" value="msp430-gcc-4.6.3-i686-mingw32.zip"/>
-      <param name="gcc_version" value="4.6.3"/>
-      <param name="dslite_archive_file" value="dslite-6.2.1.1594-i686-mingw32.zip"/>
-      <param name="dslite_version" value="6.2.1.1594"/>
+      <param name="gcc_archive_file" value="msp430-gcc-${MSPGCC-VERSION}-i686-mingw32.zip"/>
+      <param name="gcc_version" value="${MSPGCC-VERSION}"/>
+      <param name="dslite_archive_file" value="dslite-${MSPGCC-VERSION}-i686-mingw32.zip"/>
+      <param name="dslite_version" value="${MSPGCC-VERSION}"/>
     </antcall>
 
     <antcall target="package-library-index-json-bundle"/>
@@ -1033,7 +1112,7 @@
 
     <antcall target="${unpack_target}">
       <param name="archive_file" value="${staging_folder}/${gcc_archive_file}"/>
-      <param name="archive_url" value="http://energia.nu/tools/${gcc_archive_file}"/>
+      <param name="archive_url" value="https://s3.amazonaws.com/energiaUS/tools/${platform}/${gcc_archive_file}"/>
       <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/gcc/${gcc_version}/"/>
       <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/gcc/"/>
     </antcall>
@@ -1042,17 +1121,27 @@
 
     <antcall target="${unpack_target}">
       <param name="archive_file" value="${staging_folder}/${dslite_archive_file}"/>
-      <param name="archive_url" value="http://www.energia.nu/tools/${dslite_archive_file}"/>
+      <param name="archive_url" value="https://s3.amazonaws.com/energiaUS/tools/${platform}/${dslite_archive_file}"/>
       <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/dslite/${dslite_version}"/>
       <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/dslite/"/>
     </antcall>
 
-    <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/gcc/msp430" tofile="${staging_folder}/work/${staging_hardware_folder}/tools/msp430"/>
-    <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/dslite/" tofile="${staging_folder}/work/${staging_hardware_folder}/tools/"/>
+    <mkdir dir="${staging_folder}/work/${staging_hardware_folder}/tmp/mspdebug"/>
+
+    <antcall target="${unpack_target}">
+      <param name="archive_file" value="${staging_folder}/${mspdebug_archive_file}"/>
+      <param name="archive_url" value="https://s3.amazonaws.com/energiaUS/tools/${platform}/${mspdebug_archive_file}"/>
+      <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/mspdebug/${mspdebug_version}/"/>
+      <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/mspdebug/"/>
+    </antcall>
+
+    <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/gcc/msp430-gcc-${gcc_version}" tofile="${staging_folder}/work/${staging_hardware_folder}/tools/msp430"/>
+    <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/dslite" tofile="${staging_folder}/work/${staging_hardware_folder}/tools/"/>
+    <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/mspdebug/mspdebug-${mspdebug_version}" tofile="${staging_folder}/work/${staging_hardware_folder}/tools/mspdebug"/>
 <!--    <antcall target="macosx-fix-bundled-toolchain-missing-symlinks"/> -->
     <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/DSLite/builtin_tools_versions.txt" message="energia.dslite=${dslite_version}${line.separator}"/>
     <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/msp430/builtin_tools_versions.txt" message="energia.msp430-gcc=${gcc_version}${line.separator}"/>
-    <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/msp430/builtin_tools_versions.txt" message="energia.mspdebug=0.22${line.separator}"/>
+    <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/mspdebug/builtin_tools_versions.txt" message="energia.mspdebug=${mspdebug_version}${line.separator}"/>
   </target>
 
   <target name="package-library-index-json-bundle">
