@@ -189,7 +189,7 @@
       <!-- Unzip documentation -->
       <antcall target="unzip">
         <param name="archive_file" value="shared/reference.zip" />
-        <param name="archive_url" value="https://downloads.arduino.cc/reference.zip" />
+	<param name="archive_url" value="http://energia.nu/files//reference.zip" />
         <param name="final_folder" value="${target.path}/reference/www.energia.nu" />
         <param name="dest_folder" value="${target.path}/reference/" />
       </antcall>
@@ -924,9 +924,9 @@
 
     <delete dir="${staging_folder}/arduino-builder-windows" includeemptydirs="true"/>
     <mkdir dir="${staging_folder}/arduino-builder-windows"/>
-    <antcall target="unzip-with-ant-task">
-      <param name="archive_file" value="./energia-builder-windows-${ARDUINO-BUILDER-VERSION}.zip" />
-      <param name="archive_url" value="http://energia.nu/tools/energia-builder-windows-${ARDUINO-BUILDER-VERSION}.zip" />
+    <antcall target="untar">
+      <param name="archive_file" value="./energia-builder-${platform}-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
+      <param name="archive_url" value="http://s3.amazonaws.com/energiaUS/tools/windows/energia-builder-windows-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
       <param name="final_folder" value="${staging_folder}/arduino-builder-windows/arduino-builder.exe" />
       <param name="dest_folder" value="${staging_folder}/arduino-builder-windows" />
     </antcall>
@@ -1034,11 +1034,13 @@
 
   <target name="windows-build-msp430-toolchain">
     <antcall target="msp430-toolchain-bundle">
-      <param name="unpack_target" value="unzip"/>
-      <param name="gcc_archive_file" value="msp430-gcc-${MSPGCC-VERSION}-i686-mingw32.zip"/>
+      <param name="unpack_target" value="untar"/>
+      <param name="gcc_archive_file" value="msp430-gcc-${MSPGCC-VERSION}-i686-mingw32.tar.bz2"/>
       <param name="gcc_version" value="${MSPGCC-VERSION}"/>
-      <param name="dslite_archive_file" value="dslite-${MSPGCC-VERSION}-i686-mingw32.zip"/>
-      <param name="dslite_version" value="${MSPGCC-VERSION}"/>
+      <param name="dslite_archive_file" value="dslite-${DSLITE-VERSION}-i686-mingw32.tar.bz2"/>
+      <param name="dslite_version" value="${DSLITE-VERSION}"/>
+      <param name="mspdebug_archive_file" value="mspdebug-${MSPDEBUG-VERSION}-i686-mingw32.tar.bz2"/>
+      <param name="mspdebug_version" value="${MSPDEBUG-VERSION}"/>
     </antcall>
 
     <antcall target="package-library-index-json-bundle"/>
