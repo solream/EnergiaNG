@@ -59,7 +59,7 @@ public class VersionHelper {
       }
       return Version.valueOf(version + extra);
     } catch (Exception e) {
-      System.err.println("Invalid version found: " + ver);
+//      System.err.println("Invalid version found: " + ver);
       return null;
     }
   }
