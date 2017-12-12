@@ -10,7 +10,7 @@
 
   <property name="macosx-sign-id" value="Developer ID Application: Robert Wessels" />
   <property name="library_index_url" value="http://energia.nu/libraries/library_index.json" />
-  <property name="package_index_url" value="http://energia.nu/packages/package_index.json" />
+  <property name="package_index_url" value="http://energia.nu/packages/package_index_bundled.json" />
 
   <!-- Sets properties for macosx/windows/linux depending on current system -->
   <condition property="platform" value="macosx-old">
@@ -86,10 +86,10 @@
   <property name="AVRGCC-VERSION" value="4.9.2-atmel3.5.4-arduino2" />
   <property name="AVRDUDE-VERSION" value="6.3.0-arduino9" />
   <property name="arduinoOTA-VERSION" value="1.1.1" />
-  <property name="MSPGCC-VERSION" value="4.6.4" />
+  <property name="MSPGCC-VERSION" value="4.6.5" />
   <property name="MSPDEBUG-VERSION" value="0.24" />
-  <property name="DSLITE-VERSION" value="7.2.0.2096" />
-  <property name="MSP430-CORE-VERSION" value="1.0.2" />
+  <property name="DSLITE-VERSION" value="7.4.0.1099" />
+  <property name="MSP430-CORE-VERSION" value="1.0.3" />
 
   <!-- Libraries required for running arduino -->
   <fileset dir=".." id="runtime.jars">
@@ -262,7 +262,7 @@
       <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/msp430-core/${MSP430-CORE-VERSION}"/>
       <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tmp/msp430-core/"/>
     </antcall>
-    <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/msp430-core/msp430-core-${MSP430-CORE-VERSION}" tofile="${staging_folder}/work/${staging_hardware_folder}/energia/msp430/"/>
+    <move file="${staging_folder}/work/${staging_hardware_folder}/tmp/msp430-core/msp430-${MSP430-CORE-VERSION}" tofile="${staging_folder}/work/${staging_hardware_folder}/energia/msp430/"/>
     <delete dir="${staging_folder}/work/${staging_hardware_folder}/tmp"/>
   </target>
 <!--
@@ -375,10 +375,8 @@
       <classpath refid="runtime.jars"/>
 
       <option value="-Dapple.awt.application.name=Energia"/>
-      <option value="-Dapple.laf.useScreenMenuBar=true"/>
       <option value="-Dcom.apple.macos.use-file-dialog-packages=true"/>
       <option value="-Dcom.apple.smallTabs=true"/>
-      <option value="-Dcom.apple.macos.useScreenMenuBar=true"/>
       <option value="-DAPP_DIR=$APP_ROOT/Contents/Java"/>
       <option value="-Djava.ext.dirs=$JVM_RUNTIME/Contents/Home/lib/ext/:$JVM_RUNTIME/Contents/Home/jre/lib/ext/"/>
       <option value="-Dawt.useSystemAAFontSettings=on"/>
@@ -1147,6 +1145,16 @@
   </target>
 
   <target name="package-library-index-json-bundle">
+    <get src="${package_index_url}.gz"
+         dest="${staging_folder}/work/${staging_hardware_folder}/package_index.json.gz"
+         verbose="true" skipexisting="false" />
+    <gunzip src ="${staging_folder}/work/${staging_hardware_folder}/package_index.json.gz"
+            dest="${staging_folder}/work/${staging_hardware_folder}/"/>
+    <delete file="${staging_folder}/work/${staging_hardware_folder}/package_index.json.gz"/>
+  </target>
+
+<!--
+  <target name="package-library-index-json-bundle">
     <mkdir dir="${staging_folder}/work/${staging_hardware_folder}/../dist/"/>
     <mkdir dir="${staging_folder}/work/${staging_hardware_folder}/../dist/"/>
 
@@ -1171,6 +1179,7 @@
     <delete dir="${staging_folder}/work/${staging_hardware_folder}/tmp"/>
 
   </target>
+-->
 
   <target name="macosx-fix-bundled-toolchain-missing-symlinks" if="macosx">
     <exec executable="mv" failonerror="true">
