@@ -1102,11 +1102,12 @@ public class Base {
       List<ContributedLibrary> libs = getSortedLibraries();
       String lastLibType = null;
       for (ContributedLibrary lib : libs) {
-        if (lastLibType == null || !lastLibType.equals(lib.getTypes().get(0))) {
+        String libType = lib.getTypes().get(0);
+        if (!libType.equals(lastLibType)) {
           if (lastLibType != null) {
             importMenu.addSeparator();
           }
-          lastLibType = lib.getTypes().get(0);
+          lastLibType = libType;
           JMenuItem platformItem = new JMenuItem(I18n.format(tr("{0} libraries"), tr(lastLibType)));
           platformItem.setEnabled(false);
           importMenu.add(platformItem);
@@ -1177,7 +1178,7 @@ public class Base {
     // any incompatible sketchbook libs further divided into their own list.
     // The 7th list of "other" libraries should always be empty, but serves
     // as a safety feature to prevent any library from vanishing.
-    LibraryList allLibraries = new LibraryList(BaseNoGui.librariesIndexer.getInstalledLibraries());
+    LibraryList allLibraries = BaseNoGui.librariesIndexer.getInstalledLibraries();
     LibraryList ideLibs = new LibraryList();
     LibraryList retiredIdeLibs = new LibraryList();
     LibraryList platformLibs = new LibraryList();
@@ -1875,11 +1876,6 @@ public class Base {
     }
     PreferencesData.set("editor.font", StringUtils.join(pieces, ','));
     getEditors().forEach(Editor::applyPreferences);
-  }
-
-  // XXX: Remove this method and make librariesIndexer non-static
-  static public LibraryList getLibraries() {
-    return BaseNoGui.librariesIndexer.getInstalledLibraries();
   }
 
   public List<JMenu> getBoardsCustomMenus() {
