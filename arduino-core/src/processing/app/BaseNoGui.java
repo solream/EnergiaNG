@@ -20,7 +20,8 @@ import processing.app.helpers.filefilters.OnlyFilesWithExtension;
 import processing.app.legacy.PApplet;
 import processing.app.packages.LibraryList;
 import processing.app.packages.UserLibrary;
-
+import processing.app.packages.UserLibraryFolder;
+import processing.app.packages.UserLibraryFolder.Location;
 import cc.arduino.files.DeleteFilesOnShutdown;
 import processing.app.helpers.FileUtils;
 
@@ -92,7 +93,7 @@ public class BaseNoGui {
   public static Map<String, LibraryList> importToLibraryTable;
 
   // XXX: Remove this field
-  static private List<File> librariesFolders;
+  static private List<UserLibraryFolder> librariesFolders;
 
   static UserNotifier notifier = new BasicUserNotifier();
 
@@ -187,7 +188,7 @@ public class BaseNoGui {
 
     String prefix = "runtime.tools.";
     for (ContributedTool tool : requiredTools) {
-      File folder = tool.getDownloadableContribution(getPlatform()).getInstalledFolder();
+      File folder = tool.getInstalledFolder();
       if (folder == null) {
         continue;
       }
@@ -250,7 +251,7 @@ public class BaseNoGui {
     return getHardwareFolder().getAbsolutePath();
   }
 
-  static public List<File> getLibrariesPath() {
+  static public List<UserLibraryFolder> getLibrariesFolders() {
     return librariesFolders;
   }
 
@@ -331,7 +332,7 @@ public class BaseNoGui {
     return new File(getSketchbookFolder(), "hardware");
   }
 
-  static public File getSketchbookLibrariesFolder() {
+  static public UserLibraryFolder getSketchbookLibrariesFolder() {
     File libdir = new File(getSketchbookFolder(), "libraries");
     if (!libdir.exists()) {
       FileWriter freadme = null;
@@ -345,7 +346,7 @@ public class BaseNoGui {
         IOUtils.closeQuietly(freadme);
       }
     }
-    return libdir;
+    return new UserLibraryFolder(libdir, Location.SKETCHBOOK);
   }
 
   static public String getSketchbookPath() {
@@ -425,11 +426,6 @@ public class BaseNoGui {
 
   static public String getToolsPath() {
     return toolsFolder.getAbsolutePath();
-  }
-
-  static public LibraryList getUserLibs() {
-    LibraryList libs = BaseNoGui.librariesIndexer.getInstalledLibraries();
-    return libs.filterLibrariesInSubfolder(getSketchbookFolder());
   }
 
   static public String getBoardManagerLink() {
@@ -656,7 +652,7 @@ public class BaseNoGui {
     librariesFolders = new ArrayList<>();
 
     // Add IDE libraries folder
-    librariesFolders.add(getContentFile("libraries"));
+    librariesFolders.add(new UserLibraryFolder(getContentFile("libraries"), Location.IDE_BUILTIN));
 
     TargetPlatform targetPlatform = getTargetPlatform();
     if (targetPlatform != null) {
@@ -668,13 +664,13 @@ public class BaseNoGui {
           File referencedPlatformFolder = referencedPlatform.getFolder();
           // Add libraries folder for the referenced platform
           File folder = new File(referencedPlatformFolder, "libraries");
-          librariesFolders.add(folder);
+          librariesFolders.add(new UserLibraryFolder(folder, Location.REFERENCED_CORE));
         }
       }
       File platformFolder = targetPlatform.getFolder();
       // Add libraries folder for the selected platform
       File folder = new File(platformFolder, "libraries");
-      librariesFolders.add(folder);
+      librariesFolders.add(new UserLibraryFolder(folder, Location.CORE));
     }
 
     // Add libraries folder for the sketchbook
@@ -683,8 +679,8 @@ public class BaseNoGui {
     // Scan for libraries in each library folder.
     // Libraries located in the latest folders on the list can override
     // other libraries with the same name.
-    librariesIndexer.setSketchbookLibrariesFolder(getSketchbookLibrariesFolder());
     librariesIndexer.setLibrariesFolders(librariesFolders);
+    librariesIndexer.setArchitecturePriority(getTargetPlatform().getId());
     librariesIndexer.rescanLibraries();
 
     populateImportToLibraryTable();
@@ -703,9 +699,8 @@ public class BaseNoGui {
     }
 
     Map<String, String> latestVersions = new HashMap<>();
-    VersionComparator comparator = new VersionComparator();
     for (ContributedTool tool : installedTools) {
-      File installedFolder = tool.getDownloadableContribution(getPlatform()).getInstalledFolder();
+      File installedFolder = tool.getInstalledFolder();
       String toolPath;
       if (installedFolder != null) {
         toolPath = installedFolder.getAbsolutePath();
@@ -718,7 +713,7 @@ public class BaseNoGui {
       PreferencesData.set(prefix + tool.getPackager() + "-" + toolName + "-" + toolVersion + ".path", toolPath);
       // In the generic tool property put the path of the latest version if more are available
       try {
-        if (!latestVersions.containsKey(toolName) || comparator.greaterThan(toolVersion, latestVersions.get(toolName))) {
+        if (!latestVersions.containsKey(toolName) || VersionComparator.greaterThan(toolVersion, latestVersions.get(toolName))) {
           latestVersions.put(toolName, toolVersion);
           PreferencesData.set(prefix + toolName + ".path", toolPath);
         }
@@ -820,25 +815,6 @@ public class BaseNoGui {
             .format("Unable to list header files in {0}", lib.getSrcFolder()), e);
       }
     }
-    // repeat for ALL libraries, to pick up duplicates not visible normally.
-    // any new libraries found here are NEVER used, but they are added to the
-    // end of already-found headers, to allow Compiler to report them if
-    // the sketch tries to use them.
-    for (UserLibrary lib : librariesIndexer.getInstalledLibrariesWithDuplicates()) {
-      try {
-        String headers[] = headerListFromIncludePath(lib.getSrcFolder());
-        for (String header : headers) {
-          LibraryList list = importToLibraryTable.get(header);
-          if (list != null) {
-            if (!(list.hasLibrary(lib))) {
-              list.addLast(lib);
-              //System.out.println(" duplicate lib: " + lib.getInstalledFolder().getPath());
-            }
-          }
-        }
-        } catch (IOException e) {
-      }
-    }
   }
 
   static public void initParameters(String args[]) throws Exception {
@@ -911,7 +887,14 @@ public class BaseNoGui {
    */
   static public void saveFile(String str, File file) throws IOException {
     File temp = File.createTempFile(file.getName(), null, file.getParentFile());
-    PApplet.saveStrings(temp, new String[] { str });
+    // Split the file content using minimum common separator \n
+    // then trim any other character (\r) so saveStrings can print it in the correct
+    // format for every OS
+    String strArray[] = str.split("\n");
+    for (String item : strArray) {
+      item.trim();
+    }
+    PApplet.saveStrings(temp, strArray);
 
     try {
       file = file.getCanonicalFile();

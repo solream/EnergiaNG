@@ -72,6 +72,8 @@ import java.util.ArrayList;
 import static processing.app.I18n.tr;
 import static processing.app.Theme.scale;
 
+import processing.app.helpers.FileUtils;
+
 /**
  * Main editor panel for the Processing Development Environment.
  */
@@ -94,10 +96,7 @@ public class Editor extends JFrame implements RunnerListener {
     public boolean test(SketchController controller) {
       return PreferencesData.getBoolean("editor.save_on_verify")
              && controller.getSketch().isModified()
-             && !controller.isReadOnly(
-                                       BaseNoGui.librariesIndexer
-                                           .getInstalledLibraries(),
-                                       BaseNoGui.getExamplesPath());
+             && !controller.isReadOnly();
     }
   }
 
@@ -105,7 +104,7 @@ public class Editor extends JFrame implements RunnerListener {
 
     @Override
     public boolean test(SketchController sketch) {
-      return sketch.isReadOnly(BaseNoGui.librariesIndexer.getInstalledLibraries(), BaseNoGui.getExamplesPath());
+      return sketch.isReadOnly();
     }
   }
 
@@ -197,6 +196,8 @@ public class Editor extends JFrame implements RunnerListener {
   Runnable exportHandler;
   private Runnable exportAppHandler;
   private Runnable timeoutUploadHandler;
+
+  private Map<String, Tool> internalToolCache = new HashMap<String, Tool>();
 
   public Editor(Base ibase, File file, int[] storedLocation, int[] defaultLocation, Platform platform) throws Exception {
     super("Energia");
@@ -339,6 +340,9 @@ public class Editor extends JFrame implements RunnerListener {
     // Open the document that was passed in
     boolean loaded = handleOpenInternal(file);
     if (!loaded) sketchController = null;
+
+    // default the console output to the last opened editor
+    EditorConsole.setCurrentEditorConsole(console);
   }
 
 
@@ -451,8 +455,10 @@ public class Editor extends JFrame implements RunnerListener {
     boolean external = PreferencesData.getBoolean("editor.external");
     saveMenuItem.setEnabled(!external);
     saveAsMenuItem.setEnabled(!external);
-    for (EditorTab tab: tabs)
+    for (EditorTab tab: tabs) {
       tab.applyPreferences();
+    }
+    console.applyPreferences();
   }
 
 
@@ -962,8 +968,7 @@ public class Editor extends JFrame implements RunnerListener {
 
   JMenuItem createToolMenuItem(String className) {
     try {
-      Class<?> toolClass = Class.forName(className);
-      final Tool tool = (Tool) toolClass.newInstance();
+      final Tool tool = getOrCreateToolInstance(className);
 
       JMenuItem item = new JMenuItem(tool.getMenuTitle());
 
@@ -982,6 +987,20 @@ public class Editor extends JFrame implements RunnerListener {
     }
   }
 
+  private Tool getOrCreateToolInstance(String className) {
+    Tool internalTool = internalToolCache.get(className);
+    if (internalTool == null) {
+      try {
+        Class<?> toolClass = Class.forName(className);
+        internalTool = (Tool) toolClass.newInstance();
+      } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+      }
+      internalToolCache.put(className, internalTool);
+    }
+    return internalTool;
+  }
 
   private void addInternalTools(JMenu menu) {
     JMenuItem item;
@@ -1920,7 +1939,7 @@ public class Editor extends JFrame implements RunnerListener {
         // copy the sketch inside
         File properPdeFile = new File(properFolder, sketchFile.getName());
         try {
-          Base.copyFile(sketchFile, properPdeFile);
+          FileUtils.copy(new File(sketchFile.getParent()), properFolder);
         } catch (IOException e) {
           Base.showWarning(tr("Error"), tr("Could not copy to a proper location."), e);
           return false;
@@ -2016,7 +2035,12 @@ public class Editor extends JFrame implements RunnerListener {
     statusNotice(tr("Saving..."));
     boolean saved = false;
     try {
-      boolean wasReadOnly = sketchController.isReadOnly(BaseNoGui.librariesIndexer.getInstalledLibraries(), BaseNoGui.getExamplesPath());
+      if (PreferencesData.getBoolean("editor.autoformat_currentfile_before_saving")) {
+        Tool formatTool = getOrCreateToolInstance("cc.arduino.packages.formatter.AStyle");
+        formatTool.run();
+      }
+
+      boolean wasReadOnly = sketchController.isReadOnly();
       String previousMainFilePath = sketch.getMainFilePath();
       saved = sketchController.save();
       if (saved) {
@@ -2134,11 +2158,7 @@ public class Editor extends JFrame implements RunnerListener {
    */
   synchronized public void handleExport(final boolean usingProgrammer) {
     if (PreferencesData.getBoolean("editor.save_on_verify")) {
-      if (sketch.isModified()
-          && !sketchController.isReadOnly(
-                                          BaseNoGui.librariesIndexer
-                                              .getInstalledLibraries(),
-                                          BaseNoGui.getExamplesPath())) {
+      if (sketch.isModified() && !sketchController.isReadOnly()) {
         handleSave(true);
       }
     }
@@ -2514,6 +2534,7 @@ public class Editor extends JFrame implements RunnerListener {
 
   private void handleBurnBootloader() {
     console.clear();
+    EditorConsole.setCurrentEditorConsole(this.console);
     statusNotice(tr("Burning bootloader to I/O Board (this may take a minute)..."));
     new Thread(() -> {
       try {
