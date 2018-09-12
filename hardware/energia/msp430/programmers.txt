@@ -1,5 +1,0 @@
-rf2500.name=rf2500
-rf2500.protocol=rf2500
-
-dslite.name=dslite
-dslite.protocol=dslite
