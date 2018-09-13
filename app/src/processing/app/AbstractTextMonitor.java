@@ -12,6 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,9 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
-import javax.swing.text.Document;
 
 import cc.arduino.packages.BoardPort;
 
@@ -48,7 +47,7 @@ public abstract class AbstractTextMonitor extends AbstractMonitor {
   
   public AbstractTextMonitor(BoardPort boardPort) {
     super(boardPort);
-    logDateFormat = new SimpleDateFormat("HH:mm:ss.SSS");
+    logDateFormat = new SimpleDateFormat("HH:mm:ss.SSS -> ");
   }
   
   protected void onCreateWindow(Container mainPane) {
@@ -177,21 +176,30 @@ public abstract class AbstractTextMonitor extends AbstractMonitor {
   
   public void message(final String s) {
     SwingUtilities.invokeLater(new Runnable() {
+      // Pre-allocate all objects used for streaming data
+      Date t = new Date();
+      String now;
+      StringBuilder out = new StringBuilder(16384);
+      boolean isStartingLine = false;
+
       public void run() {
         if (addTimeStampBox.isSelected()) {
-          String[] lines = s.split("(?<=\\n)");
-          Document doc = textArea.getDocument();
-          for (String currentLine : lines) {
-            try {
-              if (doc.getLength() == 0 || ((int) doc.getText(doc.getLength() - 1, 1).charAt(0) == 10)) {
-                textArea.append(logDateFormat.format(new Date()) + " -> " + currentLine);
-              } else {
-                textArea.append(currentLine);
-              }
-            } catch (BadLocationException e) {
-              e.printStackTrace();
+          t.setTime(System.currentTimeMillis());
+          now = logDateFormat.format(t);
+          out.setLength(0);
+
+          StringTokenizer tokenizer = new StringTokenizer(s, "\n", true);
+          while (tokenizer.hasMoreTokens()) {
+            if (isStartingLine) {
+              out.append(now);
             }
+            String token = tokenizer.nextToken();
+            out.append(token);
+            // tokenizer returns "\n" as a single token
+            isStartingLine = token.charAt(0) == '\n';
           }
+
+          textArea.append(out.toString());
         } else {
           textArea.append(s);
         }

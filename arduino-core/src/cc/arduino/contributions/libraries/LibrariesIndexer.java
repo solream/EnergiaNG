@@ -31,7 +31,10 @@ package cc.arduino.contributions.libraries;
 
 import cc.arduino.Constants;
 import cc.arduino.contributions.packages.ContributedPlatform;
+
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.mrbean.MrBeanModule;
 import org.apache.commons.compress.utils.IOUtils;
@@ -54,6 +57,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static processing.app.I18n.format;
 import static processing.app.I18n.tr;
 
 public class LibrariesIndexer {
@@ -72,11 +76,14 @@ public class LibrariesIndexer {
   }
 
   public void parseIndex() throws IOException {
+    index = new EmptyLibrariesIndex(); // Fallback
+
     if (!indexFile.exists()) {
-      index = new EmptyLibrariesIndex();
-    } else {
-      parseIndex(indexFile);
+      return;
     }
+
+    parseIndex(indexFile);
+
     // TODO: resolve libraries inner references
   }
 
@@ -97,8 +104,12 @@ public class LibrariesIndexer {
         .forEach(library -> library.setCategory("Uncategorized"));
 
       index = newIndex;
+    } catch (JsonParseException | JsonMappingException e) {
+      System.err.println(
+          format(tr("Error parsing libraries index: {0}\nTry to open the Library Manager to update the libraries index."),
+              e.getMessage()));
     } catch (Exception e) {
-      System.err.println("Error parsing library.index:" + e.getMessage());
+      System.err.println(format(tr("Error reading libraries index: {0}"), e.getMessage()));
     } finally {
       IOUtils.closeQuietly(indexIn);
     }
@@ -178,10 +189,10 @@ public class LibrariesIndexer {
           badLibNotified.add(subfolderName);
 
           String mess = I18n.format(tr("The library \"{0}\" cannot be used.\n"
-              + "Library names must contain only basic letters and numbers.\n"
-              + "(ASCII only and no spaces, and it cannot start with a number)"),
+              + "Library folder names must start with a letter or number, followed by letters,\n"
+              + "numbers, dashes, dots and underscores. Maximum length is 63 characters."),
               subfolderName);
-          BaseNoGui.showMessage(tr("Ignoring bad library name"), mess);
+          BaseNoGui.showMessage(tr("Ignoring library with bad name"), mess);
         }
         continue;
       }
@@ -203,7 +214,7 @@ public class LibrariesIndexer {
       LegacyUserLibrary lib = LegacyUserLibrary.create(folderDesc);
       String[] headers = BaseNoGui.headerListFromIncludePath(lib.getSrcFolder());
       if (headers.length == 0) {
-        throw new IOException(lib.getSrcFolder().getAbsolutePath());
+        throw new IOException(format(tr("no headers files (.h) found in {0}"), lib.getSrcFolder()));
       }
       addToInstalledLibraries(lib);
       return;
@@ -213,7 +224,7 @@ public class LibrariesIndexer {
     UserLibrary lib = UserLibrary.create(folderDesc);
     String[] headers = BaseNoGui.headerListFromIncludePath(lib.getSrcFolder());
     if (headers.length == 0) {
-      throw new IOException(lib.getSrcFolder().getAbsolutePath());
+      throw new IOException(format(tr("no headers files (.h) found in {0}"), lib.getSrcFolder()));
     }
     addToInstalledLibraries(lib);
 

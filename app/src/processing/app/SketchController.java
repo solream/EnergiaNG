@@ -438,7 +438,7 @@ public class SketchController {
     //editor.sketchbook.rebuildMenusAsync();
     editor.base.rebuildSketchbookMenus();
     editor.header.rebuild();
-
+    editor.updateTitle();
     // Make sure that it's not an untitled sketch
     setUntitled(false);
 
@@ -709,6 +709,10 @@ public class SketchController {
 
     UploaderUtils uploaderInstance = new UploaderUtils();
     Uploader uploader = uploaderInstance.getUploaderByPreferences(false);
+    if (uploader == null) {
+      editor.statusError(tr("Please select a Port before Upload"));
+      return false;
+    }
 
     EditorConsole.setCurrentEditorConsole(editor.console);
 
@@ -846,8 +850,9 @@ public class SketchController {
 
     if (!newName.equals(origName)) {
       String msg =
-        tr("The sketch name had to be modified. Sketch names can only consist\n" +
-          "of ASCII characters and numbers and be less than 64 characters long.");
+        tr("The sketch name had to be modified.\n" +
+          "Sketch names must start with a letter or number, followed by letters,\n" +
+          "numbers, dashes, dots and underscores. Maximum length is 63 characters.");
       System.out.println(msg);
     }
     return newName;

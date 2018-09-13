@@ -200,6 +200,7 @@ public class LibraryManagerUI extends InstallerJDialog<ContributedLibraryRelease
       try {
         setProgressVisible(true, "");
         installer.updateIndex(this::setProgress);
+        ((LibrariesIndexTableModel) contribModel).update();
         onIndexesUpdated();
       } catch (Exception e) {
         throw new RuntimeException(e);
@@ -218,9 +219,12 @@ public class LibraryManagerUI extends InstallerJDialog<ContributedLibraryRelease
       try {
         setProgressVisible(true, tr("Installing..."));
         installer.install(lib, mayReplaced, this::setProgress);
-        onIndexesUpdated();
         // TODO: Do a better job in refreshing only the needed element
+        if (contribTable.getCellEditor() != null) {
+          contribTable.getCellEditor().stopCellEditing();
+        }
         ((LibrariesIndexTableModel) contribModel).update();
+        onIndexesUpdated();
       } catch (Exception e) {
         throw new RuntimeException(e);
       } finally {
@@ -247,9 +251,12 @@ public class LibraryManagerUI extends InstallerJDialog<ContributedLibraryRelease
       try {
         setProgressVisible(true, tr("Removing..."));
         installer.remove(lib, this::setProgress);
-        onIndexesUpdated();
         // TODO: Do a better job in refreshing only the needed element
+        if (contribTable.getCellEditor() != null) {
+          contribTable.getCellEditor().stopCellEditing();
+        }
         ((LibrariesIndexTableModel) contribModel).update();
+        onIndexesUpdated();
       } catch (Exception e) {
         throw new RuntimeException(e);
       } finally {
@@ -264,5 +271,4 @@ public class LibraryManagerUI extends InstallerJDialog<ContributedLibraryRelease
   protected void onIndexesUpdated() throws Exception {
     // Empty
   }
-
 }

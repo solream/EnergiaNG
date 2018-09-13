@@ -28,11 +28,8 @@
  */
 package processing.app.packages;
 
-import cc.arduino.Constants;
-import cc.arduino.contributions.VersionHelper;
-import cc.arduino.contributions.libraries.ContributedLibraryReference;
-import processing.app.helpers.PreferencesMap;
-import processing.app.packages.UserLibraryFolder.Location;
+import static processing.app.I18n.format;
+import static processing.app.I18n.tr;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,8 +38,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import com.github.zafarkhaja.semver.Version;
+
+import cc.arduino.Constants;
+import cc.arduino.contributions.VersionHelper;
+import cc.arduino.contributions.libraries.ContributedLibraryReference;
+import processing.app.helpers.PreferencesMap;
+import processing.app.packages.UserLibraryFolder.Location;
 
 public class UserLibrary {
 
@@ -141,19 +145,23 @@ public class UserLibrary {
     }
 
     List<String> includes = null;
-    if (properties.containsKey("includes")) {
+    if (properties.containsKey("includes") && !properties.get("includes").trim().isEmpty()) {
       includes = new ArrayList<>();
       for (String i : properties.get("includes").split(","))
         includes.add(i.trim());
     }
 
     String declaredVersion = properties.get("version").trim();
-    Version version = VersionHelper.valueOf(declaredVersion);
+    Optional<Version> version = VersionHelper.valueOf(declaredVersion);
+    if (!version.isPresent()) {
+      System.out.println(
+          format(tr("Invalid version '{0}' for library in: {1}"), declaredVersion, libFolder.getAbsolutePath()));
+    }
 
     UserLibrary res = new UserLibrary();
     res.installedFolder = libFolder;
     res.name = properties.get("name").trim();
-    res.version = version.toString();
+    res.version = version.isPresent() ? version.get().toString() : declaredVersion;
     res.author = properties.get("author").trim();
     res.maintainer = properties.get("maintainer").trim();
     res.sentence = properties.get("sentence").trim();

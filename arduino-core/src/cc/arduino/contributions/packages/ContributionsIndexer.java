@@ -39,7 +39,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.mrbean.MrBeanModule;
 import org.apache.commons.compress.utils.IOUtils;
-import processing.app.I18n;
 import processing.app.Platform;
 import processing.app.PreferencesData;
 import processing.app.debug.TargetPackage;
@@ -55,6 +54,7 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static processing.app.I18n.format;
 import static processing.app.I18n.tr;
 import static processing.app.helpers.filefilters.OnlyDirs.ONLY_DIRS;
 
@@ -100,13 +100,17 @@ public class ContributionsIndexer {
     // Overlay 3rd party indexes
     File[] indexFiles = preferencesFolder.listFiles(new TestPackageIndexFilenameFilter(new PackageIndexFilenameFilter(Constants.DEFAULT_INDEX_FILE_NAME)));
 
-    for (File indexFile : indexFiles) {
-      try {
-	      mergeContributions(indexFile);
-      } catch (JsonProcessingException e) {
-        System.err.println(I18n.format(tr("Skipping contributed index file {0}, parsing error occured:"), indexFile));
-        System.err.println(e);
+    if (indexFiles != null) {
+      for (File indexFile : indexFiles) {
+        try {
+          mergeContributions(indexFile);
+        } catch (JsonProcessingException e) {
+          System.err.println(format(tr("Skipping contributed index file {0}, parsing error occured:"), indexFile));
+          System.err.println(e);
+        }
       }
+    } else {
+      System.err.println(format(tr("Error reading package indexes folder: {0}\n(maybe a permission problem?)"), preferencesFolder));
     }
 
     // Fill tools and toolsDependency cross references
@@ -156,7 +160,7 @@ public class ContributionsIndexer {
       } else {
         if (contributedPackage.isTrusted() || !isPackageNameProtected(contributedPackage)) {
           if (isPackageNameProtected(contributedPackage) && trustall) {
-            System.err.println(I18n.format(tr("Warning: forced trusting untrusted contributions")));
+            System.err.println(format(tr("Warning: forced trusting untrusted contributions")));
           }
           List<ContributedPlatform> platforms = contributedPackage.getPlatforms();
           if (platforms == null) {
