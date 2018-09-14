@@ -67,7 +67,7 @@
   <property name="MACOSX_BUNDLED_JVM" value="${java.home}/../"/>
   <property name="WINDOWS_BUNDLED_JVM" value="${java.home}"/>
   <property name="LINUX32_BUNDLED_JVM" value="none"/>
-  <property name="LINUX64_BUNDLED_JVM" value="none"/>
+  <property name="LINUX64_BUNDLED_JVM" value="${java.home}"/>
   <property name="LINUXARM_BUNDLED_JVM" value="none"/>
   <condition property="linux-bundle-jvm-task" value="noop">
     <and>
@@ -92,7 +92,7 @@
 
   <property name="portable" value="false" />
 
-  <property name="ARDUINO-BUILDER-VERSION" value="1.4.0" />
+  <property name="ARDUINO-BUILDER-VERSION" value="1.4.1" />
   <property name="LIBLISTSERIAL-VERSION" value="1.4.1" />
   <property name="AVRGCC-VERSION" value="4.9.2-atmel3.5.4-arduino2" />
   <property name="AVRDUDE-VERSION" value="6.3.0-arduino9" />
@@ -627,8 +627,8 @@
 
   <target name="linux-libastyle-x86" depends="linux-build" description="Download libastyle.so for x86/x64 arch">
     <antcall target="unzip">
-      <param name="archive_file" value="./libastylej-2.05.1-3.zip" />
-      <param name="archive_url" value="https://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
+      <param name="archive_file" value="./libastylej-2.05.1-4.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/libastylej-2.05.1-4.zip" />
       <param name="final_folder" value="${staging_folder}/libastylej-2.05.1" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
@@ -652,8 +652,8 @@
 
   <target name="linux-libastyle-arm" depends="linux-build" description="Download libastyle.so for ARM">
     <antcall target="unzip">
-      <param name="archive_file" value="./libastylej-2.05.1-3.zip" />
-      <param name="archive_url" value="https://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
+      <param name="archive_file" value="./libastylej-2.05.1-4.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/libastylej-2.05.1-4.zip" />
       <param name="final_folder" value="${staging_folder}/libastylej-2.05.1" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
@@ -722,13 +722,7 @@
 
     <antcall target="build-arduino-builder" />
 
-    <antcall target="msp430-toolchain-bundle">
-      <param name="unpack_target" value="untar"/>
-      <param name="gcc_archive_file" value="msp430-gcc-${MSPGCC-VERSION}-i386-x86_64-pc-linux-gnu.tar.bz2"/>
-      <param name="gcc_version" value="${MSPGCC-VERSION}"/>
-      <param name="dslite_archive_file" value="dslite-${DSLITE-VERSION}-i386-x86_64-pc-linux-gnu.tar.bz2"/>
-      <param name="dslite_version" value="${DSLITE-VERSION}"/>
-    </antcall>
+    <antcall target="linux64-build-msp430-toolchain" />
 
     <antcall target="package-library-index-json-bundle"/>
   </target>
@@ -743,6 +737,23 @@
       <arg value="${JVM}"/>
       <arg value="${staging_folder}/work/java/"/>
     </exec>
+  </target>
+
+  <target name="linux64-build-msp430-toolchain" unless="light_bundle">
+    <antcall target="msp430-toolchain-bundle">
+      <param name="unpack_target" value="untar"/>
+      <param name="gcc_archive_file" value="msp430-gcc-${MSPGCC-VERSION}-i386-x86_64-pc-linux-gnu.tar.bz2"/>
+      <param name="gcc_version" value="${MSPGCC-VERSION}"/>
+      <param name="dslite_archive_file" value="dslite-${DSLITE-VERSION}-i386-x86_64-pc-linux-gnu.tar.bz2"/>
+      <param name="dslite_version" value="${DSLITE-VERSION}"/>
+      <param name="mspdebug_archive_file" value="mspdebug-${MSPDEBUG-VERSION}-i386-x86_64-pc-linux-gnu.tar.bz2"/>
+      <param name="mspdebug_version" value="${MSPDEBUG-VERSION}"/>
+    </antcall>
+
+    <chmod perm="+x">
+      <fileset dir="${staging_folder}/work/${staging_hardware_folder}/tools" includes="**/bin/*"/>
+      <fileset dir="${staging_folder}/work/${staging_hardware_folder}/tools" includes="**/libexec/gcc/msp430/4.6.4/*"/>
+    </chmod>
   </target>
 
   <target name="linux32-run" depends="build,start"/>
@@ -762,7 +773,7 @@
     <mkdir dir="${staging_folder}/arduino-builder-${platform}"/>
     <antcall target="untar">
       <param name="archive_file" value="./energia-builder-${platform}-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
-      <param name="archive_url" value="http://www.energia.nu/tools/energia-builder-${platform}-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
+      <param name="archive_url" value="http://s3.amazonaws.com/energiaUS/tools/linux64/energia-builder-${platform}-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
       <param name="final_folder" value="${staging_folder}/arduino-builder-${platform}/arduino-builder" />
       <param name="dest_folder" value="${staging_folder}/arduino-builder-${platform}" />
     </antcall>
@@ -949,8 +960,8 @@
     <antcall target="windows-build-msp430-toolchain" />
 
     <antcall target="unzip">
-      <param name="archive_file" value="./libastylej-2.05.1-3.zip" />
-      <param name="archive_url" value="https://downloads.arduino.cc/libastylej-2.05.1-3.zip" />
+      <param name="archive_file" value="./libastylej-2.05.1-4.zip" />
+      <param name="archive_url" value="https://downloads.arduino.cc/libastylej-2.05.1-4.zip" />
       <param name="final_folder" value="${staging_folder}/libastylej-2.05.1" />
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
