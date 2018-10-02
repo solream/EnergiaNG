@@ -9,8 +9,8 @@
   </tstamp>
 
   <property name="macosx-sign-id" value="Developer ID Application: Robert Wessels" />
-  <property name="library_index_url" value="http://energia.nu/libraries/library_index.json" />
-  <property name="package_index_url" value="http://energia.nu/packages/package_index_bundled.json" />
+  <property name="library_index_url" value="https://energia.nu/libraries/library_index.json" />
+  <property name="package_index_url" value="https://energia.nu/packages/package_index_bundled.json" />
 
   <!-- Sets properties for macosx/windows/linux depending on current system -->
   <condition property="platform" value="macosx-old">
@@ -93,14 +93,14 @@
   <property name="portable" value="false" />
 
   <property name="ARDUINO-BUILDER-VERSION" value="1.4.1" />
-  <property name="LIBLISTSERIAL-VERSION" value="1.4.1" />
+  <property name="LIBLISTSERIAL-VERSION" value="1.4.2" />
   <property name="AVRGCC-VERSION" value="4.9.2-atmel3.5.4-arduino2" />
   <property name="AVRDUDE-VERSION" value="6.3.0-arduino9" />
   <property name="arduinoOTA-VERSION" value="1.1.1" />
   <property name="MSPGCC-VERSION" value="4.6.6" />
   <property name="MSPDEBUG-VERSION" value="0.24" />
-  <property name="DSLITE-VERSION" value="7.4.0.1099" />
-  <property name="MSP430-CORE-VERSION" value="1.0.3" />
+  <property name="DSLITE-VERSION" value="8.2.0.1400" />
+  <property name="MSP430-CORE-VERSION" value="1.0.4" />
 
   <!-- Libraries required for running arduino -->
   <fileset dir=".." id="runtime.jars">
@@ -378,8 +378,6 @@
             minimumsystemversion="10.7"
             highresolutioncapable="true">
 
-      <runtime dir="${MACOSX_BUNDLED_JVM}"/>
-
       <arch name="x86_64"/>
       <arch name="i386"/>
 
@@ -391,6 +389,10 @@
       <option value="-DAPP_DIR=$APP_ROOT/Contents/Java"/>
       <option value="-Djava.ext.dirs=$JVM_RUNTIME/Contents/Home/lib/ext/:$JVM_RUNTIME/Contents/Home/jre/lib/ext/"/>
 
+
+      <runtime dir="${MACOSX_BUNDLED_JVM}">
+        <include name="bin/"/>
+      </runtime>
       <!--
       <option value="-Dapple.awt.showGrowBox=false"/>
       <option value="-Dapple.awt.Antialiasing=false"/>
@@ -417,6 +419,13 @@
       </bundledocument>
 
     </bundleapp>
+
+     <echo message="$JVM_RUNTIME/Contents/Home/jre/"/>
+     <echo message="${MACOSX_BUNDLED_JVM}"/>
+
+      <copy todir="$JVM_RUNTIME/Contents/Home/jre/">
+        <fileset dir="${MACOSX_BUNDLED_JVM}" includes="bin/**"/>
+      </copy>
 
     <mkdir dir="${staging_folder}/work/${staging_hardware_folder}" />
 
@@ -773,7 +782,7 @@
     <mkdir dir="${staging_folder}/arduino-builder-${platform}"/>
     <antcall target="untar">
       <param name="archive_file" value="./energia-builder-${platform}-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
-      <param name="archive_url" value="http://s3.amazonaws.com/energiaUS/tools/linux64/energia-builder-${platform}-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
+      <param name="archive_url" value="http://s3.amazonaws.com/energiaUS/tools/${platform}/energia-builder-${platform}-${ARDUINO-BUILDER-VERSION}.tar.bz2" />
       <param name="final_folder" value="${staging_folder}/arduino-builder-${platform}/arduino-builder" />
       <param name="dest_folder" value="${staging_folder}/arduino-builder-${platform}" />
     </antcall>
