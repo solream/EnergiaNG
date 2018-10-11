@@ -43,10 +43,10 @@ public class BaseNoGui {
 
   /** Version string to be used for build */
   public static final int REVISION = 10807;
-  public static final int EREVISION = 20;
+  public static final int EREVISION = 21;
   /** Extended version string displayed on GUI */
   public static final String VERSION_NAME = "1.8.7";
-  public static final String EVERSION_NAME = "20";
+  public static final String EVERSION_NAME = "21";
   public static final String VERSION_NAME_LONG;
   public static final String EVERSION_NAME_LONG;
 
