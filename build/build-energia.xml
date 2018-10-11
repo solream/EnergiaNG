@@ -1211,15 +1211,16 @@
     <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/DSLite/builtin_tools_versions.txt" message="energia.dslite=${dslite_version}${line.separator}"/>
     <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/msp430/builtin_tools_versions.txt" message="energia.msp430-gcc=${gcc_version}${line.separator}"/>
     <echo append="true" file="${staging_folder}/work/${staging_hardware_folder}/tools/mspdebug/builtin_tools_versions.txt" message="energia.mspdebug=${mspdebug_version}${line.separator}"/>
+    <delete dir="${staging_folder}/work/${staging_hardware_folder}/tmp"/>
   </target>
 
   <target name="package-library-index-json-bundle">
     <get src="${package_index_url}.gz"
-         dest="${staging_folder}/work/${staging_hardware_folder}/package_index.json.gz"
+         dest="${staging_folder}/work/${staging_hardware_folder}/package_index_bundled.json.gz"
          verbose="true" skipexisting="false" />
-    <gunzip src ="${staging_folder}/work/${staging_hardware_folder}/package_index.json.gz"
+    <gunzip src ="${staging_folder}/work/${staging_hardware_folder}/package_index_bundled.json.gz"
             dest="${staging_folder}/work/${staging_hardware_folder}/"/>
-    <delete file="${staging_folder}/work/${staging_hardware_folder}/package_index.json.gz"/>
+    <delete file="${staging_folder}/work/${staging_hardware_folder}/package_index_bundled.json.gz"/>
   </target>
 
   <target name="generate-hourly-build-txt" if="hourly">
