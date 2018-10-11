@@ -100,7 +100,7 @@
   <property name="MSPGCC-VERSION" value="4.6.6" />
   <property name="MSPDEBUG-VERSION" value="0.24" />
   <property name="DSLITE-VERSION" value="8.2.0.1400" />
-  <property name="MSP430-CORE-VERSION" value="1.0.4" />
+  <property name="MSP430-CORE-VERSION" value="1.0.5" />
 
   <!-- Libraries required for running arduino -->
   <fileset dir=".." id="runtime.jars">
