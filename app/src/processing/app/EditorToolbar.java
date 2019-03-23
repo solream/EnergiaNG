@@ -32,26 +32,157 @@ import java.awt.event.MouseEvent;
 import static processing.app.I18n.tr;
 import static processing.app.Theme.scale;
 
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.function.Consumer;
+
 /**
  * run/stop/etc buttons for the ide
  */
 public class EditorToolbar extends JComponent implements MouseInputListener, KeyEventDispatcher {
 
+  private static final File buttonFile = new File(new File("."), "buttons.conf");
+
+  private static boolean checkButtonsFile() {
+    if(!buttonFile.exists()) {
+      FileWriter writer = null;
+      try {
+        if(!buttonFile.createNewFile())
+          return false;
+        writer = new FileWriter(buttonFile);
+        writer.write("# Addition buttons support for Energia IDE\n");
+        writer.write("# Supported variables:\n");
+        writer.write("# @{SKETCH_NAME}\n");
+        writer.write("# @{SKETCH_BUILD_PATH}\n");
+        writer.write("# @{CURRENT_FILE_NAME}\n");
+        writer.write("# @{CURRENT_FILE_PATH}\n");
+        writer.write("# Example:\n");
+        writer.write("# <button text>@@<program name>@@<program arguments>\n");
+        writer.write("Sketch Name@@echo @{SKETCH_NAME}\n");
+        writer.write("Sketch build path@@echo@@@{SKETCH_BUILD_PATH}\n");
+        writer.write("Current file name@@echo@@@{CURRENT_FILE_NAME}\n");
+        writer.write("Current file path@@echo@@@{CURRENT_FILE_PATH}\n");
+        return true;
+      } catch (IOException e) {
+        e.printStackTrace();
+      } finally {
+        if(writer != null)
+          try {
+            writer.close();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+      }
+      return false;
+    }
+    return true;
+  }
+
+  private class StreamGobbler implements Runnable {
+    private InputStream inputStream;
+    private Consumer<String> consumeInputLine;
+
+    public StreamGobbler(InputStream inputStream, Consumer<String> consumeInputLine) {
+      this.inputStream = inputStream;
+      this.consumeInputLine = consumeInputLine;
+    }
+
+    public void run() {
+      new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(consumeInputLine);
+    }
+  }
+
+  private class CButton {
+    final String text;
+    final String program;
+    final String arguments;
+    private CButton(String text, String program, String arguments) {
+      this.text = text.trim();
+      this.program = program.trim();
+      this.arguments = arguments == null ? "" : arguments.trim();
+    }
+
+    public String buildCmd(Editor editor) {
+      String command = program + " " + arguments;
+      try {
+        command = command
+          .replace("@{SKETCH_NAME}", editor.getSketch().getName())
+          .replace("@{SKETCH_BUILD_PATH}", editor.getSketch().getBuildPath().getAbsolutePath())
+          .replace("@{CURRENT_FILE_NAME}", editor.getCurrentTab().getSketchFile().getFileName())
+          .replace("@{CURRENT_FILE_PATH}", editor.getCurrentTab().getSketchFile().getFile().getAbsolutePath());
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return command;
+    }
+  }
+
+  private CButton[] readCustomButtons() {
+    List<CButton> buttons = new ArrayList<>();
+    if(checkButtonsFile()) {
+      BufferedReader reader = null;
+      try {
+        reader = new BufferedReader(new FileReader(buttonFile));
+        String line = reader.readLine();
+        while (line != null) {
+          if(line.length() > 0 && line.charAt(0) != '#') {
+            String[] parts = line.split("@@");
+            if (parts.length == 2)
+              buttons.add(new CButton(parts[0], parts[1], ""));
+            else if (parts.length > 2) {
+              String[] args = new String[parts.length - 2];
+              System.arraycopy(parts, 2, args, 0, args.length);
+              buttons.add(new CButton(parts[0], parts[1], String.join("@@", args)));
+            }
+          }
+          line = reader.readLine();
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      } finally {
+        if(reader != null)
+          try {
+            reader.close();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+      }
+    }
+    return buttons.toArray(new CButton[buttons.size()]);
+  }
+
+
+  private final CButton[] customButtons = readCustomButtons();
+
+
+  private String[] generateTitles(boolean shift) {
+    List<String> titles = new ArrayList<>();
+    if(shift) {
+      titles.addAll(Arrays.asList(tr("Verify"), tr("Upload"), tr("New"), tr("Open"), tr("Save"), tr("Serial Monitor")));
+    } else {
+      titles.addAll(Arrays.asList(tr("Verify"), tr("Upload Using Programmer"), tr("New"), tr("Open"), tr("Save As..."), tr("Serial Monitor")));
+    }
+
+    for(CButton b : customButtons) {
+      titles.add(b.text);
+    }
+
+    return titles.toArray(new String[titles.size()]);
+  }
+
   /**
    * Rollover titles for each button.
    */
-  private static final String[] title = {
-    tr("Verify"), tr("Upload"), tr("New"), tr("Open"), tr("Save"), tr("Serial Monitor")
-  };
+  private final String[] title = generateTitles(false);
 
   /**
    * Titles for each button when the shift key is pressed.
    */
-  private static final String[] titleShift = {
-    tr("Verify"), tr("Upload Using Programmer"), tr("New"), tr("Open"), tr("Save As..."), tr("Serial Monitor")
-  };
+  private final String[] titleShift = generateTitles(true);
 
-  private static final int BUTTON_COUNT = title.length;
+  private final int BUTTON_COUNT = title.length;
   /**
    * Width of each toolbar button.
    */
@@ -78,6 +209,9 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
   private static final int SAVE = 4;
 
   private static final int SERIAL = 5;
+
+
+  private static final int CUSTOM = 6;
 
   private static final int INACTIVE = 0;
   private static final int ROLLOVER = 1;
@@ -127,6 +261,11 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
     which[buttonCount++] = SAVE;
     which[buttonCount++] = SERIAL;
 
+    for(int i = 0; i < customButtons.length; ++i) {
+      which[buttonCount++] = CUSTOM + i;
+    }
+
+
     currentRollover = -1;
 
     bgcolor = Theme.getColor("buttons.bgcolor");
@@ -139,12 +278,15 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
   }
 
   private void loadButtons() {
+    int orig_count = BUTTON_COUNT - customButtons.length;
+
     Image allButtons = Theme.getThemeImage("buttons", this,
-                                           BUTTON_IMAGE_SIZE * BUTTON_COUNT,
-                                           BUTTON_IMAGE_SIZE * 3);
+      BUTTON_IMAGE_SIZE * orig_count,
+      BUTTON_IMAGE_SIZE * 3);
     buttonImages = new Image[BUTTON_COUNT][3];
 
-    for (int i = 0; i < BUTTON_COUNT; i++) {
+
+    for (int i = 0; i < orig_count; i++) {
       for (int state = 0; state < 3; state++) {
         Image image = createImage(BUTTON_WIDTH, BUTTON_HEIGHT);
         Graphics g = image.getGraphics();
@@ -152,10 +294,26 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
         g.fillRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
         int offset = (BUTTON_IMAGE_SIZE - BUTTON_WIDTH) / 2;
         g.drawImage(allButtons, -(i * BUTTON_IMAGE_SIZE) - offset,
-                    (-2 + state) * BUTTON_IMAGE_SIZE, null);
+          (-2 + state) * BUTTON_IMAGE_SIZE, null);
         buttonImages[i][state] = image;
       }
     }
+
+
+    // for custom buttons use file icon
+    for (int i = orig_count; i < BUTTON_COUNT; i++) {
+      for (int state = 0; state < 3; state++) {
+        Image image;
+        image = createImage(BUTTON_WIDTH, BUTTON_HEIGHT);
+        Graphics g = image.getGraphics();
+        g.setColor(bgcolor);
+        g.fillRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
+        int offset = (BUTTON_IMAGE_SIZE - BUTTON_WIDTH) / 2;
+        g.drawImage(allButtons, -(NEW * BUTTON_IMAGE_SIZE) - offset, (-2 + state) * BUTTON_IMAGE_SIZE, null);
+        buttonImages[i][state] = image;
+      }
+    }
+
   }
 
   @Override
@@ -210,9 +368,9 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
 
     /*
     // if i ever find the guy who wrote the java2d api, i will hurt him.
-     * 
+     *
      * whereas I love the Java2D API. --jdf. lol.
-     * 
+     *
     Graphics2D g2 = (Graphics2D) g;
     FontRenderContext frc = g2.getFontRenderContext();
     float statusW = (float) statusFont.getStringBounds(status, frc).getWidth();
@@ -223,7 +381,7 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
       int statusY = (BUTTON_HEIGHT + g.getFontMetrics().getAscent()) / 2;
       String status = shiftPressed ? titleShift[currentRollover] : title[currentRollover];
       if (currentRollover != SERIAL)
-        g.drawString(status, (buttonCount - 1) * BUTTON_WIDTH + 3 * BUTTON_GAP, statusY);
+        g.drawString(status, (buttonCount - 1) * BUTTON_WIDTH + 3 * BUTTON_GAP + (customButtons.length + 1) * BUTTON_GAP , statusY);
       else {
         int statusX = x1[SERIAL] - BUTTON_GAP;
         statusX -= g.getFontMetrics().stringWidth(status);
@@ -324,7 +482,6 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
     handleMouse(e);
   }
 
-
   public void mousePressed(MouseEvent e) {
 
     // jdf
@@ -384,6 +541,21 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
         break;
 
       default:
+        if(sel >= CUSTOM && sel < BUTTON_COUNT) {
+          String cmd = customButtons[sel - CUSTOM].buildCmd(editor);
+          try {
+            ProcessBuilder builder = new ProcessBuilder(cmd.split(" "));
+            Process p = builder.start();
+            StreamGobbler outputGobbler = new StreamGobbler(p.getInputStream(), System.out::println);
+            StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream(), System.err::println);
+            new Thread(outputGobbler).start();
+            new Thread(errorGobbler).start();
+            p.waitFor();
+
+          } catch (IOException | InterruptedException e1) {
+            e1.printStackTrace();
+          }
+        }
         break;
     }
   }
