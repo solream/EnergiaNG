@@ -346,7 +346,7 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
       int offsetX = 3;
       for (int i = 0; i < buttonCount; i++) {
         x1[i] = offsetX;
-        if (i == 2 || i == 6) x1[i] += BUTTON_GAP;
+        if (i == 2 /*|| i == 6*/) x1[i] += BUTTON_GAP;
         x2[i] = x1[i] + BUTTON_WIDTH;
         offsetX = x2[i];
       }
@@ -381,7 +381,7 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
       int statusY = (BUTTON_HEIGHT + g.getFontMetrics().getAscent()) / 2;
       String status = shiftPressed ? titleShift[currentRollover] : title[currentRollover];
       if (currentRollover != SERIAL)
-        g.drawString(status, (buttonCount - 1) * BUTTON_WIDTH + 3 * BUTTON_GAP + (customButtons.length + 1) * BUTTON_GAP , statusY);
+        g.drawString(status, (buttonCount - (customButtons.length>0?0:1)) * BUTTON_WIDTH + 3 * BUTTON_GAP, statusY);
       else {
         int statusX = x1[SERIAL] - BUTTON_GAP;
         statusX -= g.getFontMetrics().stringWidth(status);
