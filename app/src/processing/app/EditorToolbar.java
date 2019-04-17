@@ -342,7 +342,8 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
     switch (sel) {
       case RUN:
         if (!editor.avoidMultipleOperations) {
-          editor.handleRun(false, editor.presentHandler, editor.runHandler);
+//          editor.handleRun(false, editor.presentHandler, editor.runHandler);
+          editor.exportCompiledBinary();
           editor.avoidMultipleOperations = true;
         }
         break;

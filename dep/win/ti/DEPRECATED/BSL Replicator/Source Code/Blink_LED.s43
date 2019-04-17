@@ -1,0 +1,19 @@
+;Source File:   C:\Work\Assignments\BSL\BSL_App_Note_Code\Blink_LED.txt
+;Date:          4/13/2005
+
+     PUBLIC CodeArray
+     RSEG CODE
+CodeArray
+     DW     0x0002       ; Number of Sections
+
+     DW     0xFC00       ; Start address of section 
+     DW     0x0018       ; Number of words in section 
+     DW     0x4031, 0x0280, 0x12B0, 0xFC12, 0x12B0, 0xFC2C, 0x4030, 0xFC10
+     DW     0x3FFF, 0x40B2, 0x5A80, 0x0120, 0xD3D2, 0x0022, 0xE3D2, 0x0021
+     DW     0x403F, 0xC350, 0x533F, 0x930F, 0x23FD, 0x3FF8, 0x4030, 0xFC0C
+
+     DW     0xFFFE       ; Start address of section 
+     DW     0x0001       ; Number of words in section 
+     DW     0xFC00
+     end
+

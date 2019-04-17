@@ -198,12 +198,12 @@
 
   <target name="assemble-docs" unless="no_docs">
       <!-- Unzip documentation -->
-      <antcall target="unzip">
+<!--       <antcall target="unzip">
         <param name="archive_file" value="shared/reference.zip" />
-	<param name="archive_url" value="http://energia.nu/files//reference.zip" />
+		<param name="archive_url" value="http://energia.nu/files//reference.zip" />
         <param name="final_folder" value="${target.path}/reference/www.energia.nu" />
         <param name="dest_folder" value="${target.path}/reference/" />
-      </antcall>
+      </antcall> -->
 <!--
       <antcall target="unzip">
         <param name="archive_file" value="shared/Galileo_help_files-1.6.2.zip" />

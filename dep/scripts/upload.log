@@ -1,0 +1,34 @@
+build: /tmp/arduino_build_116825, sketch: sketch_apr17a.ino, port: /dev/ttyS0, HEX: /tmp/arduino_build_116825/sketch_apr17a.ino.hex, OS: LINUX
+SOIL in ./soil/linux
+GPIO OFF
+Traceback (most recent call last):
+  File "switch_OFF_cp2102N_gpio5.py", line 2, in <module>
+    import usb.core
+ModuleNotFoundError: No module named 'usb'
+INVOKE BSL
+
+    Error! in Opening ttyUSB0  GPIO ON
+Traceback (most recent call last):
+  File "switch_OFF_cp2102N_gpio5.py", line 2, in <module>
+    import usb.core
+ModuleNotFoundError: No module named 'usb'
+GENERATE CONFIG
+===============CONFIG===============
+MODE FRxx UART 9600 /dev/ttyS0 PARITY
+RX_PASSWORD /home/vlad/Projects/solream/EnergiaNG/build/linux/work/scripts/soil/linux/pass32_wrong.txt
+DELAY 2000
+RX_PASSWORD /home/vlad/Projects/solream/EnergiaNG/build/linux/work/scripts/soil/linux/pass32_default.txt
+RX_DATA_BLOCK /tmp/arduino_build_116825/sketch_apr17a.ino.hex
+SET_PC 0x4400
+=================END================
+Run scripter
+[97m---------------------------------------------------------
+BSL Scripter 3.4.0.1
+
+PC software for BSL programming
+2019-Apr-17 12:40:19
+---------------------------------------------------------
+
+[97mLog mode is turned on! 
+[97m./BSL_scripter ./bsl_config.conf 
+[97mVerbose is turned off! 

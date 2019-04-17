@@ -106,7 +106,7 @@ import processing.app.syntax.PdeKeywords;
 import processing.app.syntax.SketchTextArea;
 import processing.app.tools.MenuScroller;
 import processing.app.tools.Tool;
-
+import java.nio.file.Paths;
 /**
  * Main editor panel for the Processing Development Environment.
  */
@@ -666,11 +666,7 @@ public class Editor extends JFrame implements RunnerListener {
 
     item = newJMenuItemAlt(tr("Export compiled Binary"), 'S');
     item.addActionListener(event -> {
-      if (new ShouldSaveReadOnly().test(sketchController) && !handleSave(true)) {
-        System.out.println(tr("Export canceled, changes must first be saved."));
-        return;
-      }
-      handleRun(false, new ShouldSaveReadOnly(), presentAndSaveHandler, runAndSaveHandler);
+      exportCompiledBinary();
     });
     sketchMenu.add(item);
 
@@ -697,6 +693,13 @@ public class Editor extends JFrame implements RunnerListener {
     sketchMenu.add(item);
   }
 
+  public void exportCompiledBinary() {
+    if (new ShouldSaveReadOnly().test(sketchController) && !handleSave(true)) {
+      System.out.println(tr("Export canceled, changes must first be saved."));
+      return;
+    }
+    handleRun(false, new ShouldSaveReadOnly(), presentAndSaveHandler, runAndSaveHandler);
+  }
 
   private JMenu buildToolsMenu() {
     toolsMenu = new JMenu(tr("Tools"));
@@ -1613,8 +1616,22 @@ public class Editor extends JFrame implements RunnerListener {
     public void run() {
       try {
         removeAllLineHighlights();
-        sketchController.build(verbose, saveHex);
+        String hexName = sketchController.build(verbose, saveHex);
         statusNotice(tr("Done compiling."));
+        File scripts = new File(new File(".").getAbsolutePath(), "scripts");
+        boolean windows = System.getProperty("os.name").toLowerCase().contains("win");
+        File file = new File(scripts, windows ? "upload.bat" : "upload.sh");
+        scripts.mkdirs();
+        String buildPath = sketch.getBuildPath().getAbsolutePath();
+        String port = PreferencesData.get("serial.port");
+        if(!file.exists())
+          file.createNewFile();
+        ProcessBuilder pb = windows ?
+          new ProcessBuilder(Paths.get(file.getAbsolutePath()).getFileName().toString(), buildPath, hexName, port) :
+          new ProcessBuilder("/bin/bash", file.getAbsolutePath(), buildPath, hexName, port);
+        pb.directory(scripts);
+        Process process = pb.start();
+        process.waitFor();
       } catch (PreferencesMapException e) {
         statusError(I18n.format(
                 tr("Error while compiling: missing '{0}' configuration parameter"),

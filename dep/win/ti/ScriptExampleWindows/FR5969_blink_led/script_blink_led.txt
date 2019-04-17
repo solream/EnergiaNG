@@ -1,0 +1,6 @@
+MODE FRxx UART 9600 COM9 PARITY
+RX_PASSWORD C:\ti\ScriptExampleWindows\FR5969_blink_led\pass32_wrong.txt
+DELAY 2000 
+RX_PASSWORD C:\ti\ScriptExampleWindows\FR5969_blink_led\pass32_default.txt
+RX_DATA_BLOCK C:\ti\ScriptExampleWindows\FR5969_blink_led\Blink_led.txt
+SET_PC 0x4400
