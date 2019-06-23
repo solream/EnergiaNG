@@ -41,14 +41,14 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
    * Rollover titles for each button.
    */
   private static final String[] title = {
-    tr("Verify"), tr("Upload"), tr("New"), tr("Open"), tr("Save"), tr("Serial Monitor")
+    tr("Export Compiled Binary"), tr("Upload"), tr("New"), tr("Open"), tr("Save"), tr("Serial Monitor")
   };
 
   /**
    * Titles for each button when the shift key is pressed.
    */
   private static final String[] titleShift = {
-    tr("Verify"), tr("Upload Using Programmer"), tr("New"), tr("Open"), tr("Save As..."), tr("Serial Monitor")
+    tr("Export Compiled Binary"), tr("Upload Using Programmer"), tr("New"), tr("Open"), tr("Save As..."), tr("Serial Monitor")
   };
 
   private static final int BUTTON_COUNT = title.length;
@@ -341,11 +341,7 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
 
     switch (sel) {
       case RUN:
-        if (!editor.avoidMultipleOperations) {
-//          editor.handleRun(false, editor.presentHandler, editor.runHandler);
-          editor.exportCompiledBinary();
-          editor.avoidMultipleOperations = true;
-        }
+        editor.exportCompiledBinary();
         break;
 
 //    case STOP:

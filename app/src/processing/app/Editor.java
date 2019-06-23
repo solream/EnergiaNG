@@ -1615,8 +1615,11 @@ public class Editor extends JFrame implements RunnerListener {
     @Override
     public void run() {
       try {
+        //old
         removeAllLineHighlights();
         String hexName = sketchController.build(verbose, saveHex);
+
+        //new
         statusNotice(tr("Done compiling."));
         File scripts = new File(new File(".").getAbsolutePath(), "scripts");
         boolean windows = System.getProperty("os.name").toLowerCase().contains("win");
