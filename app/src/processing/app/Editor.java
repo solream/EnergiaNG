@@ -1630,7 +1630,7 @@ public class Editor extends JFrame implements RunnerListener {
         if(!file.exists())
           file.createNewFile();
         ProcessBuilder pb = windows ?
-          new ProcessBuilder(Paths.get(file.getAbsolutePath()).getFileName().toString(), buildPath, hexName, port) :
+          new ProcessBuilder("cmd", "/c", buildPath, hexName, port) :
           new ProcessBuilder("/bin/bash", file.getAbsolutePath(), buildPath, hexName, port);
         pb.directory(scripts);
         Process process = pb.start();
